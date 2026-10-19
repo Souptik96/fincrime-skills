@@ -1,0 +1,13 @@
+# Normalize line endings. The project is authored with LF; the warnings from
+# `git add` on Windows are noise, not a signal.
+* text=auto eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.gif binary
+*.pdf binary
+*.zip binary
+
+# Lockfiles and generated data keep their exact form
+*.lock -text
