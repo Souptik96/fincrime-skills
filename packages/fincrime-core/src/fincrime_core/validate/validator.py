@@ -23,6 +23,7 @@ part of the output contract:
 from __future__ import annotations
 
 import json
+import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Mapping, Sequence
@@ -39,6 +40,41 @@ from fincrime_core.validate.schema import JsonSchemaValidator, SchemaError
 __all__ = ["ValidationResult", "Validator", "EnforcementContext", "load_finding_schema"]
 
 _CONTRACTS_DIR = contracts_dir()
+
+#: Defect codes that supersede a generic schema violation for the same claim.
+#: The contract encodes these rules structurally so that a stock JSON Schema
+#: validator enforces them too, which produces a generic schema error in
+#: addition to the specific lint defect. A consumer keying on defect codes
+#: should see the specific code, not both.
+_SUPERSEDING_CODES = frozenset({"recommendation_without_basis"})
+
+
+def _superseded_claim_paths(defects: list[Defect], claims: Sequence[Any]) -> set[str]:
+    """Return the JSON paths of claims whose generic schema error is superseded.
+
+    The contract encodes these rules structurally so that a stock JSON Schema
+    validator enforces them too, which produces a generic schema error in
+    addition to the specific lint defect. A consumer keying on defect codes
+    should see the specific code, not both.
+    """
+    by_claim = {
+        d.claim_id for d in defects if d.code in _SUPERSEDING_CODES and d.claim_id
+    }
+    if not by_claim:
+        return set()
+    paths: set[str] = set()
+    for index, claim in enumerate(claims):
+        if getattr(claim, "id", None) in by_claim:
+            paths.add(f"$.claims[{index}]")
+    return paths
+
+
+def _path_is_superseded(path: str, superseded: set[str]) -> bool:
+    """True when a schema error path is covered by a superseding lint defect."""
+    for candidate in superseded:
+        if path == candidate or path.startswith(candidate + ".") or path.startswith(candidate + "["):
+            return True
+    return False
 
 
 def load_finding_schema(path: str | None = None) -> JsonSchemaValidator:
@@ -103,25 +139,29 @@ class ValidationResult:
 
     @property
     def unsupported_claim_rate(self) -> float:
-        """Fraction of evidence-requiring claims that failed attribution.
+        """Fraction of evidence-bearing claims that failed attribution.
 
         This is one of the project's headline metrics. It is computed
-        deterministically: a claim counts as unsupported when it has no
-        evidence reference, or when any of its references fails to resolve.
+        deterministically: a claim counts as unsupported when it is of a class
+        that mandates evidence and has none, or when any reference it carries
+        fails to resolve.
+
+        The denominator is every *evidence-bearing* claim, not only the
+        classes that mandate evidence. A risk assessment or a recommendation
+        that cites a fabricated reference is unsupported, and excluding it
+        would let the failure hide behind the claim class.
         """
-        requiring = [
-            c for c in self._claims if c.requires_evidence
-        ]
-        if not requiring:
+        bearing = [c for c in self._claims if c.is_evidence_bearing]
+        if not bearing:
             return 0.0
         unsupported = 0
-        for claim in requiring:
-            if not claim.evidence_refs:
+        for claim in bearing:
+            if claim.requires_evidence and not claim.evidence_refs:
                 unsupported += 1
                 continue
             if any(not self.resolved_refs.get(ref, False) for ref in claim.evidence_refs):
                 unsupported += 1
-        return unsupported / len(requiring)
+        return unsupported / len(bearing)
 
     @property
     def evidence_attribution_accuracy(self) -> float:
@@ -154,7 +194,16 @@ class Validator:
     had.
     """
 
-    __slots__ = ("_evidence_set", "_source_index", "_schema", "_matcher", "_known_indicator_ids", "_known_knowledge_ids", "_expired_knowledge_ids")
+    __slots__ = (
+        "_evidence_set",
+        "_source_index",
+        "_schema",
+        "_matcher",
+        "_known_indicator_ids",
+        "_known_knowledge_ids",
+        "_expired_knowledge_ids",
+        "_allowed_jurisdictions",
+    )
 
     def __init__(
         self,
@@ -164,6 +213,7 @@ class Validator:
         known_indicator_ids: Sequence[str] | None = None,
         known_knowledge_ids: Sequence[str] | None = None,
         expired_knowledge_ids: Sequence[str] | None = None,
+        allowed_jurisdictions: Sequence[str] | None = None,
     ) -> None:
         self._evidence_set = dict(evidence_set or {})
         self._source_index: SourceIndex = build_source_index(self._evidence_set)
@@ -172,6 +222,7 @@ class Validator:
         self._known_indicator_ids = known_indicator_ids
         self._known_knowledge_ids = known_knowledge_ids
         self._expired_knowledge_ids = set(expired_knowledge_ids or ())
+        self._allowed_jurisdictions = allowed_jurisdictions
 
     @property
     def source_index(self) -> SourceIndex:
@@ -226,8 +277,26 @@ class Validator:
                 matcher=self._matcher,
             )
         )
-        defects.extend(lint_artifact(finding))
+        defects.extend(lint_artifact(finding, allowed_jurisdictions=self._allowed_jurisdictions))
         defects.extend(self._check_knowledge_freshness(finding, enforcement))
+
+        # Drop the generic schema error for any condition a specific lint has
+        # already reported with an actionable code.
+        superseded = _superseded_claim_paths(defects, finding.claims)
+        if superseded:
+            schema_errors = [
+                error for error in schema_errors if not _path_is_superseded(error.path, superseded)
+            ]
+            defects = [
+                defect
+                for defect in defects
+                if not (
+                    defect.code == "schema_violation"
+                    and any(
+                        defect.message.startswith(path + ":") for path in superseded
+                    )
+                )
+            ]
 
         return self._finalise(defects, schema_errors, finding.claims, resolved)
 

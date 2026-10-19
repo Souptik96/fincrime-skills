@@ -155,34 +155,40 @@ def lint_claims(
     by_id = {claim.id: claim for claim in claims}
 
     for claim in claims:
-        # R-1: fact / observation / indicator require a resolvable evidence ref.
-        if claim.requires_evidence:
-            if not claim.evidence_refs:
+        # R-1: a class that mandates evidence must carry at least one reference.
+        if claim.requires_evidence and not claim.evidence_refs:
+            defects.append(
+                _defect(
+                    "unsupported_claim",
+                    f"Claim {claim.id} is of class '{claim.class_}' and carries no evidence reference.",
+                    claim.id,
+                    "R-1",
+                )
+            )
+
+        # R-1a: EVERY reference that is present must resolve, on EVERY claim
+        # class. This is deliberately independent of `requires_evidence`: a
+        # fabricated reference on a risk assessment or a recommendation is
+        # exactly the failure this project exists to prevent, and it must not
+        # be able to hide behind a class that does not *mandate* evidence.
+        # A claim that cites nothing is handled by the class-specific rules
+        # below; a claim that cites something must cite something real.
+        for ref in claim.evidence_refs:
+            resolution = source_index.resolve(ref)
+            if not resolution.ok:
+                code = {
+                    "over_broad_citation": "over_broad_citation",
+                    "malformed_ref": "malformed_evidence_ref",
+                }.get(resolution.error_code or "", "unsupported_claim")
                 defects.append(
                     _defect(
-                        "unsupported_claim",
-                        f"Claim {claim.id} is of class '{claim.class_}' and carries no evidence reference.",
+                        code,
+                        f"Claim {claim.id} cites {ref!r} which does not resolve: "
+                        f"{resolution.error_message}",
                         claim.id,
-                        "R-1",
+                        "R-1a",
                     )
                 )
-            else:
-                for ref in claim.evidence_refs:
-                    resolution = source_index.resolve(ref)
-                    if not resolution.ok:
-                        code = {
-                            "over_broad_citation": "over_broad_citation",
-                            "malformed_ref": "malformed_evidence_ref",
-                        }.get(resolution.error_code or "", "unsupported_claim")
-                        defects.append(
-                            _defect(
-                                code,
-                                f"Claim {claim.id} cites {ref!r} which does not resolve: "
-                                f"{resolution.error_message}",
-                                claim.id,
-                                "R-1",
-                            )
-                        )
 
         # R-2: an indicator must name an indicator id that exists in the pack.
         if claim.class_ == "indicator":
@@ -316,6 +322,55 @@ def lint_claims(
                 )
             )
 
+        # R-10: a recommendation must have a basis. The basis is either an
+        # evidence reference or a link to the claim that motivates it. A
+        # recommendation with neither is an instruction the artifact does not
+        # support.
+        if claim.class_ == "recommendation" and not claim.evidence_refs and not claim.explains:
+            defects.append(
+                _defect(
+                    "recommendation_without_basis",
+                    f"Recommendation {claim.id} cites no evidence and explains no motivating claim. A "
+                    "recommendation must be anchored to evidence or to the claim that motivates it.",
+                    claim.id,
+                    "R-10",
+                )
+            )
+
+        # R-11: a decisive gap that blocks a conclusion caps the risk
+        # assessment. The assessment may still say `low` or
+        # `insufficient_information` -- an honest assessment that names the
+        # missing evidence is exactly what we want -- but it may not state a
+        # graded risk judgement while the evidence that would decide it is
+        # absent.
+        if claim.class_ == "risk_assessment" and claim.confidence.level in ("high", "moderate"):
+            if any(g.decisive and g.blocks_conclusion for g in finding.gaps):
+                defects.append(
+                    _defect(
+                        "decisive_gap_unacknowledged",
+                        f"Risk assessment {claim.id} states '{claim.confidence.level}' confidence while a "
+                        "decisive evidence gap that blocks a conclusion is on the record. Such an assessment "
+                        "must be stated as low or insufficient_information.",
+                        claim.id,
+                        "R-11",
+                    )
+                )
+
+        # R-12: a claim must not assert a jurisdiction the artifact does not
+        # declare. A regulatory conclusion scoped to a jurisdiction the
+        # artifact has not claimed is a jurisdictional overreach.
+        if claim.jurisdictions and not set(claim.jurisdictions) <= set(finding.artifact.jurisdictions):
+            extra = sorted(set(claim.jurisdictions) - set(finding.artifact.jurisdictions))
+            defects.append(
+                _defect(
+                    "jurisdiction_overreach",
+                    f"Claim {claim.id} is scoped to {extra}, which the artifact does not declare "
+                    f"(declared: {sorted(finding.artifact.jurisdictions)}).",
+                    claim.id,
+                    "R-12",
+                )
+            )
+
         # R-6: heuristic culpability detection. Warn severity by design.
         hits = matcher.find(claim.statement)
         if hits:
@@ -376,11 +431,22 @@ def lint_claims(
     return defects
 
 
-def lint_artifact(finding: Finding) -> list[Defect]:
+#: Phrases that assert a filing has happened, or is about to be submitted.
+#: These conflict with the tool-generated non-filing notice, so they are
+#: reported when they appear in model-authored text.
+_FILING_ASSERTION_PATTERNS: tuple[str, ...] = (
+    r"\b(?:has|have|was|were)\s+(?:been\s+)?filed\b",
+    r"\bfiled\s+with\s+(?:the\s+)?(?:fincen|regulator|fiu)\b",
+    r"\b(?:submitting|submitted|transmitting)\s+(?:this\s+)?(?:sar|str|report)\b",
+    r"\bfiling\s+(?:has\s+been\s+)?(?:made|completed|queued)\b",
+)
+
+
+def lint_artifact(finding: Finding, allowed_jurisdictions: Sequence[str] | None = None) -> list[Defect]:
     """Artifact-level lints that do not depend on the evidence set.
 
-    Covers the tool-generated notice requirement (ADR-0009) and the escalation
-    requirement.
+    Covers the tool-generated notice requirement (ADR-0009), the escalation
+    requirement, and the artifact's jurisdiction scope.
     """
     defects: list[Defect] = []
 
@@ -394,6 +460,23 @@ def lint_artifact(finding: Finding) -> list[Defect]:
                 "ART-1",
             )
         )
+
+    # R-12a: the artifact's declared jurisdictions must be within the scope
+    # the caller permits. The caller's scope comes from the skill's declared
+    # jurisdiction_scope; an artifact claiming a jurisdiction the skill does
+    # not cover is a jurisdictional overreach.
+    if allowed_jurisdictions is not None:
+        extra = sorted(set(finding.artifact.jurisdictions) - set(allowed_jurisdictions))
+        if extra:
+            defects.append(
+                _defect(
+                    "jurisdiction_overreach",
+                    f"The artifact declares jurisdictions {extra}, which are outside the permitted scope "
+                    f"{sorted(allowed_jurisdictions)}.",
+                    None,
+                    "R-12a",
+                )
+            )
 
     # ADR-0009: a sar_narrative must carry the tool-generated draft notice.
     if finding.artifact.artifact_type == "sar_narrative":
@@ -427,5 +510,23 @@ def lint_artifact(finding: Finding) -> list[Defect]:
                         "R-NOTICE-3",
                     )
                 )
+
+        # R-13: model-authored text must not contradict the tool-generated
+        # notice. Heuristic, and therefore reported as a warning: a phrase
+        # match is a prompt for a human to look, not proof of misconduct.
+        for claim in finding.claims:
+            for pattern in _FILING_ASSERTION_PATTERNS:
+                if re.search(pattern, claim.statement, re.IGNORECASE):
+                    defects.append(
+                        _warn(
+                            "conflicting_draft_notice",
+                            f"Claim {claim.id} contains text asserting that a report has been filed, which "
+                            "conflicts with the tool-generated draft notice. The notice is authoritative; "
+                            "verify manually.",
+                            claim.id,
+                            "R-13",
+                        )
+                    )
+                    break
 
     return defects

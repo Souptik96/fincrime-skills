@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -205,3 +206,50 @@ class TestContractSchemas:
 
         grammar = load("evidence-ref-grammar.schema.json")
         assert EVIDENCE_REF_PATTERN_STR == grammar["properties"]["evidence_ref_pattern"]["const"]
+
+    def test_evidence_ref_pattern_is_identical_in_every_contract(self) -> None:
+        """The evidence-reference grammar must be stated once, identically.
+
+        The review found the pattern in ``finding.schema.json`` had drifted
+        from the canonical one: it accepted a second ``#`` in the fragment and
+        an unbounded source-instance length, so an artifact could satisfy the
+        contract and still be rejected by the implementation. The two are now
+        asserted equal everywhere the pattern appears.
+        """
+        from fincrime_core.validate.evidence_refs import EVIDENCE_REF_PATTERN_STR
+
+        canonical = EVIDENCE_REF_PATTERN_STR
+        occurrences: list[tuple[str, str]] = []
+
+        for path in sorted(CONTRACTS.glob("*.json")):
+            with path.open("r", encoding="utf-8") as handle:
+                document = json.load(handle)
+
+            def walk(node: Any) -> None:
+                if isinstance(node, dict):
+                    for key, value in node.items():
+                        if key == "pattern" and isinstance(value, str) and "#" in value and "/(" in value:
+                            occurrences.append((path.name, value))
+                        walk(value)
+                elif isinstance(node, list):
+                    for item in node:
+                        walk(item)
+
+            walk(document)
+
+        assert occurrences, "no evidence-reference pattern was found in the contracts"
+        for filename, pattern in occurrences:
+            assert pattern == canonical, (
+                f"{filename} states a different evidence-reference pattern from the canonical one. "
+                "The contract and the implementation must agree exactly."
+            )
+
+    def test_the_finding_schema_rejects_a_second_hash(self) -> None:
+        """A second '#' would terminate the fragment under RFC 3986."""
+        from fincrime_core.validate.schema import JsonSchemaValidator
+
+        validator = JsonSchemaValidator(load("finding.schema.json")["$defs"]["evidence_ref"])
+        assert not validator.is_valid("txn:123#/amount#second")
+        assert not validator.is_valid("txn:" + ("a" * 100) + "#/amount")
+        assert validator.is_valid("txn:123#/amount")
+        assert validator.is_valid("txn:123#")

@@ -75,6 +75,8 @@ class DefectInfo:
     description: str
     remediation: str
     enforcement: str
+    stage: str = "active"
+    planned_for: str | None = None
 
     @property
     def is_structural(self) -> bool:
@@ -87,6 +89,17 @@ class DefectInfo:
     @property
     def is_heuristic(self) -> bool:
         return self.enforcement == "heuristic"
+
+    @property
+    def is_active(self) -> bool:
+        """True when the validator emits this code today.
+
+        A code marked ``planned`` is reserved vocabulary for a later phase. It
+        is listed so the vocabulary stays stable, and so that the
+        no-ghost-defect test can hold the line: a taxonomy entry must not
+        imply enforcement the code does not have.
+        """
+        return self.stage == "active"
 
 
 @dataclass(frozen=True, slots=True)
@@ -162,6 +175,8 @@ def load_defect_taxonomy(path: str | None = None) -> dict[str, DefectInfo]:
             description=entry.get("description", ""),
             remediation=entry.get("remediation", ""),
             enforcement=entry.get("enforcement", "structural"),
+            stage=entry.get("stage", "active"),
+            planned_for=entry.get("planned_for"),
         )
         for entry in entries
     }

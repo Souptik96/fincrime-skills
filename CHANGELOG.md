@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+Four defects found by an adversarial review of the Phase 0 code, two of which
+were integrity bypasses of the evidence guarantee:
+
+- **A fabricated reference could hide behind a claim class.** Evidence
+  references were only resolved on the classes that *mandate* evidence
+  (`fact`, `observation`, `indicator`). A `risk_assessment` or a
+  `recommendation` citing a transaction that does not exist passed validation
+  with zero defects, and `unsupported_claim_rate` reported 0.0. The mandate and
+  the check are now separate: **any reference present on any claim must
+  resolve**, and the metric's denominator is every evidence-bearing claim
+  (`R-1a`).
+- **`recommendation_without_basis` was never emitted.** The defect was declared
+  in the taxonomy and advertised in the example, but no code produced it, and
+  a recommendation with `evidence_refs: []` satisfied the schema. A
+  recommendation must now be anchored to an evidence reference or to the claim
+  it explains (`R-10`).
+- **The evidence-reference pattern had drifted between contracts.**
+  `contracts/finding.schema.json` accepted a second `#` in the fragment and an
+  unbounded source-instance length, so an artifact could satisfy the contract
+  and still be rejected by the implementation. All contracts now state the
+  canonical pattern, and a test asserts they are identical everywhere.
+- **RFC 6901 section 4 array indices accepted leading zeros.** `/lines/01`
+  resolved to index 1. The normative ABNF
+  (`array-index = %x30 / ( %x31-39 *(%x30-39) )`) is now enforced, ASCII
+  digits only.
+
+### Added
+
+- **A no-ghost-defect guard.** The defect taxonomy now carries a `stage` field
+  (`active` or `planned`). A behavioural test proves every `active` code is
+  reachable, and that no `planned` code is emitted yet. A taxonomy entry can
+  no longer imply enforcement the code does not have.
+- Four defect codes that were previously unreachable are now implemented:
+  `recommendation_without_basis`, `decisive_gap_unacknowledged`,
+  `jurisdiction_overreach`, and `conflicting_draft_notice` (heuristic).
+- A jurisdiction-scope check: an artifact may not declare a jurisdiction
+  outside the scope the skill permits, and a claim may not be scoped to a
+  jurisdiction the artifact does not declare.
+
 ### Added
 
 - The **Finding Contract** `fincrime/finding/1.0.0`: a JSON Schema 2020-12
@@ -15,10 +56,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   validator enforces the same rules the project does.
   ([ADR-0001](docs/adr/0001-evidence-linked-finding.md))
 - The **RFC 6901 evidence-reference grammar**, `contracts/evidence-ref-grammar.schema.json`,
-  with a normative ABNF, the escaping rules, and the empty-pointer semantics.
+  with a normative ABNF, the escaping rules, the empty-pointer semantics, and
+  the array-index rule.
   ([ADR-0004](docs/adr/0004-evidence-ref-grammar.md))
 - `fincrime-core`: a **dependency-free** validator with a total, deterministic
-  evidence resolver; a claim linter implementing R-1 through R-9; a pure
+  evidence resolver; a claim linter implementing R-1 through R-13; a pure
   deterministic policy evaluator; and a dated, cited, jurisdiction-scoped
   knowledge engine. ([ADR-0002](docs/adr/0002-zero-dependency-core.md),
   [ADR-0003](docs/adr/0003-deterministic-boundary.md))

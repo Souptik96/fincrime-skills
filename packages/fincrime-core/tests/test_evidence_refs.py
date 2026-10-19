@@ -135,6 +135,24 @@ class TestResolution:
         index = SourceIndex({"txn:1": ok})
         assert index.resolve("txn:1#/lines").ok
 
+    def test_array_index_leading_zeros_are_rejected(self) -> None:
+        """RFC 6901 section 4: array-index = %x30 / ( %x31-39 *(%x30-39) ).
+
+        "01" and "007" are not valid array indices. Accepting them would make
+        "/lines/01" silently mean index 1.
+        """
+        index = SourceIndex({"txn:1": {"lines": [{"amount": 1}, {"amount": 2}]}})
+        assert index.resolve("txn:1#/lines/0/amount").ok
+        assert index.resolve("txn:1#/lines/1/amount").value == 2
+        assert not index.resolve("txn:1#/lines/01/amount").ok
+        assert not index.resolve("txn:1#/lines/007/amount").ok
+
+    def test_array_index_must_be_ascii_digits(self) -> None:
+        """The ABNF is ASCII only. str.isdigit() accepts other decimal
+        characters, such as U+0661 ARABIC-INDIC DIGIT ONE."""
+        index = SourceIndex({"txn:1": {"lines": [{"amount": 1}]}})
+        assert not index.resolve("txn:1#/lines/\u0661/amount").ok
+
     def test_cannot_descend_into_a_scalar(self) -> None:
         index = SourceIndex({"txn:1": {"amount": 5}})
         result = index.resolve("txn:1#/amount/deeper")

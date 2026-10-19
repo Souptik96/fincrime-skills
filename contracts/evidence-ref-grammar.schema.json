@@ -10,7 +10,7 @@
     "abnf": {
       "type": "string",
       "description": "ABNF grammar for evidence references.",
-      "const": "evidence-ref    = source-id \"#\" json-pointer\nsource-id       = type \":\" instance\ntype            = ALPHA *( ALPHA / DIGIT / \"_\" / \"-\" )\ninstance        = 1*64( UNRESERVED / \":\" / \".\" / \"-\" / \"_\" )\njson-pointer    = *( \"/\" reference-token )\nreference-token = *( unescaped / escaped )\nescaped         = \"~\" ( \"0\" / \"1\" )\nunescaped       = %x00-22 / %x24-2E / %x30-7D / %x7F-10FFFF"
+      "const": "evidence-ref    = source-id \"#\" json-pointer\nsource-id       = type \":\" instance\ntype            = ALPHA *( ALPHA / DIGIT / \"_\" / \"-\" )\ninstance        = 1*64( UNRESERVED / \":\" / \".\" / \"-\" / \"_\" )\njson-pointer    = *( \"/\" reference-token )\nreference-token = *( unescaped / escaped )\nescaped         = \"~\" ( \"0\" / \"1\" )\nunescaped       = %x00-22 / %x24-2E / %x30-7D / %x7F-10FFFF\n; array index, RFC 6901 section 4\narray-index     = %x30 / ( %x31-39 *(%x30-39) )"
     },
     "source_id_pattern": {
       "type": "string",
@@ -29,8 +29,10 @@
         "There is no range syntax. A claim spanning multiple items carries one reference per item.",
         "Resolution is a total pure function: (evidence_set, ref) -> value or error. It never raises.",
         "A pointer resolving to an array longer than 20 elements is over_broad_citation: citing a whole collection is not evidence attribution.",
-        "'#' is excluded from the unescaped character set because a second '#' would be a second fragment separator; RFC 6901 requires it to be percent-encoded.",
-        "The escape order matters when decoding: '~1' must be replaced before '~0', so '~01' decodes to '~1' and not to '/1'."
+        "'#' is excluded from the unescaped character set because a second '#' would terminate the fragment under RFC 3986; RFC 6901 section 6 requires such a character to be percent-encoded, and a raw reference in this grammar must therefore not contain one.",
+        "The escape order matters when decoding: '~1' must be replaced before '~0', so '~01' decodes to '~1' and not to '/1'.",
+        "Array indices follow RFC 6901 section 4: the token MUST be '0', or digits without a leading '0' (ABNF array-index = %x30 / ( %x31-39 *(%x30-39) )). '01' and '007' are invalid, and the digits are ASCII only.",
+        "Any reference that is present on a claim must resolve, whatever the claim class. Only the requirement to carry a reference is class-scoped."
       ]
     }
   }

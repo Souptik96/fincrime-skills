@@ -189,7 +189,19 @@
             "properties": { "class": { "const": "recommendation" } },
             "required": ["class"]
           },
-          "then": { "required": ["evidence_refs"] }
+          "then": {
+            "required": ["evidence_refs"],
+            "anyOf": [
+              {
+                "required": ["evidence_refs"],
+                "properties": { "evidence_refs": { "minItems": 1 } }
+              },
+              {
+                "required": ["explains"],
+                "properties": { "explains": { "minItems": 1 } }
+              }
+            ]
+          }
         }
       ]
     },
@@ -211,8 +223,8 @@
     },
     "evidence_ref": {
       "type": "string",
-      "description": "RFC 6901 URI fragment: <source_id>#<json-pointer>. The '#' separator is required. The pointer is empty (whole item) or a sequence of '/'-prefixed reference tokens, URI-fragment-escaped per RFC 6901 section 3. See ADR-0004.",
-      "pattern": "^[A-Za-z][A-Za-z0-9_-]*:[A-Za-z0-9._:-]+#(/([^/~]|~[01])*)*$"
+      "description": "RFC 6901 URI fragment: <source_id>#<json-pointer>. The '#' separator is required. The pointer is empty (whole item) or a sequence of '/'-prefixed reference tokens, URI-fragment-escaped per RFC 6901 section 3. The pattern is identical to contracts/evidence-ref-grammar.schema.json and to EVIDENCE_REF_PATTERN_STR in fincrime_core.validate.evidence_refs; a contract test asserts the three are equal. See ADR-0004.",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*:[A-Za-z0-9._:-]{1,64}#(/([^/~#]|~[01])*)*$"
     },
     "evidence_item": {
       "type": "object",

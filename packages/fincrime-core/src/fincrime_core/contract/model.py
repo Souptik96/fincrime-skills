@@ -128,8 +128,29 @@ class Claim:
 
     @property
     def requires_evidence(self) -> bool:
-        """True for claim classes that cannot stand without an evidence reference."""
+        """True for claim classes that MUST carry at least one evidence reference.
+
+        This is a *mandate*: a fact, observation or indicator cannot stand
+        without a reference. It is not a statement about what happens to
+        references that are present on other classes.
+        """
         return self.class_ in ("fact", "observation", "indicator")
+
+    @property
+    def cites_evidence(self) -> bool:
+        """True when the claim carries at least one evidence reference."""
+        return bool(self.evidence_refs)
+
+    @property
+    def is_evidence_bearing(self) -> bool:
+        """True when the claim is subject to evidence-attribution checking.
+
+        A claim that carries references is always subject to it, whatever its
+        class. A fabricated reference on a risk assessment or a recommendation
+        is exactly the failure this project exists to prevent, and it must not
+        be able to hide behind a class that does not *mandate* evidence.
+        """
+        return self.requires_evidence or self.cites_evidence
 
     @property
     def is_hypothesis(self) -> bool:

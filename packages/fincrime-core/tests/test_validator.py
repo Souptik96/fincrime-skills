@@ -255,6 +255,123 @@ class TestOtherRules:
         assert "escalation_missed" in result.error_codes
 
 
+class TestNoClassCanHideAFabricatedReference:
+    """A reference that is present must resolve, whatever the claim class.
+
+    The review found that a risk assessment citing a fabricated transaction
+    validated clean, and that ``unsupported_claim_rate`` reported 0.0 for it,
+    because the lint only examined claims whose class *mandates* evidence.
+    The mandate and the check are now separate: the mandate is class-scoped,
+    the check is not.
+    """
+
+    @pytest.mark.parametrize(
+        "class_",
+        ["fact", "observation", "indicator", "risk_assessment", "recommendation", "hypothesis"],
+    )
+    def test_a_fabricated_reference_is_rejected_on_every_class(
+        self, evidence_set: dict, valid_artifact: dict, class_: str
+    ) -> None:
+        artifact = copy.deepcopy(valid_artifact)
+        artifact["claims"] = [
+            {
+                "id": "C-001",
+                "class": class_,
+                "statement": "A statement that cites a record which does not exist.",
+                "confidence": {"level": "moderate", "basis": "b"},
+                "evidence_refs": ["txn:FABRICATED#/amount"],
+                "epistemic_type": "benign_reading",
+                "falsifier": "f",
+            }
+        ]
+        result = make_validator(evidence_set).validate(artifact)
+        assert "unsupported_claim" in result.error_codes, class_
+        assert not result.valid
+
+    def test_the_metric_counts_a_fabricated_reference(
+        self, evidence_set: dict, valid_artifact: dict
+    ) -> None:
+        """The headline metric must not report a clean bill of health."""
+        artifact = copy.deepcopy(valid_artifact)
+        artifact["claims"] = [
+            {
+                "id": "C-001",
+                "class": "risk_assessment",
+                "statement": "High risk.",
+                "confidence": {"level": "moderate", "basis": "b"},
+                "evidence_refs": ["txn:FABRICATED#/amount"],
+            }
+        ]
+        result = make_validator(evidence_set).validate(artifact)
+        assert result.unsupported_claim_rate > 0.0
+        assert result.evidence_attribution_accuracy < 1.0
+
+    def test_a_resolvable_reference_on_a_non_mandating_class_is_fine(
+        self, evidence_set: dict, valid_artifact: dict
+    ) -> None:
+        """The fix must not over-reject: a real reference is still accepted."""
+        artifact = copy.deepcopy(valid_artifact)
+        artifact["claims"] = [
+            {
+                "id": "C-001",
+                "class": "risk_assessment",
+                "statement": "High risk.",
+                "confidence": {"level": "moderate", "basis": "b"},
+                "evidence_refs": ["txn:8841#/amount"],
+            }
+        ]
+        result = make_validator(evidence_set).validate(artifact)
+        assert "unsupported_claim" not in result.error_codes
+        assert result.evidence_attribution_accuracy == 1.0
+
+
+class TestRecommendationBasis:
+    def test_a_recommendation_with_no_basis_is_rejected(
+        self, evidence_set: dict, valid_artifact: dict
+    ) -> None:
+        artifact = copy.deepcopy(valid_artifact)
+        artifact["claims"] = [
+            {
+                "id": "C-001",
+                "class": "recommendation",
+                "statement": "A SAR should be filed immediately.",
+                "confidence": {"level": "low", "basis": "gut feeling"},
+                "evidence_refs": [],
+                "human_approval_required": True,
+            }
+        ]
+        result = make_validator(evidence_set).validate(artifact)
+        assert "recommendation_without_basis" in result.error_codes
+
+    def test_the_specific_code_replaces_the_generic_schema_error(
+        self, evidence_set: dict, valid_artifact: dict
+    ) -> None:
+        """A consumer keying on codes should see one actionable code, not two."""
+        artifact = copy.deepcopy(valid_artifact)
+        artifact["claims"] = [
+            {
+                "id": "C-001",
+                "class": "recommendation",
+                "statement": "A SAR should be filed immediately.",
+                "confidence": {"level": "low", "basis": "gut feeling"},
+                "evidence_refs": [],
+                "human_approval_required": True,
+            }
+        ]
+        result = make_validator(evidence_set).validate(artifact)
+        schema_errors = [d for d in result.errors if d.code == "schema_violation"]
+        assert schema_errors == [], [d.to_dict() for d in schema_errors]
+
+    def test_a_recommendation_may_anchor_to_a_claim(
+        self, evidence_set: dict, valid_artifact: dict
+    ) -> None:
+        artifact = copy.deepcopy(valid_artifact)
+        artifact["claims"][5]["evidence_refs"] = []
+        artifact["claims"][5]["explains"] = ["C-005"]
+        result = make_validator(evidence_set).validate(artifact)
+        assert "recommendation_without_basis" not in result.error_codes
+
+
 class TestTotality:
     @pytest.mark.parametrize(
         "artifact",

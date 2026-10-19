@@ -76,6 +76,10 @@ _EVIDENCE_REF_NAMED = re.compile(
 #: over-broad: citing "the whole transaction list" is not evidence attribution.
 MAX_CITED_COLLECTION_LENGTH = 20
 
+#: RFC 6901 section 4 array index: "0", or digits without a leading "0".
+#: ASCII only, per the normative ABNF ``array-index = %x30 / ( %x31-39 *(%x30-39) )``.
+_ARRAY_INDEX_PATTERN = re.compile(r"^(?:0|[1-9][0-9]*)$")
+
 
 class EvidenceRefError(ValueError):
     """Raised only by strict helpers. :func:`resolve` never raises."""
@@ -151,8 +155,19 @@ def _walk_pointer(document: Any, pointer: str) -> tuple[bool, Any, str | None]:
         elif isinstance(current, Sequence) and not isinstance(current, (str, bytes)):
             if token == "-":
                 return False, None, "array token '-' does not reference a value"
-            if not token.isdigit():
-                return False, None, f"array index {token!r} is not a non-negative integer"
+            # RFC 6901 section 4: "the reference token MUST contain either
+            # characters comprised of digits (see ABNF below; note that leading
+            # zeros are not allowed) that represent an unsigned base-10 integer
+            # value". The normative ABNF is
+            #     array-index = %x30 / ( %x31-39 *(%x30-39) )
+            # so "0" is valid, "01" and "007" are not, and the digits are
+            # ASCII only. str.isdigit() is not sufficient: it accepts
+            # non-ASCII decimal characters such as U+0661.
+            if not _ARRAY_INDEX_PATTERN.match(token):
+                return False, None, (
+                    f"array index {token!r} is not a valid RFC 6901 array index "
+                    "(leading zeros are not allowed)"
+                )
             index = int(token)
             if index >= len(current):
                 return False, None, f"array index {index} out of range"

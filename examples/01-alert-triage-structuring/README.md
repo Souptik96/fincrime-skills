@@ -49,7 +49,6 @@ Defects found:
   "confidence": { "level": "high", "basis": "Read directly from the transaction records." }
 }
 ```
-
 ```jsonc
 {
   "id": "C-002",
@@ -118,6 +117,12 @@ object:
    "here is what would change the answer".
 5. **No intent is asserted.** "Consistent with an indicator" is not the same
    claim as "structured to evade reporting", and only the first is supported.
+6. **A reference that does not resolve fails the artifact.** The claim classes
+   that *mandate* evidence are `fact`, `observation` and `indicator`. But a
+   reference that is *present* on **any** claim must resolve, whatever the
+   class. A risk assessment that cites a transaction that is not in the case
+   file is rejected — a fabricated reference cannot hide behind a class that
+   merely declines to require one.
 
 ## Reproducing it
 
