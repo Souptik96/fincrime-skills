@@ -1,0 +1,93 @@
+{
+  "evidence_set_version": "fincrime/evidence-set/1.0.0",
+  "alert": {
+    "alert_id": "9930",
+    "rule_id": "SC-TM-CASH-STRUCTURING",
+    "rule_name": "Cash structuring",
+    "triggered_at": "2026-03-12T00:00:00Z",
+    "window": { "from": "2026-03-01T00:00:00Z", "to": "2026-03-12T00:00:00Z" },
+    "subject_id": "5512"
+  },
+  "subject": {
+    "subject_id": "5512",
+    "type": "individual",
+    "risk_rating": "medium",
+    "segment": "small_business",
+    "onboarded_at": "2023-04-02",
+    "kyc_status": "current",
+    "declared_profile": {
+      "business": "Neighbourhood restaurant",
+      "expected_activity": "Daily card and cash takings",
+      "expected_monthly_volume": 42000,
+      "cash_intensity": "medium"
+    }
+  },
+  "transactions": [
+    {
+      "txn_id": "8841",
+      "ts": "2026-03-04T10:12:00Z",
+      "direction": "inbound",
+      "amount": 9400,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "acc-2210",
+      "branch_id": "BR-011"
+    },
+    {
+      "txn_id": "8842",
+      "ts": "2026-03-05T11:40:00Z",
+      "direction": "inbound",
+      "amount": 9700,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "acc-2210",
+      "branch_id": "BR-022"
+    },
+    {
+      "txn_id": "8843",
+      "ts": "2026-03-07T09:05:00Z",
+      "direction": "inbound",
+      "amount": 9600,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "acc-2210",
+      "branch_id": "BR-033"
+    }
+  ],
+  "policies": {
+    "policy_set_id": "firm-aml",
+    "policy_set_version": "7.2",
+    "jurisdictions": ["US"],
+    "scenarios": [
+      {
+        "rule_id": "SC-TM-CASH-STRUCTURING",
+        "name": "Cash structuring",
+        "question": "Does cash activity deviate from the expected profile in a way consistent with evasion of reporting thresholds?",
+        "severity": "high",
+        "min_window_coverage": 0.8
+      }
+    ],
+    "thresholds": [
+      {
+        "policy_id": "POL-STRUCT-THRESHOLD-PROXIMITY",
+        "name": "Currency transaction reporting threshold",
+        "value": 10000,
+        "currency": "USD",
+        "jurisdictions": ["US"],
+        "effective_from": "2020-01-01"
+      }
+    ]
+  },
+  "documents": [
+    {
+      "doc_id": "kYC-2291",
+      "kind": "kyc_docket",
+      "present": true,
+      "received_at": "2023-04-02",
+      "fields": {
+        "business_registration_number": "BR-8891",
+        "declared_business": "Neighbourhood restaurant"
+      }
+    }
+  ]
+}

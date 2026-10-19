@@ -1,0 +1,150 @@
+{
+  "contract_version": "fincrime/defect-taxonomy/1.0.0",
+  "severities": ["error", "warn", "info"],
+  "defects": [
+    {
+      "code": "unsupported_claim",
+      "name": "Unsupported claim",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "A fact, observation or indicator claim carries no evidence reference, or carries a reference that does not resolve against the evidence set.",
+      "remediation": "Supply at least one evidence reference that resolves to a specific value in the evidence set, or reclassify the claim as a hypothesis."
+    },
+    {
+      "code": "misclassified_claim",
+      "name": "Misclassified claim",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "A claim is of a class that does not match its content, or a hypothesis is missing a required field such as a falsifier or an epistemic type.",
+      "remediation": "Correct the claim class or supply the missing field."
+    },
+    {
+      "code": "missing_benign_reading",
+      "name": "Missing benign reading",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "An adverse_reading hypothesis is present with no benign_reading hypothesis to compete with it. An adverse reading may not stand alone.",
+      "remediation": "Add a benign_reading hypothesis and evaluate both readings against the available evidence."
+    },
+    {
+      "code": "missing_gap",
+      "name": "Missing evidence gap",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "The artifact relies on evidence that is absent from the evidence set without recording the gap.",
+      "remediation": "Record the absent evidence in the gaps list and lower the confidence of the affected claims."
+    },
+    {
+      "code": "overstated_confidence",
+      "name": "Overstated confidence",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "A claim states more confidence than the evidence supports, for example a high-confidence adverse reading while a decisive evidence gap is recorded, or a high-confidence claim against a partial evidence set.",
+      "remediation": "Lower the confidence level, or supply the evidence that would justify it."
+    },
+    {
+      "code": "contradiction_ignored",
+      "name": "Contradiction ignored",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "The evidence set contains a contradiction that the artifact does not surface.",
+      "remediation": "Record the contradiction and state its status as resolved, unresolved or unresolvable with current data."
+    },
+    {
+      "code": "recommendation_without_basis",
+      "name": "Recommendation without basis",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "A recommendation does not cite the evidence or hypothesis that motivates it.",
+      "remediation": "Cite the motivating evidence reference or hypothesis claim id."
+    },
+    {
+      "code": "provenance_gap",
+      "name": "Provenance gap",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "A decision claim is not attributable to a human or a deterministic policy, or the provenance block is incomplete.",
+      "remediation": "Supply decided_by naming a human or a policy id, and complete the provenance block."
+    },
+    {
+      "code": "escalation_missed",
+      "name": "Escalation missed",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "The artifact names no human decision, or a consequential recommendation declares that no human approval is required.",
+      "remediation": "Name the open human decision and its owner, and set human_approval_required on consequential recommendations."
+    },
+    {
+      "code": "jurisdiction_overreach",
+      "name": "Jurisdiction overreach",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "The artifact asserts a requirement or an outcome outside the jurisdiction scope it declares, or outside the jurisdiction of the skill.",
+      "remediation": "Scope the claim to a declared jurisdiction, or remove it."
+    },
+    {
+      "code": "missing_draft_notice",
+      "name": "Missing draft notice",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "An artifact that requires a safety notice does not carry it, or carries one that was not tool-generated.",
+      "remediation": "Apply the notice through the renderer so that it is tool-generated, and re-validate."
+    },
+    {
+      "code": "conflicting_draft_notice",
+      "name": "Conflicting draft notice",
+      "severity": "warn",
+      "enforcement": "heuristic",
+      "description": "The model-authored body contains text that conflicts with the tool-generated notice, for example a competing filing statement.",
+      "remediation": "Remove the conflicting text from the body. The tool-generated notice is authoritative."
+    },
+    {
+      "code": "unknown_indicator",
+      "name": "Unknown indicator",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "An indicator claim names an indicator id that is not present in the declared knowledge pack.",
+      "remediation": "Use an indicator id from the declared pack, or add the indicator to the pack through the promotion process."
+    },
+    {
+      "code": "expired_knowledge_citation",
+      "name": "Expired knowledge citation",
+      "severity": "warn",
+      "enforcement": "graded",
+      "description": "The artifact cites a knowledge record that has passed its expiry date. Severity is escalated to error when promoting new or modified content (ADR-0006).",
+      "remediation": "Refresh the knowledge record, or re-anchor the artifact to a current pack and disclose the staleness."
+    },
+    {
+      "code": "over_broad_citation",
+      "name": "Over-broad citation",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "An evidence reference resolves to a collection rather than to specific values. Citing a whole collection is not evidence attribution.",
+      "remediation": "Cite the specific items with one reference per item."
+    },
+    {
+      "code": "malformed_evidence_ref",
+      "name": "Malformed evidence reference",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "An evidence reference does not conform to the RFC 6901 grammar: the source id or the fragment separator is missing, or the pointer is malformed.",
+      "remediation": "Emit the reference as <source_id>#<json-pointer>."
+    },
+    {
+      "code": "schema_violation",
+      "name": "Schema violation",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "The artifact does not satisfy the Finding Contract schema.",
+      "remediation": "Correct the artifact so that it validates against the contract."
+    },
+    {
+      "code": "decisive_gap_unacknowledged",
+      "name": "Decisive gap unacknowledged",
+      "severity": "error",
+      "enforcement": "structural",
+      "description": "A decisive evidence gap is recorded but the artifact states a conclusion that the gap would preclude.",
+      "remediation": "State the conclusion as insufficient_information, or request the missing evidence."
+    }
+  ]
+}

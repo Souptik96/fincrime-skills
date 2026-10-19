@@ -1,0 +1,76 @@
+FinCrime Skills
+Copyright 2026 The FinCrime Skills Contributors
+
+This product includes software developed by the FinCrime Skills contributors.
+
+Licensing
+---------
+
+Code, contracts, and schemas
+    Apache License 2.0. See LICENSE.
+
+Knowledge packs and documentation
+    Creative Commons Attribution 4.0 International (CC BY 4.0).
+    https://creativecommons.org/licenses/by/4.0/
+
+    Knowledge records contain derived, paraphrased, dated, and cited
+    summaries of publicly published regulatory and typology material.
+    No third-party regulatory text is reproduced verbatim. Each record
+    names its sources in its `sources` field.
+
+Synthetic datasets
+    CC0 1.0 Universal (public domain dedication).
+    All data is generated from a recorded seed. No real personal or
+    financial data is used, and no ingestion path from customer data
+    exists in this repository.
+
+Third-party projects referenced
+-------------------------------
+
+The following projects were consulted during design. No code or data from
+them is vendored into this repository. They are listed so that a reviewer can
+independently check the design decisions they informed.
+
+Project                     Licence              Use
+-------------------------  -------------------  -----------------------------------
+Anthropic Agent Skills      See per-skill         Container format for `skills/`.
+                            licences
+Model Context Protocol      MIT                  Adapter surface (v1.1, optional).
+Open Policy Agent           Apache-2.0            Target format for the policy
+                                                 export; not a runtime dependency.
+IBM/AMLSim                  Apache-2.0            Reference for synthetic
+                                                 transaction realism. Not vendored.
+IBM/AML-Data                CDLA-Sharing-1.0      Reference for data shape. Not
+                                                 vendored.
+promptfoo                  MIT                   Reference for skill evaluation
+                                                 methodology. Not a dependency.
+microsoft/waza              MIT                  Reference for skill evaluation
+                                                 mechanics. Not a dependency; the
+                                                 evaluation harness is built
+                                                 natively (ADR-0005).
+jsonschema                  MIT                  Dev-only reference implementation
+                                                 used by the schema parity check.
+                                                 Not a runtime dependency.
+
+Standards referenced
+--------------------
+
+RFC 6901 (JSON Pointer)                 The evidence-reference grammar.
+RFC 6901 section 3 (escaping)            Token escape order: `~0` then `~1`.
+RFC 8259 (JSON)                         Canonical serialisation.
+JSON Schema Draft 2020-12               The contract schema dialect.
+
+Public regulatory sources
+-------------------------
+
+Citations for every knowledge record live in that record's `sources` field
+and are not duplicated here. The sources consulted during design included
+FinCEN advisories and alerts, the FinCEN SAR Filing Instructions and SAR
+Narrative Completion Guidance, FATF's 40 Recommendations and risk-based
+approach guidance, the US Treasury National Money Laundering Risk Assessment,
+the HKMA circular on AI in financial crime, the FCA Financial Crime Guide, and
+PRA SS1/23.
+
+This project is not affiliated with, endorsed by, or sponsored by any of the
+above bodies. It is not a compliance service and provides no regulatory
+assurance.

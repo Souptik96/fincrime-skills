@@ -1,0 +1,18 @@
+# Default ownership
+* @fincrime-maintainers
+
+# The contracts are the product. Changes here need two maintainers.
+/contracts/           @fincrime-maintainers
+/packages/fincrime-core/ @fincrime-maintainers
+
+# Domain-owned content. A domain maintainer is a compliance or financial-crime
+# practitioner, not only an engineer.
+/knowledge/           @fincrime-maintainers
+/skills/              @fincrime-maintainers
+
+# Evaluation and reporting.
+/evals/               @fincrime-maintainers
+
+# CI and security configuration.
+/.github/              @fincrime-maintainers
+/scripts/             @fincrime-maintainers

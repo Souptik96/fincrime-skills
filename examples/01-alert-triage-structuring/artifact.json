@@ -1,0 +1,174 @@
+{
+  "contract_version": "fincrime/finding/1.0.0",
+  "artifact": {
+    "skill_id": "alert-triage",
+    "skill_version": "1.0.0",
+    "artifact_type": "triage_report",
+    "subject_ids": ["5512"],
+    "jurisdictions": ["US"],
+    "created_at": "2026-03-13T09:00:00Z",
+    "completeness": "partial",
+    "scope_note": "Transaction window coverage is 3 of 12 calendar days; the decisive evidence for the benign reading is absent."
+  },
+  "provenance": {
+    "skill_id": "alert-triage",
+    "skill_version": "1.0.0",
+    "model": {
+      "provider": "example",
+      "id": "example-model-1",
+      "temperature": 0,
+      "seed": 42
+    },
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "evidence_set_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "knowledge_pack": {
+      "id": "fincrime-knowledge",
+      "version": "core-2026-10",
+      "as_of": "2026-10-01"
+    },
+    "policy_set": { "id": "firm-aml", "version": "7.2" },
+    "run_id": "run-example-001",
+    "timestamp": "2026-03-13T09:00:00Z"
+  },
+  "claims": [
+    {
+      "id": "C-001",
+      "class": "fact",
+      "statement": "Three cash deposits totalling $28,700 were made between 2026-03-04 and 2026-03-07, at three different branches.",
+      "evidence_refs": ["txn:8841#/amount", "txn:8842#/amount", "txn:8843#/amount"],
+      "confidence": {
+        "level": "high",
+        "basis": "Read directly from the transaction records in the supplied evidence set."
+      }
+    },
+    {
+      "id": "C-002",
+      "class": "observation",
+      "statement": "Each deposit is between $9,400 and $9,700, below the $10,000 currency transaction reporting threshold recorded in the policy set.",
+      "evidence_refs": ["txn:8841#/amount", "txn:8842#/amount", "txn:8843#/amount"],
+      "policy_ids": ["POL-STRUCT-THRESHOLD-PROXIMITY"],
+      "confidence": {
+        "level": "high",
+        "basis": "Comparison of the recorded amounts against the threshold value in the supplied policy set."
+      }
+    },
+    {
+      "id": "C-003",
+      "class": "indicator",
+      "statement": "Cash deposits cluster immediately below the currency transaction reporting threshold, across dispersed branches.",
+      "evidence_refs": ["txn:8841#/amount", "txn:8842#/amount", "txn:8843#/amount"],
+      "indicator_ids": ["IND-STRUCT-THRESHOLD-PROXIMITY"],
+      "policy_ids": ["POL-STRUCT-THRESHOLD-PROXIMITY"],
+      "confidence": {
+        "level": "moderate",
+        "basis": "Threshold proximity is measured directly; the pattern's significance is not established."
+      }
+    },
+    {
+      "id": "C-004",
+      "class": "hypothesis",
+      "epistemic_type": "adverse_reading",
+      "statement": "The cash activity may be structured to avoid the reporting threshold.",
+      "evidence_refs": ["txn:8841#/amount"],
+      "falsifier": "Payroll or point-of-sale settlement records showing the cash as genuine revenue.",
+      "confidence": {
+        "level": "low",
+        "basis": "The decisive corroborating evidence is absent from the evidence set.",
+        "would_be_raised_by": ["payroll_records", "point_of_sale_settlement_records"]
+      }
+    },
+    {
+      "id": "C-005",
+      "class": "hypothesis",
+      "epistemic_type": "benign_reading",
+      "statement": "The cash activity may be ordinary revenue for a cash-intensive business.",
+      "evidence_refs": ["txn:8841#/amount", "subject:5512#/declared_profile/cash_intensity"],
+      "falsifier": "Absence of payroll or point-of-sale settlement records supporting the declared business.",
+      "confidence": {
+        "level": "low",
+        "basis": "The subject's declared cash intensity is recorded, but the supporting records are absent.",
+        "would_be_raised_by": ["payroll_records", "point_of_sale_settlement_records"]
+      }
+    },
+    {
+      "id": "C-006",
+      "class": "risk_assessment",
+      "statement": "Threshold proximity is high and branch dispersion is present. The evidence that would distinguish the two readings is not in the case file, so the pattern is consistent with a structuring indicator and equally consistent with unremarkable cash revenue.",
+      "evidence_refs": ["txn:8841#/amount", "txn:8842#/amount", "txn:8843#/amount"],
+      "confidence": {
+        "level": "low",
+        "basis": "One side of the hypothesis pair is evidenced and the other is not."
+      }
+    },
+    {
+      "id": "C-007",
+      "class": "recommendation",
+      "statement": "Request source-of-funds documentation and six months of point-of-sale settlement records, and re-triage on receipt.",
+      "evidence_refs": ["txn:8841#/amount"],
+      "human_approval_required": true,
+      "confidence": {
+        "level": "moderate",
+        "basis": "Follows the documented evidence request catalogue for this scenario."
+      }
+    }
+  ],
+  "evidence_inventory": [
+    {
+      "source_id": "txn:8841",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of $9,400 at BR-011 on 2026-03-04.",
+      "decisive": true
+    },
+    {
+      "source_id": "txn:8842",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of $9,700 at BR-022 on 2026-03-05."
+    },
+    {
+      "source_id": "txn:8843",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of $9,600 at BR-033 on 2026-03-07."
+    },
+    {
+      "source_id": "subject:5512",
+      "kind": "subject",
+      "present": true,
+      "summary": "Individual, small-business segment, declared cash-intensive restaurant."
+    },
+    {
+      "source_id": "doc:kYC-2291",
+      "kind": "document",
+      "present": true,
+      "summary": "KYC docket recording the business registration and the declared business."
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "G-01",
+      "description": "Payroll records and point-of-sale settlement records supporting the declared business are absent from the case file.",
+      "decisive": true,
+      "blocks_conclusion": true,
+      "request_ref": "REQ-SOF-001"
+    },
+    {
+      "gap_id": "G-02",
+      "description": "Transactions for 9 of the 12 days in the alert window are not in the supplied evidence set.",
+      "decisive": false,
+      "blocks_conclusion": false
+    }
+  ],
+  "human_decision_required": [
+    {
+      "decision_id": "D-01",
+      "question": "Whether to escalate this alert to a level 2 investigator, or to await the requested records and re-triage.",
+      "owner_role": "AML Level 1 Investigator",
+      "would_change_if": [
+        "Receipt of point-of-sale settlement records consistent with the declared business, which would support the benign reading.",
+        "Receipt of records showing the deposits are unrelated to the declared business, which would strengthen the adverse reading."
+      ]
+    }
+  ]
+}

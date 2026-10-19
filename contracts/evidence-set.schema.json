@@ -1,0 +1,259 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/evidence-set/1.0.0",
+  "title": "FinCrime Evidence Set",
+  "description": "The input contract. An evidence set is the closed world an agent may reference. Anything not present here cannot be cited. See ADR-0004 for the evidence reference grammar.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["evidence_set_version", "alert", "subject", "transactions", "policies"],
+  "properties": {
+    "evidence_set_version": { "const": "fincrime/evidence-set/1.0.0" },
+    "alert": { "$ref": "#/$defs/alert" },
+    "subject": { "$ref": "#/$defs/subject" },
+    "transactions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/transaction" }
+    },
+    "policies": { "$ref": "#/$defs/policies" },
+    "documents": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/document" }
+    },
+    "watchlist_records": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/watchlist_record" }
+    },
+    "prior_findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/prior_finding" }
+    },
+    "entities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entity" }
+    }
+  },
+  "$defs": {
+    "alert": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alert_id", "rule_id", "triggered_at", "window", "subject_id"],
+      "properties": {
+        "alert_id": { "type": "string", "minLength": 3 },
+        "rule_id": { "type": "string", "minLength": 1 },
+        "rule_name": { "type": "string" },
+        "triggered_at": { "type": "string", "minLength": 1 },
+        "window": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["from", "to"],
+          "properties": {
+            "from": { "type": "string", "minLength": 1 },
+            "to": { "type": "string", "minLength": 1 }
+          }
+        },
+        "subject_id": { "type": "string", "minLength": 1 },
+        "risk_score": { "type": ["number", "null"] },
+        "scenario_ref": { "type": "string" }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["subject_id", "type"],
+      "properties": {
+        "subject_id": { "type": "string", "minLength": 1 },
+        "type": { "enum": ["individual", "entity"] },
+        "risk_rating": { "type": "string" },
+        "segment": { "type": "string" },
+        "onboarded_at": { "type": "string" },
+        "kyc_status": { "type": "string" },
+        "declared_profile": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "occupation": { "type": "string" },
+            "business": { "type": "string" },
+            "expected_activity": { "type": "string" },
+            "expected_monthly_volume": { "type": ["number", "null"] },
+            "cash_intensity": { "enum": ["none", "low", "medium", "high"] },
+            "countries_of_operation": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        },
+        "prior_alerts": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "transaction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["txn_id", "ts", "direction", "amount", "currency", "channel"],
+      "properties": {
+        "txn_id": { "type": "string", "minLength": 3 },
+        "ts": { "type": "string", "minLength": 1 },
+        "direction": { "enum": ["inbound", "outbound"] },
+        "amount": { "type": "number" },
+        "currency": { "type": "string", "minLength": 3 },
+        "channel": {
+          "enum": ["cash", "wire", "ach", "card", "cheque", "crypto", "internal", "other"]
+        },
+        "instrument": { "type": "string" },
+        "account_id": { "type": "string" },
+        "counterparty": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "country": { "type": "string" },
+            "type": { "type": "string" },
+            "account_id": { "type": "string" }
+          }
+        },
+        "country": { "type": "string" },
+        "device_id": { "type": "string" },
+        "branch_id": { "type": "string" }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["policy_set_id", "policy_set_version", "scenarios", "thresholds"],
+      "properties": {
+        "policy_set_id": { "type": "string", "minLength": 1 },
+        "policy_set_version": { "type": "string", "minLength": 1 },
+        "jurisdictions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "scenarios": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["rule_id", "name"],
+            "properties": {
+              "rule_id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "question": { "type": "string" },
+              "severity": { "enum": ["low", "medium", "high"] },
+              "min_window_coverage": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        },
+        "thresholds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["policy_id", "name", "value"],
+            "properties": {
+              "policy_id": { "type": "string", "pattern": "^POL-[A-Z0-9-]+$" },
+              "name": { "type": "string", "minLength": 1 },
+              "value": { "type": "number" },
+              "currency": { "type": "string" },
+              "jurisdictions": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "effective_from": { "type": "string" }
+            }
+          }
+        },
+        "independent_escalation_threshold": { "type": "string" }
+      }
+    },
+    "document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["doc_id", "kind", "present"],
+      "properties": {
+        "doc_id": { "type": "string", "minLength": 3 },
+        "kind": {
+          "enum": [
+            "kyc_docket",
+            "source_of_funds",
+            "source_of_wealth",
+            "payroll_record",
+            "invoice",
+            "bank_statement",
+            "business_registration",
+            "other"
+          ]
+        },
+        "present": { "type": "boolean" },
+        "received_at": { "type": "string" },
+        "fields": { "type": "object" }
+      }
+    },
+    "watchlist_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry_id", "list_name", "list_version", "name"],
+      "description": "A watchlist record supplied as data. The skill must never consult model memory of any list.",
+      "properties": {
+        "entry_id": { "type": "string", "minLength": 1 },
+        "list_name": { "type": "string", "minLength": 1 },
+        "list_version": { "type": "string", "minLength": 1 },
+        "list_effective_date": { "type": "string" },
+        "name": { "type": "string", "minLength": 1 },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "dob": { "type": "string" },
+        "place_of_birth": { "type": "string" },
+        "nationality": { "type": "string" },
+        "address": { "type": "string" },
+        "registration_number": { "type": "string" },
+        "id_type": { "type": "string" },
+        "program": { "type": "string" },
+        "entry_date": { "type": "string" }
+      }
+    },
+    "prior_finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["finding_id", "type"],
+      "properties": {
+        "finding_id": { "type": "string", "minLength": 3 },
+        "type": {
+          "enum": ["alert", "case", "sar", "str", "escalation", "disposition"]
+        },
+        "disposition": { "type": "string" },
+        "closed_reason": { "type": "string" },
+        "filed_at": { "type": "string" }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entity_id", "name", "entity_type"],
+      "properties": {
+        "entity_id": { "type": "string", "minLength": 3 },
+        "name": { "type": "string", "minLength": 1 },
+        "entity_type": {
+          "enum": ["individual", "company", "partnership", "trust", "spv", "other"]
+        },
+        "jurisdiction": { "type": "string" },
+        "registration_number": { "type": "string" },
+        "ownership": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["owner_id", "share"],
+            "properties": {
+              "owner_id": { "type": "string", "minLength": 1 },
+              "share": { "type": "number", "minimum": 0, "maximum": 1 },
+              "control": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

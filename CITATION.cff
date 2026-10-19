@@ -1,0 +1,37 @@
+cff-version: 1.2.0
+message: "If you use the FinCrime Skills contracts, validator, or evaluation harness in your work, please cite it as below."
+title: "FinCrime Skills: an evidence-contract capability layer for financial-crime AI agents"
+abstract: >-
+  FinCrime Skills is an open capability layer for AI agents operating in
+  financial-crime environments. Its core artefact is the Evidence-Linked
+  Finding: a structured contract in which every output claim is typed and
+  bound to a specific, resolvable value in the supplied evidence. The project
+  ships the normative contracts, a dependency-free deterministic validator, a
+  native evaluation harness with no-skill baselines, and dated, cited,
+  jurisdiction-scoped knowledge records. It provides risk reduction and
+  evidence discipline; it does not provide regulatory assurance and makes no
+  customer-facing decision.
+type: software
+version: 0.1.0
+date-released: "2026-10-19"
+license: Apache-2.0
+license-url: "https://www.apache.org/licenses/LICENSE-2.0"
+repository-code: "https://github.com/fincrime/fincrime-skills"
+url: "https://github.com/fincrime/fincrime-skills"
+keywords:
+  - aml
+  - financial-crime
+  - kyc
+  - sanctions
+  - agent-skills
+  - audit
+  - evidence
+  - hallucination
+  - model-risk
+authors:
+  - name: "The FinCrime Skills Contributors"
+references:
+  - type: standard
+    title: "FinCrime Finding Contract, version 1.0.0"
+    url: "https://github.com/fincrime/fincrime-skills/blob/main/contracts/finding.schema.json"
+    notes: "The normative output contract. Apache-2.0."

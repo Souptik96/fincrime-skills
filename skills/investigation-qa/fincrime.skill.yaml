@@ -1,0 +1,165 @@
+apiVersion: fincrime.dev/v1
+kind: FinCrimeSkill
+
+metadata:
+  name: investigation-qa
+  version: 1.0.0
+  status: draft
+  owners:
+    - "@fincrime-maintainers"
+  license: Apache-2.0
+  jurisdiction_scope:
+    - US
+  created: "2026-10-19"
+  contract_version: fincrime/finding/1.0.0
+  knowledge_pack: core-2026-10
+  related_skills: alert-triage,case-summarize,sar-narrative-draft,evidence-request
+
+spec:
+  purpose: >-
+    Review a financial-crime investigation artifact and return a structured defect
+    list identifying unsupported claims, epistemically conflated statements,
+    missing benign alternatives, unrecorded gaps, overstated confidence and
+    absent safety notices. Produces a QA result with per-defect remediation.
+    Never rewrites the artifact and never reaches a disposition.
+
+  inputs:
+    required:
+      - name: artifact
+        description: The finding document under review, conforming to fincrime/finding/1.0.0.
+        schema_ref: "contracts/finding.schema.json"
+      - name: evidence_set
+        description: The closed world the artifact was produced against. Without it, evidence attribution cannot be checked.
+        schema_ref: "contracts/evidence-set.schema.json"
+    optional:
+      - name: knowledge_index
+        description: The knowledge pack the artifact declared, used to check that cited records exist and are not expired.
+      - name: policy_rules
+        description: The firm's deterministic rules, used to check enforceable controls.
+      - name: expected
+        description: Case expectations, when the artifact is being scored rather than reviewed.
+
+  preconditions:
+    - id: PC-1
+      check: "the artifact is a well-formed finding document"
+      on_fail: stop
+      message: "The artifact cannot be reviewed because it is not structured. Report the schema violations."
+    - id: PC-2
+      check: "an evidence set is supplied"
+      on_fail: stop
+      message: "Evidence attribution cannot be checked without the evidence set."
+    - id: PC-3
+      check: "the declared knowledge pack is resolvable"
+      on_fail: annotate
+      message: "Indicator and record existence cannot be verified; disclose it."
+
+  procedure:
+    - stage: S0
+      name: frame
+      produces: [frame]
+      requires: []
+    - stage: S1
+      name: ground
+      produces: [evidence_inventory, gaps]
+      requires: []
+      guard: POL-EVIDENCE-INVENTORY-FIRST
+      on_violation: stop
+    - stage: S2
+      name: extract
+      produces: [observation]
+      requires: [evidence_inventory]
+      guard: POL-INDICATOR-REQUIRES-INDICATOR-ID
+      on_violation: annotate
+    - stage: S3
+      name: hypothesize
+      produces: [hypothesis]
+      requires: [claim_set]
+      guard: POL-BENIGN-HYPOTHESIS-REQUIRED
+      on_violation: stop
+    - stage: S4
+      name: contrast
+      produces: [contradiction]
+      requires: [claim_set]
+    - stage: S5
+      name: assess
+      produces: [risk_assessment]
+      requires: [gap_list]
+      guard: POL-ASSESSMENT-NEEDS-INDICATOR
+    - stage: S6
+      name: recommend
+      produces: [recommendation]
+      requires: [defect_list]
+      guard: POL-RECOMMENDATION-NEEDS-BASIS
+    - stage: S7
+      name: escalate
+      produces: [escalation]
+      requires: [defect_list]
+
+  output:
+    format: fincrime/finding/1.0.0
+    artifact: qa_result
+    required_claims:
+      - frame
+      - evidence_inventory
+      - gaps
+      - observation
+      - hypothesis
+      - risk_assessment
+      - recommendation
+      - escalation
+    optional_claims:
+      - contradiction
+      - indicator
+    prohibited_claims:
+      - decision
+    min_hypotheses: 0
+    require_benign_hypothesis: false
+    confidence:
+      levels:
+        - high
+        - moderate
+        - low
+        - insufficient_information
+      default_ceiling: high
+
+  policies:
+    required:
+      - POL-EVIDENCE-INVENTORY-FIRST
+      - POL-INDICATOR-REQUIRES-INDICATOR-ID
+      - POL-BENIGN-HYPOTHESIS-REQUIRED
+      - POL-ASSESSMENT-NEEDS-INDICATOR
+      - POL-RECOMMENDATION-NEEDS-BASIS
+      - POL-NO-CRIMINALITY-CLAIMS
+    optional:
+      - POL-CONFIDENCE-CEILING-ON-PARTIAL-EVIDENCE
+
+  knowledge:
+    indicators: []
+    scenarios: []
+    typologies: []
+    regulatory: []
+
+  evaluation:
+    suite: evals/suites/investigation-qa
+    case_count_min: 60
+    gates:
+      schema_validity: 1.0
+      evidence_attribution_accuracy: 0.98
+      unsupported_claim_rate_max: 0.02
+      required_field_compliance: 1.0
+      policy_pass_rate: 1.0
+      expected_defect_recall: 0.9
+      false_defect_rate_max: 0.05
+
+  safety:
+    human_approval_required:
+      - decision
+      - escalation
+    prohibited_actions:
+      - customer_action
+      - filing
+      - legal_conclusion
+      - numeric_risk_rating
+      - artifact_rewrite
+    closed_world: true
+    pii_policy: reference_only

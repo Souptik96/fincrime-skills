@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/knowledge-record/1.0.0",
+  "title": "FinCrime Knowledge Record",
+  "description": "A single dated, cited, jurisdiction-scoped knowledge record. Records are the substrate for indicators, typologies, regulatory mappings, request-catalogue entries and scenarios. Packs are immutable once published; a correction is a new pack. See ADR-0006.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "pack",
+    "version",
+    "title",
+    "definition",
+    "jurisdictions",
+    "sources",
+    "as_of",
+    "review_by",
+    "expires_at",
+    "status",
+    "maintainer"
+  ],
+  "properties": {
+    "id": { "type": "string", "pattern": "^(IND|TYP|REG|REQ|SC)-[A-Z0-9-]+$" },
+    "type": { "enum": ["indicator", "typology", "regulatory", "request", "scenario"] },
+    "pack": { "type": "string", "minLength": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "title": { "type": "string", "minLength": 1 },
+    "definition": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Derived and paraphrased. Verbatim regulatory text is not permitted."
+    },
+    "typology_refs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "behavioral_attributes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Behavioural attributes an indicator may be defined over."
+    },
+    "prohibited_attributes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": [
+          "nationality",
+          "ethnicity",
+          "age_band",
+          "religion",
+          "disability",
+          "political_opinion",
+          "sex",
+          "gender",
+          "immigration_status",
+          "language"
+        ]
+      },
+      "description": "The bias control. An indicator may not be defined over a protected or proxy-protected attribute. Enforced at pack validation time."
+    },
+    "evidence_to_cite": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "benign_explanations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 },
+      "description": "The source material for the benign-hypothesis rule and for the benign population used to measure false-positive rate. Required for indicators."
+    },
+    "jurisdictions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 2 },
+      "description": "A 'global' or empty jurisdiction list is invalid. Regulatory content is never jurisdiction-agnostic."
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["citation"],
+        "properties": {
+          "citation": { "type": "string", "minLength": 1 },
+          "url": { "type": "string" },
+          "retrieved": { "type": "string" }
+        }
+      }
+    },
+    "as_of": { "type": "string", "minLength": 1 },
+    "effective_from": { "type": "string" },
+    "review_by": { "type": "string", "minLength": 1 },
+    "expires_at": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["active", "draft", "superseded", "withdrawn", "expired"] },
+    "supersedes": { "type": "string" },
+    "maintainer": { "type": "string", "minLength": 1 },
+    "confidence": { "enum": ["high", "moderate", "low"] },
+    "notes": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "indicator" } }, "required": ["type"] },
+      "then": { "required": ["benign_explanations", "prohibited_attributes"] }
+    }
+  ]
+}

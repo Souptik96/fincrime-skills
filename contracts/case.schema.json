@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/case/1.0.0",
+  "title": "FinCrime Evaluation Case",
+  "description": "The unit of evaluation. A case is an input plus discriminating expectations. A case that asserts only 'some output' is rejected: the suite loader enforces that every case carries at least one negative expectation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["case_id", "suite", "version", "kind", "input", "expect"],
+  "properties": {
+    "case_id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "suite": { "type": "string", "minLength": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "kind": {
+      "enum": [
+        "golden",
+        "adversarial",
+        "edge",
+        "missing_data",
+        "contradictory",
+        "benign",
+        "multijurisdiction"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "jurisdictions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "input": {
+      "type": "object",
+      "description": "The evidence set, inline or by reference to a dataset manifest.",
+      "required": [],
+      "properties": {
+        "inline": { "type": "object" },
+        "dataset_ref": { "type": "string" }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_claim_classes", "forbidden_claim_classes"],
+      "properties": {
+        "required_claim_classes": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "forbidden_claim_classes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "min_hypotheses": { "type": "integer", "minimum": 0 },
+        "require_benign_hypothesis": { "type": "boolean" },
+        "expected_indicators": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "forbidden_indicators": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "expected_escalation": { "type": "boolean" },
+        "expected_gaps": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "expected_contradictions": { "type": "integer", "minimum": 0 },
+        "expected_confidence_max": {
+          "enum": ["high", "moderate", "low", "insufficient_information"]
+        },
+        "expected_confidence_min": {
+          "enum": ["high", "moderate", "low", "insufficient_information"]
+        },
+        "forbidden_strings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "required_strings": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "human_approval_required": { "type": "boolean" },
+        "notes": { "type": "string" }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

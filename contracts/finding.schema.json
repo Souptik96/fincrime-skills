@@ -1,0 +1,392 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/finding/1.0.0",
+  "title": "FinCrime Finding Contract",
+  "description": "The canonical output artifact of every FinCrime Skill. A claim of class fact, observation or indicator cannot validate without at least one resolvable evidence reference; a decision cannot validate without decided_by. An artifact that fails validation is structurally a non-finding. See ADR-0001.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "artifact",
+    "provenance",
+    "claims",
+    "human_decision_required"
+  ],
+  "properties": {
+    "contract_version": { "const": "fincrime/finding/1.0.0" },
+    "artifact": { "$ref": "#/$defs/artifact" },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    },
+    "evidence_inventory": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidence_item" }
+    },
+    "gaps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gap" }
+    },
+    "contradictions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contradiction" }
+    },
+    "timeline": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/timeline_entry" }
+    },
+    "human_decision_required": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/decision_request" }
+    },
+    "draft_notice": { "$ref": "#/$defs/draft_notice" },
+    "validation": { "$ref": "#/$defs/validation_block" }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skill_id",
+        "skill_version",
+        "artifact_type",
+        "subject_ids",
+        "jurisdictions",
+        "created_at",
+        "completeness"
+      ],
+      "properties": {
+        "skill_id": { "type": "string", "minLength": 1 },
+        "skill_version": { "type": "string", "minLength": 1 },
+        "artifact_type": {
+          "enum": [
+            "triage_report",
+            "case_summary",
+            "sar_narrative",
+            "evidence_request_plan",
+            "qa_result",
+            "sanctions_assessment"
+          ]
+        },
+        "subject_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "jurisdictions": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 2 }
+        },
+        "created_at": { "type": "string", "format": "date-time" },
+        "completeness": { "enum": ["complete", "partial", "insufficient"] },
+        "scope_note": { "type": "string" },
+        "knowledge_stale": { "type": "boolean" }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "class", "statement", "confidence"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^C-[0-9]{3,}$" },
+        "class": {
+          "enum": [
+            "fact",
+            "observation",
+            "indicator",
+            "hypothesis",
+            "risk_assessment",
+            "recommendation",
+            "decision"
+          ]
+        },
+        "statement": { "type": "string", "minLength": 1 },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence_ref" }
+        },
+        "indicator_ids": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^IND-[A-Z0-9-]+$" }
+        },
+        "policy_ids": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^POL-[A-Z0-9-]+$" }
+        },
+        "knowledge_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "jurisdictions": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 2 }
+        },
+        "confidence": { "$ref": "#/$defs/confidence" },
+        "epistemic_type": {
+          "enum": ["benign_reading", "adverse_reading", "data_gap", "other"]
+        },
+        "falsifier": { "type": "string", "minLength": 1 },
+        "competing_with": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^C-[0-9]{3,}$" }
+        },
+        "decided_by": { "type": "string", "minLength": 1 },
+        "human_approval_required": { "type": "boolean" },
+        "explains": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^C-[0-9]{3,}$" }
+        },
+        "carried_forward_from": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "class": { "enum": ["fact", "observation", "indicator"] } },
+            "required": ["class"]
+          },
+          "then": {
+            "required": ["evidence_refs"],
+            "properties": { "evidence_refs": { "minItems": 1 } }
+          }
+        },
+        {
+          "if": {
+            "properties": { "class": { "const": "indicator" } },
+            "required": ["class"]
+          },
+          "then": {
+            "required": ["indicator_ids"],
+            "properties": { "indicator_ids": { "minItems": 1 } }
+          }
+        },
+        {
+          "if": {
+            "properties": { "class": { "const": "hypothesis" } },
+            "required": ["class"]
+          },
+          "then": {
+            "required": ["falsifier", "epistemic_type"]
+          }
+        },
+        {
+          "if": {
+            "properties": { "class": { "const": "decision" } },
+            "required": ["class"]
+          },
+          "then": { "required": ["decided_by"] }
+        },
+        {
+          "if": {
+            "properties": { "class": { "const": "risk_assessment" } },
+            "required": ["class"]
+          },
+          "then": { "required": ["evidence_refs", "confidence"] }
+        },
+        {
+          "if": {
+            "properties": { "class": { "const": "recommendation" } },
+            "required": ["class"]
+          },
+          "then": { "required": ["evidence_refs"] }
+        }
+      ]
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "basis"],
+      "properties": {
+        "level": {
+          "enum": ["high", "moderate", "low", "insufficient_information"]
+        },
+        "basis": { "type": "string", "minLength": 1 },
+        "would_be_raised_by": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "ceiling": { "enum": ["high", "moderate", "low"] }
+      }
+    },
+    "evidence_ref": {
+      "type": "string",
+      "description": "RFC 6901 URI fragment: <source_id>#<json-pointer>. The '#' separator is required. The pointer is empty (whole item) or a sequence of '/'-prefixed reference tokens, URI-fragment-escaped per RFC 6901 section 3. See ADR-0004.",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*:[A-Za-z0-9._:-]+#(/([^/~]|~[01])*)*$"
+    },
+    "evidence_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_id", "kind", "present"],
+      "properties": {
+        "source_id": { "type": "string", "minLength": 3 },
+        "kind": {
+          "enum": [
+            "transaction",
+            "account",
+            "subject",
+            "entity",
+            "alert",
+            "document",
+            "policy",
+            "watchlist_record",
+            "prior_finding"
+          ]
+        },
+        "present": { "type": "boolean" },
+        "summary": { "type": "string" },
+        "decisive": { "type": "boolean" },
+        "note": { "type": "string" }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["gap_id", "description", "decisive"],
+      "properties": {
+        "gap_id": { "type": "string", "pattern": "^G-[0-9]{2,}$" },
+        "description": { "type": "string", "minLength": 1 },
+        "decisive": { "type": "boolean" },
+        "blocks_conclusion": { "type": "boolean" },
+        "request_ref": { "type": "string" }
+      }
+    },
+    "contradiction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contradiction_id", "description", "status"],
+      "properties": {
+        "contradiction_id": { "type": "string", "pattern": "^X-[0-9]{2,}$" },
+        "description": { "type": "string", "minLength": 1 },
+        "status": { "enum": ["resolved", "unresolved", "unresolvable_with_current_data"] },
+        "claim_refs": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^C-[0-9]{3,}$" }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/evidence_ref" }
+        }
+      }
+    },
+    "timeline_entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timestamp", "description", "evidence_refs"],
+      "properties": {
+        "timestamp": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "evidence_refs": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/evidence_ref" }
+        }
+      }
+    },
+    "decision_request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision_id", "question", "owner_role"],
+      "properties": {
+        "decision_id": { "type": "string", "pattern": "^D-[0-9]{2,}$" },
+        "question": { "type": "string", "minLength": 1 },
+        "owner_role": { "type": "string", "minLength": 1 },
+        "would_change_if": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "draft_notice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text", "tool_generated"],
+      "description": "Tool-generated safety notice. The model never authors this field; the renderer sets it. See ADR-0009.",
+      "properties": {
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Canonical notice text. For sar_narrative artifacts this must equal the canonical non-filing notice exactly."
+        },
+        "tool_generated": { "const": true }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "skill_id",
+        "skill_version",
+        "model",
+        "prompt_sha256",
+        "evidence_set_sha256",
+        "knowledge_pack",
+        "policy_set",
+        "run_id",
+        "timestamp"
+      ],
+      "properties": {
+        "skill_id": { "type": "string", "minLength": 1 },
+        "skill_version": { "type": "string", "minLength": 1 },
+        "model": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["provider", "id"],
+          "properties": {
+            "provider": { "type": "string", "minLength": 1 },
+            "id": { "type": "string", "minLength": 1 },
+            "temperature": { "type": ["number", "null"] },
+            "seed": { "type": ["integer", "null"] }
+          }
+        },
+        "prompt_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "evidence_set_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "knowledge_pack": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "version", "as_of"],
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 },
+            "as_of": { "type": "string", "minLength": 1 },
+            "stale": { "type": "boolean" }
+          }
+        },
+        "policy_set": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "version"],
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "version": { "type": "string", "minLength": 1 }
+          }
+        },
+        "run_id": { "type": "string", "minLength": 1 },
+        "timestamp": { "type": "string", "format": "date-time" }
+      }
+    },
+    "validation_block": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["valid", "defects"],
+      "properties": {
+        "valid": { "type": "boolean" },
+        "defects": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "severity", "message"],
+            "properties": {
+              "code": { "type": "string", "minLength": 1 },
+              "severity": { "enum": ["error", "warn", "info"] },
+              "message": { "type": "string", "minLength": 1 },
+              "claim_id": { "type": "string" },
+              "rule_id": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/policy-rule/1.0.0",
+  "title": "FinCrime Policy Rule",
+  "description": "A deterministic rule. No rule kind contains a free-text expression: if a constraint cannot be evaluated by code, it does not belong in the policy layer. See ADR-0003.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "version", "severity", "description", "kind", "rule", "message"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^POL-[A-Z0-9-]+$" },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "severity": { "enum": ["error", "warn", "info"] },
+    "applies_to": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "description": { "type": "string", "minLength": 1 },
+    "kind": {
+      "enum": ["require", "forbid", "threshold", "count", "consistency", "composite"]
+    },
+    "rule": { "$ref": "#/$defs/ruleBody" },
+    "message": { "type": "string", "minLength": 1 },
+    "jurisdictions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "A rule with no jurisdiction applies structurally everywhere. A rule with a jurisdiction list is only evaluated for matching artifacts."
+    }
+  },
+  "$defs": {
+    "ruleBody": {
+      "type": "object",
+      "required": [],
+      "properties": {
+        "field": { "type": "string" },
+        "where": { "$ref": "#/$defs/where" },
+        "min_items": { "type": "integer", "minimum": 0 },
+        "max_items": { "type": "integer", "minimum": 0 },
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "equals": {},
+        "pattern": { "type": "string" },
+        "not_pattern": { "type": "string" },
+        "in": { "type": "array" },
+        "not_in": { "type": "array" },
+        "all": { "type": "array", "items": { "$ref": "#/$defs/ruleBody" } },
+        "any": { "type": "array", "items": { "$ref": "#/$defs/ruleBody" } },
+        "not": { "$ref": "#/$defs/ruleBody" }
+      }
+    },
+    "where": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "claim_class": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "fact",
+              "observation",
+              "indicator",
+              "hypothesis",
+              "risk_assessment",
+              "recommendation",
+              "decision"
+            ]
+          }
+        },
+        "epistemic_type": {
+          "type": "array",
+          "items": {
+            "enum": ["benign_reading", "adverse_reading", "data_gap", "other"]
+          }
+        },
+        "field": { "type": "string" },
+        "has_field": { "type": "string" },
+        "confidence_level": {
+          "type": "array",
+          "items": {
+            "enum": ["high", "moderate", "low", "insufficient_information"]
+          }
+        }
+      }
+    }
+  }
+}

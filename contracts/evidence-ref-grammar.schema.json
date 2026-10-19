@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/evidence-ref-grammar/1.0.0",
+  "title": "Evidence Reference Grammar",
+  "description": "Canonical machine-readable form of the evidence reference grammar specified in ADR-0004. An evidence reference is an RFC 6901 URI fragment identifier: <source_id>#<json-pointer>. The '#' separator is required. The pointer is either empty (the whole item) or a sequence of '/' prefixed reference tokens, URI-fragment-escaped per RFC 6901 section 3 (~0 decodes to '~', ~1 decodes to '/'; the escape order matters). There is no range syntax: a claim spanning multiple items carries one reference per item.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["abnf", "source_id_pattern", "notes"],
+  "properties": {
+    "abnf": {
+      "type": "string",
+      "description": "ABNF grammar for evidence references.",
+      "const": "evidence-ref    = source-id \"#\" json-pointer\nsource-id       = type \":\" instance\ntype            = ALPHA *( ALPHA / DIGIT / \"_\" / \"-\" )\ninstance        = 1*64( UNRESERVED / \":\" / \".\" / \"-\" / \"_\" )\njson-pointer    = *( \"/\" reference-token )\nreference-token = *( unescaped / escaped )\nescaped         = \"~\" ( \"0\" / \"1\" )\nunescaped       = %x00-22 / %x24-2E / %x30-7D / %x7F-10FFFF"
+    },
+    "source_id_pattern": {
+      "type": "string",
+      "const": "^[A-Za-z][A-Za-z0-9_-]*:[A-Za-z0-9._:-]{1,64}$"
+    },
+    "evidence_ref_pattern": {
+      "type": "string",
+      "const": "^[A-Za-z][A-Za-z0-9_-]*:[A-Za-z0-9._:-]{1,64}#(/([^/~#]|~[01])*)*$"
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "const": [
+        "The '#' separator is required. A reference without '#' is invalid, not a whole-item reference.",
+        "The empty pointer (source_id followed by '#') addresses the whole item.",
+        "There is no range syntax. A claim spanning multiple items carries one reference per item.",
+        "Resolution is a total pure function: (evidence_set, ref) -> value or error. It never raises.",
+        "A pointer resolving to an array longer than 20 elements is over_broad_citation: citing a whole collection is not evidence attribution.",
+        "'#' is excluded from the unescaped character set because a second '#' would be a second fragment separator; RFC 6901 requires it to be percent-encoded.",
+        "The escape order matters when decoding: '~1' must be replaced before '~0', so '~01' decodes to '~1' and not to '/1'."
+      ]
+    }
+  }
+}

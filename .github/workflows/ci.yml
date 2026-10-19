@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  contract:
+    name: Contracts and core
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install core (editable, with dev extras)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "packages/fincrime-core[dev]"
+
+      - name: Validate contract files are well-formed JSON
+        run: python -m json.tool contracts/finding.schema.json > /dev/null
+
+      - name: Import lint (ADR-0002) - zero non-stdlib runtime dependencies
+        run: python scripts/check_imports.py
+
+      - name: Unit and contract tests
+        run: python -m pytest packages/fincrime-core/tests -q
+
+      - name: Network-blocked test run (air-gap safety)
+        run: python scripts/check_no_network.py -- packages/fincrime-core/tests -q
+
+      - name: Cross-check our JSON Schema subset against the reference implementation
+        run: |
+          python -m pip install --quiet "jsonschema>=4.21"
+          python scripts/check_schema_parity.py
+
+  matrix:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install and test
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "packages/fincrime-core[dev]"
+          python -m pytest packages/fincrime-core/tests -q
+
+  security:
+    name: Security posture
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Core installs with zero runtime dependencies
+        run: |
+          python -m venv /tmp/corevenv
+          /tmp/corevenv/bin/pip install --quiet packages/fincrime-core
+          /tmp/corevenv/bin/pip show fincrime-core | grep -i "^Requires:" || echo "Requires: (none)"
+      - name: CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+      - name: CodeQL analyse
+        uses: github/codeql-action/analyze@v3

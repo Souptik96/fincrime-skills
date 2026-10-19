@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/claim-classes/1.0.0",
+  "title": "FinCrime Claim Class Ontology",
+  "description": "The machine-readable ontology of the seven claim classes. This file is the single source for both the documentation generator and the runtime linter, so the docs and the enforcement cannot drift. See ADR-0001 and Part 5.1 of the blueprint.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "epistemic_types", "classes"],
+  "properties": {
+    "contract_version": { "const": "fincrime/claim-classes/1.0.0" },
+    "epistemic_types": {
+      "type": "array",
+      "description": "The closed enum for hypothesis epistemic type. This is the structural defense against soft-synonym bypass of the culpability lint. See ADR-0001 and the Part 5.1.1 amendment.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "definition", "requires_competing_benign"],
+        "properties": {
+          "id": { "enum": ["benign_reading", "adverse_reading", "data_gap", "other"] },
+          "definition": { "type": "string", "minLength": 1 },
+          "requires_competing_benign": { "type": "boolean" },
+          "example": { "type": "string" }
+        }
+      }
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 7,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "definition",
+          "requires_evidence_ref",
+          "may_assert_criminality",
+          "required_fields"
+        ],
+        "properties": {
+          "id": {
+            "enum": [
+              "fact",
+              "observation",
+              "indicator",
+              "hypothesis",
+              "risk_assessment",
+              "recommendation",
+              "decision"
+            ]
+          },
+          "definition": { "type": "string", "minLength": 1 },
+          "requires_evidence_ref": { "type": "boolean" },
+          "may_assert_criminality": { "const": false },
+          "required_fields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "prohibited_uses": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "example": { "type": "string" },
+          "counter_example": { "type": "string" }
+        }
+      }
+    }
+  }
+}
