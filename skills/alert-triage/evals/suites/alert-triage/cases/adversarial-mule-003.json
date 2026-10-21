@@ -1,0 +1,78 @@
+{
+  "case_id": "adversarial-mule-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A large credit is reversed by an equal debit back to the same originator the same day, and nothing leaves the account.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-9009",
+        "accounts": [
+          "acct-9009"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:9060",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 30,000 USD from an originator on 2026-03-03"
+          },
+          {
+            "source_id": "txn:9061",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 30,000 USD back to the same originator on 2026-03-03"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Pass-through is measured on funds leaving the account. A reversal leaves nothing to trace."
+  }
+}

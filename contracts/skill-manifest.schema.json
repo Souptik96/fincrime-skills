@@ -92,6 +92,11 @@
           "properties": {
             "indicators": { "type": "array", "items": { "type": "string" } },
             "scenarios": { "type": "array", "items": { "type": "string" } },
+            "requests": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Request catalogue records the skill cites, from the declared pack."
+            },
             "typologies": { "type": "array", "items": { "type": "string" } },
             "regulatory": { "type": "array", "items": { "type": "string" } }
           }

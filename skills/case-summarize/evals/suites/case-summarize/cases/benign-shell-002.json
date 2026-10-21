@@ -1,0 +1,81 @@
+{
+  "case_id": "benign-shell-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A holding structure owns an operating subsidiary and the trades between them are documented and consistent with the group policy.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4170",
+          "acct-4171"
+        ],
+        "counterparties": [
+          "holding-structure"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4180",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Transfer of 30,000 USD to the subsidiary on 2026-02-05"
+          },
+          {
+            "source_id": "doc:4181",
+            "kind": "document",
+            "present": true,
+            "summary": "Group treasury policy and intercompany loan agreement"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-COMMON-OWNERSHIP-SHELL-CHAIN"
+    ],
+    "required_strings": [
+      "IND-COMMON-OWNERSHIP-SHELL-CHAIN"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the ordinary explanation accounts for it. The summary must not escalate."
+  }
+}

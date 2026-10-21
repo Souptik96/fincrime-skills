@@ -1,0 +1,72 @@
+{
+  "case_id": "contradictory-ato-002",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The customer supplied a signed control declaration and the file holds it, while the gap list asks for the evidence of control as missing.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Evidence of who controls the account",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6509",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "doc:6575",
+            "kind": "document",
+            "present": true,
+            "summary": "Signed control declaration supplied by the customer and held on file"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "The gap and the file disagree about what is held. The dossier must not request what is already on file."
+  }
+}

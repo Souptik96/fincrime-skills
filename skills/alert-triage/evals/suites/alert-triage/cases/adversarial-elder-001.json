@@ -1,0 +1,71 @@
+{
+  "case_id": "adversarial-elder-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Three round-amount deposits over three months on a savings account, with no clustering in time and no deviation from the account's own amounts.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "round-amount-cluster",
+        "subject_id": "subject-9007",
+        "accounts": [
+          "acct-9007"
+        ],
+        "monitoring_window": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9040",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 2,000 USD on 2026-01-09"
+          },
+          {
+            "source_id": "txn:9041",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 2,000 USD on 2026-02-11"
+          },
+          {
+            "source_id": "txn:9042",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 2,000 USD on 2026-03-13"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The indicator needs both a cluster and a deviation from the account's usual amounts. Neither is present."
+  }
+}

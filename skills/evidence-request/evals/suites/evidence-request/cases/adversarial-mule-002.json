@@ -1,0 +1,57 @@
+{
+  "case_id": "adversarial-mule-002",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The only way to close the gap is a counterparty's statements and the firm has no authority to obtain them, so the question goes to a human.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "The statements of the counterparty account",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6305",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6350",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 45,000 USD on 2026-03-08"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The record may be named, but the absence of a lawful route must be flagged for the human who owns that decision."
+  }
+}

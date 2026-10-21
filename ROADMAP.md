@@ -20,47 +20,103 @@ is green on a clean clone; the validator rejects the five seeded defects and
 produces zero false positives on the conformant baseline; the resolver is total
 and byte-stable.
 
-## Phase 1 — Core skill specification
+## Phase 1 — Core skill specification ✅
 
 **Objective:** a working, versioned skill format that one person can author,
 validate, and test without reading the whole architecture.
 
-- [ ] `fincrime new skill` scaffolding
-- [ ] The remaining contract schemas (case mix enforcement, policy export)
-- [ ] The knowledge pack format and the expiry bot
-- [ ] The policy rule set: `policies/default/`
-- [ ] `docs/skill-authoring.md`
+- [x] `fincrime new skill` scaffolding
+- [x] The remaining contract schemas (case mix enforcement, policy export)
+- [x] The knowledge pack format and the expiry bot
+- [x] The policy rule set: `policies/default/`
+- [x] `docs/skill-authoring.md`
 
 **Exit criterion:** a contributor who has read only the authoring guide can
-author, validate, and test a new skill.
+author, validate, and test a new skill. ✅ `fincrime new skill my-skill`
+writes a package that already satisfies its contract, and
+`fincrime validate` reports it clean; the guide is
+[`docs/skill-authoring.md`](docs/skill-authoring.md).
 
-## Phase 2 — Knowledge layer
+The pack *content* is Phase 2. Phase 1 shipped the format, the loader, the
+integrity checks and the expiry machinery — a worked example pack lives in
+`knowledge/examples/sample-pack` so the tooling has something real to
+exercise.
+
+## Phase 2 — Knowledge layer ✅
 
 **Objective:** the first dated pack, with the expiry machinery *working* — the
 expiry machinery, not the content, is the hard part.
 
-- [ ] `knowledge/packs/core-2026-10` — ~25 indicators, ~8 typologies, ~20 US
-      regulatory records, ~30 request-catalogue entries
-- [ ] The nightly expiry bot, issuing one labelled issue per stale dependency
-      with the refresh diff attached
-- [ ] The pack promotion gate
+- [x] `knowledge/packs/core-2026-10` — 25 indicators, 8 typologies, 20 US
+      regulatory records, 30 request-catalogue entries (83 records)
+- [x] The nightly expiry bot, issuing one labelled issue per stale dependency
+      with the refresh diff attached — *the machinery shipped in Phase 1; this
+      is the first pack it has to act on*
+- [x] The pack promotion gate
 
 **Exit criterion:** an expired record blocks its pack's promotion **and** fails
 the citing skill's CI gate in promotion context, while a released skill is
-warned rather than blocked.
+warned rather than blocked. ✅ `fincrime knowledge validate --pack
+knowledge/packs/core-2026-10 --promotion --as-of 2027-11-01` exits 1 with
+`pack_record_expired`; the same check without `--promotion` exits 0 with the
+same finding as a warning; and `fincrime validate skills/investigation-qa
+--promotion --as-of 2027-11-01` exits 1 with `SKILL-KNOWLEDGE-EXPIRED` while
+the release context exits 0 and marks the skill `MAINTENANCE_REQUIRED`.
 
-## Phase 3 — First skills
+The pack is built from a reviewed source by `scripts/build_core_pack.py`, so
+the published bytes and the reviewed content cannot drift apart, and
+`--check` proves it.
+
+## Phase 3 — First skills ✅
 
 **Objective:** three skills that work end to end.
 
-- [ ] `alert-triage`
-- [ ] `case-summarize`
-- [ ] `evidence-request`
-- [ ] ≥ 40 cases each, with the required mix
+- [x] `alert-triage`
+- [x] `case-summarize`
+- [x] `evidence-request`
+- [x] ≥ 60 cases each, with the required mix
 
 **Exit criterion:** each validates, each has a case suite, and the
 `investigation-qa` skill finds the seeded defects in the others' outputs and no
-false defects in their good outputs.
+false defects in their good outputs. ✅ All three skill packages and all three
+case suites validate with zero errors and zero warnings in the release *and*
+the promotion context. The suites hold 180 cases, 60 per skill, each with at
+least 40% benign, adversarial, missing-data or contradictory cases, every case
+carrying a negative expectation, and at least two benign cases for every
+typology the suite covers. The exit-criterion gate proves both halves:
+**zero false defects** against the three golden artifacts — zero, not zero
+errors, so a warning on the golden corpus fails the gate — and **12 of 12
+seeded defects detected (100%, against a 90% floor)**, by the same validator
+`investigation-qa` drives.
+
+The suites are generated, not written by hand.
+[`scripts/generate_phase3_cases.py`](scripts/generate_phase3_cases.py) is the
+source of truth for the case population and is deterministic: two runs write
+byte-identical files, and the script checks the mix before it writes anything.
+A suite of a hundred and twenty cases that is edited by hand drifts, and a
+drifted suite measures nothing.
+
+Both disclosures from the first pass are closed:
+
+- The suites now declare `min_cases: 60`, the bar
+  [`CONTRIBUTING.md`](CONTRIBUTING.md) sets for a stable skill, and the
+  population has been extended to meet it: 180 generated cases, 60 per suite.
+  All three skills are still `draft`, so the bar is the floor rather than the
+  ceiling.
+- `contracts/finding.schema.json` enumerates `request_dossier`, the artifact
+  type the Phase 3 specification gives the `evidence-request` skill. The
+  contract offered only `evidence_request_plan`, so the skill could not have
+  produced a conformant artifact at all. The change is additive — one enum
+  value, and `evidence_request_plan` is retained — and it is recorded, with
+  the manifest's binding to the request catalogue, in
+  [ADR-0011](docs/adr/0011-request-dossier-and-manifest-catalogue-binding.md).
+
+The third disclosure was a hole rather than a debt: the validator resolved the
+evidence references on every claim (`R-1a`) but not on the timeline, so the
+anchoring invariant the `case-summarize` skill is defined by was enforced by
+the exit-criterion test and by nothing else. Rule `R-1b` now resolves every
+timeline reference against the evidence set, and a `case_summary` that states
+an event nothing in the evidence set supports fails validation.
 
 ## Phase 4 — Evaluation framework
 

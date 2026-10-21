@@ -1,0 +1,144 @@
+{
+  "evidence_set_version": "fincrime/evidence-set/1.0.0",
+  "alert": {
+    "alert_id": "ALT-5510",
+    "rule_id": "SC-CASE-MULTI-ACCOUNT",
+    "rule_name": "Multi-account cash activity",
+    "triggered_at": "2026-02-20T00:00:00Z",
+    "window": { "from": "2026-02-01T00:00:00Z", "to": "2026-02-20T00:00:00Z" },
+    "subject_id": "SUB-5512"
+  },
+  "subject": {
+    "subject_id": "SUB-5512",
+    "type": "individual",
+    "segment": "small_business",
+    "onboarded_at": "2023-05-02",
+    "kyc_status": "current",
+    "declared_profile": {
+      "business": "Northgate Trading",
+      "expected_activity": "Branch takings and customer refunds",
+      "expected_monthly_volume": 41000,
+      "cash_intensity": "medium"
+    }
+  },
+  "transactions": [
+    {
+      "txn_id": "TXN-5514",
+      "ts": "2026-02-03T09:14:00Z",
+      "direction": "inbound",
+      "amount": 9400,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "ACC-5510",
+      "branch_id": "BR-011"
+    },
+    {
+      "txn_id": "TXN-5515",
+      "ts": "2026-02-04T10:05:00Z",
+      "direction": "inbound",
+      "amount": 9300,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "ACC-5511",
+      "branch_id": "BR-011"
+    },
+    {
+      "txn_id": "TXN-5516",
+      "ts": "2026-02-07T14:30:00Z",
+      "direction": "outbound",
+      "amount": 18700,
+      "currency": "USD",
+      "channel": "wire",
+      "account_id": "ACC-5510",
+      "counterparty": {
+        "name": "Meridian Trading LLC",
+        "country": "US",
+        "type": "business",
+        "account_id": "CB-7781"
+      }
+    },
+    {
+      "txn_id": "TXN-5517",
+      "ts": "2026-02-09T11:45:00Z",
+      "direction": "inbound",
+      "amount": 18600,
+      "currency": "USD",
+      "channel": "wire",
+      "account_id": "ACC-5511",
+      "counterparty": {
+        "name": "Halden Freight Ltd",
+        "country": "GB",
+        "type": "business",
+        "account_id": "CB-9902"
+      }
+    },
+    {
+      "txn_id": "TXN-5518",
+      "ts": "2026-02-12T08:20:00Z",
+      "direction": "inbound",
+      "amount": 240,
+      "currency": "USD",
+      "channel": "card",
+      "account_id": "ACC-5510",
+      "branch_id": "BR-011"
+    }
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-5519",
+      "kind": "business_registration",
+      "present": true,
+      "received_at": "2023-05-02",
+      "fields": {
+        "business_name": "Northgate Trading",
+        "registered_address": "9 Dockside Row",
+        "registration_number": "BR-7781",
+        "account_ids": ["ACC-5510", "ACC-5511"]
+      }
+    },
+    {
+      "doc_id": "DOC-5520",
+      "kind": "kyc_docket",
+      "present": true,
+      "received_at": "2023-05-02",
+      "fields": {
+        "declared_business": "Northgate Trading",
+        "declared_cash_intensity": "medium"
+      }
+    }
+  ],
+  "entities": [
+    {
+      "entity_id": "ENT-5521",
+      "name": "Meridian Trading LLC",
+      "entity_type": "company",
+      "jurisdiction": "US",
+      "registration_number": "BR-7781",
+      "ownership": [{ "owner_id": "SUB-5512", "share": 0.6, "control": "majority shareholder" }]
+    }
+  ],
+  "policies": {
+    "policy_set_id": "firm-aml",
+    "policy_set_version": "7.2",
+    "jurisdictions": ["US"],
+    "scenarios": [
+      {
+        "rule_id": "SC-CASE-MULTI-ACCOUNT",
+        "name": "Multi-account cash activity",
+        "question": "Does activity that is unremarkable account by account aggregate into a materially different picture across the subject's accounts?",
+        "severity": "medium",
+        "min_window_coverage": 0.8
+      }
+    ],
+    "thresholds": [
+      {
+        "policy_id": "POL-STRUCT-THRESHOLD-PROXIMITY",
+        "name": "Currency transaction reporting threshold",
+        "value": 10000,
+        "currency": "USD",
+        "jurisdictions": ["US"],
+        "effective_from": "2020-01-01"
+      }
+    ]
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "case_id": "benign-shell-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Two companies share a serviced-office address and one director, and trade honestly at market rates with full documentation.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4160",
+          "acct-4161"
+        ],
+        "counterparties": [
+          "sibling-companies"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4170",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Invoice settlement of 12,000 USD from Company Beta on 2026-02-12"
+          },
+          {
+            "source_id": "doc:4171",
+            "kind": "document",
+            "present": true,
+            "summary": "Service agreement and market-rate invoice"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-COMMON-OWNERSHIP-SHELL-CHAIN"
+    ],
+    "required_strings": [
+      "IND-COMMON-OWNERSHIP-SHELL-CHAIN"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the ordinary explanation accounts for it. The summary must not escalate."
+  }
+}

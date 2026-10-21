@@ -1,0 +1,78 @@
+{
+  "case_id": "edge-shell-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The same amount moves between the two companies two hundred times in the period, and the summary must separate the pattern from the episode.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4704",
+          "acct-4705"
+        ],
+        "counterparties": [
+          "high-frequency-repeats"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4740",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Transfers of 5,000 USD between the two companies on 200 separate dates in the period"
+          },
+          {
+            "source_id": "doc:4741",
+            "kind": "document",
+            "present": true,
+            "summary": "Registered address and director common to both"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "txn:"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Frequency alone is not a finding, and the summary must not present it as one."
+  }
+}

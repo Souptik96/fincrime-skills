@@ -1,0 +1,71 @@
+{
+  "case_id": "adversarial-structuring-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The detector used a stale 10,000 USD threshold, but the threshold in force for the window was 5,000 USD, so the deposits are not below it.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-9002",
+        "accounts": [
+          "acct-9002"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9010",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-03"
+          },
+          {
+            "source_id": "txn:9011",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-04"
+          },
+          {
+            "source_id": "txn:9012",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-05"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 5000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The threshold is a policy input. A deposit below a stale threshold is not proximity to the threshold in force."
+  }
+}

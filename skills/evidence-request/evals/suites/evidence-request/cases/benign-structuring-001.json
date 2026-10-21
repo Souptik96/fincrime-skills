@@ -1,0 +1,71 @@
+{
+  "case_id": "benign-structuring-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The gap list is empty: the triage closed with nothing outstanding, so there is nothing to request.",
+  "input": {
+    "inline": {
+      "gap_list": [],
+      "subject_scope": {
+        "subject_id": "subject-6101",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6110",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-03"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "REQ-PAYROLL-REGISTER",
+      "REQ-MORTGAGE-APPLICATION",
+      "REQ-LODGING-TAX-RETURNS",
+      "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "REQ-PROPERTY-TITLE-RECORD",
+      "REQ-EMPLOYMENT-CONTRACT",
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The only recommendation is that no request is warranted."
+  }
+}

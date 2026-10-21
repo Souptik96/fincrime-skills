@@ -1,0 +1,72 @@
+{
+  "case_id": "edge-structuring-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The summary covers two accounts that hold no records in the period, and the empty window is the finding.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4560",
+          "acct-4561"
+        ],
+        "counterparties": [
+          "none"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "doc:4560",
+            "kind": "document",
+            "present": true,
+            "summary": "Statements for both accounts showing no transactions in the period"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "doc:"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "An empty period is an absence of activity, and the summary says so in one entry."
+  }
+}

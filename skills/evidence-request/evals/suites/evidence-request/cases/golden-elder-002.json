@@ -1,0 +1,74 @@
+{
+  "case_id": "golden-elder-002",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The relationship between the subject and the party it pays is not evidenced, so the payments have no explanation.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "The commercial reason for the payments to the counterparty",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6207",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6270",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Transfer of 8,000 USD on 2026-03-02"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "REQ-COMMERCIAL-CONTRACTS"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "The underlying contract is what explains why the subject transacted with this party at this price."
+  }
+}

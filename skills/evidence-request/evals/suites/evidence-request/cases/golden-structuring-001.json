@@ -1,0 +1,81 @@
+{
+  "case_id": "golden-structuring-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The cash side of a cash-heavy merchant's takings is unknown while the card side is held, and the two must be compared.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "The cash takings of the business for the monitoring period",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6201",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6210",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Card receipts of 2,000 USD per day for 20 days"
+          },
+          {
+            "source_id": "doc:6211",
+            "kind": "document",
+            "present": true,
+            "summary": "Cash deposits totalling 180,000 USD for the same period"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "REQ-ATM-TRANSACTION-LOG",
+      "REQ-POS-SETTLEMENT-BATCH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "The terminal log and the settlement batch establish the cash and card sides of the same picture."
+  }
+}

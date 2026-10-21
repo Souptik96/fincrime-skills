@@ -1,0 +1,94 @@
+{
+  "case_id": "benign-structuring-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A sole trader operates three accounts for three branches; each is unremarkable and together they match the declared takings.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4101",
+          "acct-4102",
+          "acct-4103"
+        ],
+        "counterparties": [
+          "supplier-branch"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4110",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 8,900 USD at branch 011 on 2026-02-03"
+          },
+          {
+            "source_id": "txn:4111",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,100 USD at branch 014 on 2026-02-04"
+          },
+          {
+            "source_id": "txn:4112",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 8,700 USD at branch 022 on 2026-02-05"
+          },
+          {
+            "source_id": "doc:4113",
+            "kind": "document",
+            "present": true,
+            "summary": "Declared branch structure and daily takings"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-MULTI-ACCOUNT-AGGREGATION"
+    ],
+    "required_strings": [
+      "IND-MULTI-ACCOUNT-AGGREGATION"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the ordinary explanation accounts for it. The summary must not escalate."
+  }
+}

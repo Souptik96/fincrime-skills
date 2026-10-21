@@ -1,0 +1,78 @@
+{
+  "case_id": "edge-trade-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The gap is answered by a record the analyst may obtain from a public source, so no request is made of the customer.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "The customs declaration for the shipment",
+          "decisive": true,
+          "blocks_conclusion": false
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6610",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6680",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 80,000 USD to a foreign supplier on 2026-02-11"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "REQ-PAYROLL-REGISTER",
+      "REQ-MORTGAGE-APPLICATION",
+      "REQ-LODGING-TAX-RETURNS",
+      "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "REQ-PROPERTY-TITLE-RECORD",
+      "REQ-EMPLOYMENT-CONTRACT",
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A record that the firm may obtain without the customer is not an information request."
+  }
+}

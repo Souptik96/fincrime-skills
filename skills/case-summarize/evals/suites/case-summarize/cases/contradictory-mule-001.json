@@ -1,0 +1,76 @@
+{
+  "case_id": "contradictory-mule-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The same transaction is recorded in two accounts with different amounts.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4602",
+          "acct-4603"
+        ],
+        "counterparties": [
+          "duplicate-record"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4620",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 5,000 USD recorded in acct-4602 on 2026-03-02"
+          },
+          {
+            "source_id": "txn:4621",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 4,750 USD for the same event recorded in acct-4603 on 2026-03-02"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "A duplicated event with two amounts is a contradiction, and the timeline must not carry it twice."
+  }
+}

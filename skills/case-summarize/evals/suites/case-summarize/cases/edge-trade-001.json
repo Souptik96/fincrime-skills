@@ -1,0 +1,77 @@
+{
+  "case_id": "edge-trade-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "One shipment, one invoice and one payment, with nothing to compare them against.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4550"
+        ],
+        "counterparties": [
+          "foreign-supplier"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4550",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 12,000 USD to a foreign supplier on 2026-02-04"
+          },
+          {
+            "source_id": "doc:4551",
+            "kind": "document",
+            "present": true,
+            "summary": "Invoice for 12,000 USD and a bill of lading for the same shipment"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "txn:"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A single consistent shipment is a single shipment."
+  }
+}

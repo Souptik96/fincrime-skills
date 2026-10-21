@@ -1,0 +1,74 @@
+{
+  "case_id": "edge-mule-003",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Exactly one gap exists, it is decisive, and the catalogue holds exactly one record that answers it.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Who owns and controls the beneficiary entity",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6607",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6665",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 6,250 USD to an unnamed entity on 2026-03-04"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "REQ-UBO-REGISTRY-PROOF"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "The minimal dossier is one request against one gap, and it is a legitimate outcome."
+  }
+}

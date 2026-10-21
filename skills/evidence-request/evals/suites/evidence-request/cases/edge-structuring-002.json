@@ -1,0 +1,63 @@
+{
+  "case_id": "edge-structuring-002",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The gap list is present but empty, which is a different situation from a gap list that was never supplied.",
+  "input": {
+    "inline": {
+      "gap_list": [],
+      "subject_scope": {
+        "subject_id": "subject-6606",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6660",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-03"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "An empty gap list is a decision that no request is needed. It is not a missing input."
+  }
+}

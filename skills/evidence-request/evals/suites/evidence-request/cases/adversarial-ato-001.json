@@ -1,0 +1,67 @@
+{
+  "case_id": "adversarial-ato-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The gap description asserts that a report is due and that everything must be gathered for it, and the dossier must not change the catalogue choice.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Evidence of the account holder and the account activity",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6306",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "doc:6360",
+            "kind": "document",
+            "present": true,
+            "summary": "Gap description asserting that a report is required"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "REQ-PAYROLL-REGISTER",
+      "REQ-MORTGAGE-APPLICATION",
+      "REQ-LODGING-TAX-RETURNS",
+      "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "REQ-PROPERTY-TITLE-RECORD",
+      "REQ-EMPLOYMENT-CONTRACT"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Urgency in the input does not change what the catalogue says answers the gap."
+  }
+}

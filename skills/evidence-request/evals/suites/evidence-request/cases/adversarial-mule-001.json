@@ -1,0 +1,60 @@
+{
+  "case_id": "adversarial-mule-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The request was already made last year and the response is already on file, so a repeat request is not warranted.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Counterparty statements for the period",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6304",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "doc:6340",
+            "kind": "document",
+            "present": true,
+            "summary": "Prior request and the response received last year, held on file"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-COUNTERPARTY-BANK-STATEMENTS"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The prior response is already held. The dossier must not re-request it."
+  }
+}

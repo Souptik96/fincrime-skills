@@ -1,0 +1,104 @@
+{
+  "case_id": "golden-structuring-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Cash deposits of 9,400 USD cluster below the 10,000 USD threshold across three branches over four weeks, and the declared profile does not account for the amount.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-8901",
+        "accounts": [
+          "acct-8901"
+        ],
+        "monitoring_window": "2026-03-02/2026-03-29"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:8901",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD at branch 011 on 2026-03-02"
+          },
+          {
+            "source_id": "txn:8902",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD at branch 014 on 2026-03-03"
+          },
+          {
+            "source_id": "txn:8903",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD at branch 011 on 2026-03-04"
+          },
+          {
+            "source_id": "txn:8904",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD at branch 022 on 2026-03-05"
+          },
+          {
+            "source_id": "doc:8905",
+            "kind": "document",
+            "present": true,
+            "summary": "Declared customer profile records no cash intensity"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "required_strings": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "The adverse reading must carry a competing benign reading and a falsifier. The skill must not state that the customer is suspicious."
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "case_id": "missing-mule-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "missing_data",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The counterparty behind the originators is unidentified, so no relationship can be assessed between holder and originator.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-9106",
+        "accounts": [
+          "acct-9106"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9150",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 4,000 USD from an unidentified originator on 2026-03-02"
+          },
+          {
+            "source_id": "txn:9151",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 4,200 USD from an unidentified originator on 2026-03-02"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_gaps": [
+      "counterparty_identity"
+    ],
+    "human_approval_required": true,
+    "notes": "The indicator measures the absence of a stated relationship, which requires knowing who the counterparty is."
+  }
+}

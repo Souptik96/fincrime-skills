@@ -1,0 +1,81 @@
+{
+  "case_id": "benign-structuring-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A family business trades across a personal account and a corporate account, and the corporate account shows a single round deposit.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4110",
+          "acct-4111"
+        ],
+        "counterparties": [
+          "family-business"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4120",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 2,000 USD on 2026-02-18"
+          },
+          {
+            "source_id": "txn:4121",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Card receipt of 310 USD on 2026-02-19"
+          },
+          {
+            "source_id": "doc:4122",
+            "kind": "document",
+            "present": true,
+            "summary": "Account titles showing the same household"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the ordinary explanation accounts for it. The summary must not escalate."
+  }
+}

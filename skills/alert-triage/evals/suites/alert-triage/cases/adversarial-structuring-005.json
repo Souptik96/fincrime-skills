@@ -1,0 +1,84 @@
+{
+  "case_id": "adversarial-structuring-005",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The alert names the customer as the subject, but the deposits were made into an account held by a different customer.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-9012",
+        "accounts": [
+          "acct-9012"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "alert:9075",
+            "kind": "alert",
+            "present": true,
+            "summary": "Narrative naming the subject as the depositor"
+          },
+          {
+            "source_id": "doc:9076",
+            "kind": "document",
+            "present": true,
+            "summary": "Account title record showing the account is held by another customer"
+          },
+          {
+            "source_id": "txn:9077",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-03"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The subject's account is the one under review. Another customer's deposits are not the subject's pattern."
+  }
+}

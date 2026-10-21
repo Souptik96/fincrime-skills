@@ -1,0 +1,250 @@
+{
+  "contract_version": "fincrime/finding/1.0.0",
+  "artifact": {
+    "skill_id": "case-summarize",
+    "skill_version": "1.0.0",
+    "artifact_type": "case_summary",
+    "subject_ids": ["SUB-5512", "ENT-5521"],
+    "jurisdictions": ["US"],
+    "created_at": "2026-02-21T09:00:00Z",
+    "completeness": "partial",
+    "scope_note": "The summary covers 2026-02-01 to 2026-02-20 and the accounts and counterparties named in the subject scope. Activity outside that window, and the counterparty's own records, are not in the evidence set."
+  },
+  "provenance": {
+    "skill_id": "case-summarize",
+    "skill_version": "1.0.0",
+    "model": { "provider": "example", "id": "example-model-1", "temperature": 0, "seed": 42 },
+    "prompt_sha256": "3cd9b2d2f2c1ff4f649921a27f57bd959d8c95e23dffe3594635adc7087afd6f",
+    "evidence_set_sha256": "f7ce7347b8b4381863bebd72ea2a48bb9d90d18f08a2d906c4957c6ecf85293b",
+    "knowledge_pack": { "id": "fincrime-knowledge", "version": "core-2026-10", "as_of": "2026-10-01" },
+    "policy_set": { "id": "firm-aml", "version": "7.2" },
+    "run_id": "run-phase3-case-summarize-001",
+    "timestamp": "2026-02-21T09:00:00Z"
+  },
+  "claims": [
+    {
+      "id": "C-001",
+      "class": "fact",
+      "statement": "Two cash deposits totalling 18,700 USD were made on consecutive days, one into each of the two accounts named in the business registration record.",
+      "evidence_refs": [
+        "txn:TXN-5514#/amount",
+        "txn:TXN-5515#/amount",
+        "doc:DOC-5519#/fields/account_ids"
+      ],
+      "confidence": {
+        "level": "high",
+        "basis": "Read directly from the transaction records and the registration record in the supplied evidence set."
+      }
+    },
+    {
+      "id": "C-002",
+      "class": "observation",
+      "statement": "Taken together the two deposits exceed the 10,000 USD reporting threshold, although neither deposit on its own does.",
+      "evidence_refs": [
+        "txn:TXN-5514#/amount",
+        "txn:TXN-5515#/amount",
+        "subject:SUB-5512#/declared_profile/cash_intensity"
+      ],
+      "policy_ids": ["POL-STRUCT-THRESHOLD-PROXIMITY"],
+      "confidence": {
+        "level": "moderate",
+        "basis": "A comparison of two recorded amounts against the threshold value supplied with the policy input."
+      }
+    },
+    {
+      "id": "C-003",
+      "class": "indicator",
+      "statement": "Activity that is unremarkable in each account aggregates across the two commonly owned accounts into a materially different picture.",
+      "evidence_refs": [
+        "doc:DOC-5519#/fields/account_ids",
+        "txn:TXN-5514#/account_id",
+        "txn:TXN-5515#/account_id"
+      ],
+      "indicator_ids": ["IND-MULTI-ACCOUNT-AGGREGATION"],
+      "knowledge_ids": ["IND-MULTI-ACCOUNT-AGGREGATION"],
+      "confidence": {
+        "level": "moderate",
+        "basis": "The common ownership is evidenced by the registration record rather than assumed, and the aggregation is measured across the recorded amounts."
+      }
+    },
+    {
+      "id": "C-004",
+      "class": "observation",
+      "statement": "18,700 USD left ACC-5510 for Meridian Trading LLC on 2026-02-07, and 18,600 USD returned to ACC-5511 on 2026-02-09 from a different counterparty.",
+      "evidence_refs": [
+        "txn:TXN-5516#/amount",
+        "txn:TXN-5516#/counterparty/name",
+        "txn:TXN-5517#/amount",
+        "txn:TXN-5517#/counterparty/name",
+        "entity:ENT-5521#/ownership/0/owner_id"
+      ],
+      "confidence": {
+        "level": "moderate",
+        "basis": "Read from the transaction records; the counterparty's own records are not held, so the reason for the return is not established."
+      }
+    },
+    {
+      "id": "C-005",
+      "class": "hypothesis",
+      "epistemic_type": "adverse_reading",
+      "statement": "The deposits across the two accounts and the near-equal return may reflect value being moved between commonly owned accounts beneath the reporting threshold.",
+      "evidence_refs": ["txn:TXN-5514#/amount", "txn:TXN-5516#/amount", "entity:ENT-5521#/ownership/0/owner_id"],
+      "falsifier": "Records showing the two accounts are held for separate commercial purposes, and that the payment to Meridian Trading LLC and the return from Halden Freight Ltd are unrelated.",
+      "confidence": {
+        "level": "low",
+        "basis": "The common ownership is evidenced, but the commercial reason for the round trip is not, and a decisive gap blocks a conclusion."
+      }
+    },
+    {
+      "id": "C-006",
+      "class": "hypothesis",
+      "epistemic_type": "benign_reading",
+      "statement": "The subject may be a sole trader whose branch takings are split across two accounts at the same branch, and whose receipts include customer refunds.",
+      "evidence_refs": [
+        "doc:DOC-5519#/fields/business_name",
+        "doc:DOC-5520#/fields/declared_cash_intensity",
+        "subject:SUB-5512#/declared_profile/business"
+      ],
+      "falsifier": "Records showing the two accounts have no common commercial purpose, or that the payments to and from the two counterparties are unrelated to the declared business.",
+      "competing_with": ["C-005"],
+      "confidence": {
+        "level": "low",
+        "basis": "The declared profile is on file, but the records that would corroborate it are absent."
+      }
+    },
+    {
+      "id": "C-007",
+      "class": "risk_assessment",
+      "statement": "The aggregation across the two accounts is measured, and the near-equal outflow and return is measured; the commercial relationship behind the round trip is not documented, so the summary supports both readings equally and neither at a graded level.",
+      "evidence_refs": ["txn:TXN-5514#/amount", "txn:TXN-5516#/amount", "txn:TXN-5517#/amount"],
+      "confidence": {
+        "level": "low",
+        "basis": "A decisive gap that blocks a conclusion is on the record."
+      }
+    },
+    {
+      "id": "C-008",
+      "class": "recommendation",
+      "statement": "Obtain the commercial contracts and invoices behind the payments to Meridian Trading LLC and Halden Freight Ltd for February 2026, and re-assess the summary on receipt.",
+      "evidence_refs": ["txn:TXN-5516#/amount", "txn:TXN-5517#/amount"],
+      "knowledge_ids": ["REQ-COMMERCIAL-CONTRACTS", "REQ-INVOICE-LEDGER"],
+      "explains": ["C-007"],
+      "human_approval_required": true,
+      "confidence": {
+        "level": "moderate",
+        "basis": "The named records are the ones that would close the decisive gap in the summary."
+      }
+    }
+  ],
+  "evidence_inventory": [
+    {
+      "source_id": "txn:TXN-5514",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of 9,400 USD into ACC-5510 at BR-011 on 2026-02-03.",
+      "decisive": true
+    },
+    {
+      "source_id": "txn:TXN-5515",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of 9,300 USD into ACC-5511 at BR-011 on 2026-02-04.",
+      "decisive": true
+    },
+    {
+      "source_id": "txn:TXN-5516",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Outbound wire of 18,700 USD from ACC-5510 to Meridian Trading LLC on 2026-02-07."
+    },
+    {
+      "source_id": "txn:TXN-5517",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Inbound wire of 18,600 USD into ACC-5511 from Halden Freight Ltd on 2026-02-09."
+    },
+    {
+      "source_id": "txn:TXN-5518",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Card receipt of 240 USD into ACC-5510 on 2026-02-12."
+    },
+    {
+      "source_id": "subject:SUB-5512",
+      "kind": "subject",
+      "present": true,
+      "summary": "Individual trading as Northgate Trading, declared cash intensity medium."
+    },
+    {
+      "source_id": "doc:DOC-5519",
+      "kind": "document",
+      "present": true,
+      "summary": "Business registration record naming both accounts."
+    },
+    {
+      "source_id": "doc:DOC-5520",
+      "kind": "document",
+      "present": true,
+      "summary": "KYC docket recording the declared business and cash intensity."
+    },
+    {
+      "source_id": "entity:ENT-5521",
+      "kind": "entity",
+      "present": true,
+      "summary": "Registry entry showing the subject as a majority shareholder of Meridian Trading LLC."
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "G-01",
+      "description": "The commercial relationship between the subject and Meridian Trading LLC, and between the subject and Halden Freight Ltd, is not documented in the evidence set.",
+      "decisive": true,
+      "blocks_conclusion": true,
+      "request_ref": "REQ-COMMERCIAL-CONTRACTS"
+    },
+    {
+      "gap_id": "G-02",
+      "description": "Activity outside 2026-02-01 to 2026-02-20 is not in the evidence set, so the pattern cannot be separated from the episode.",
+      "decisive": false,
+      "blocks_conclusion": false
+    }
+  ],
+  "timeline": [
+    {
+      "timestamp": "2026-02-03T09:14:00Z",
+      "description": "Cash deposit of 9,400 USD into ACC-5510 at branch BR-011.",
+      "evidence_refs": ["txn:TXN-5514#/amount", "txn:TXN-5514#/account_id"]
+    },
+    {
+      "timestamp": "2026-02-04T10:05:00Z",
+      "description": "Cash deposit of 9,300 USD into ACC-5511 at branch BR-011.",
+      "evidence_refs": ["txn:TXN-5515#/amount", "txn:TXN-5515#/account_id"]
+    },
+    {
+      "timestamp": "2026-02-07T14:30:00Z",
+      "description": "Outbound wire of 18,700 USD from ACC-5510 to Meridian Trading LLC.",
+      "evidence_refs": ["txn:TXN-5516#/amount", "txn:TXN-5516#/counterparty/name"]
+    },
+    {
+      "timestamp": "2026-02-09T11:45:00Z",
+      "description": "Inbound wire of 18,600 USD into ACC-5511 from Halden Freight Ltd.",
+      "evidence_refs": ["txn:TXN-5517#/amount", "txn:TXN-5517#/counterparty/name"]
+    },
+    {
+      "timestamp": "2026-02-12T08:20:00Z",
+      "description": "Card receipt of 240 USD into ACC-5510.",
+      "evidence_refs": ["txn:TXN-5518#/amount"]
+    }
+  ],
+  "human_decision_required": [
+    {
+      "decision_id": "D-01",
+      "question": "Whether the case proceeds to a structured investigation of the two counterparties, or the round trip is recorded as an explained commercial movement.",
+      "owner_role": "Case Investigator",
+      "would_change_if": [
+        "Receipt of contracts and invoices showing the payments and the return are unrelated, which would support the benign reading.",
+        "Receipt of records showing the two accounts and the counterparty are used to move value, which would strengthen the adverse reading."
+      ]
+    }
+  ]
+}

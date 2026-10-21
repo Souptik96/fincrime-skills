@@ -1,0 +1,71 @@
+{
+  "case_id": "benign-ato-002",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "No gap was recorded against this subject, so there is nothing to ask for.",
+  "input": {
+    "inline": {
+      "gap_list": [],
+      "subject_scope": {
+        "subject_id": "subject-6106",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6160",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 30,000 USD on 2026-03-04"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "REQ-PAYROLL-REGISTER",
+      "REQ-MORTGAGE-APPLICATION",
+      "REQ-LODGING-TAX-RETURNS",
+      "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "REQ-PROPERTY-TITLE-RECORD",
+      "REQ-EMPLOYMENT-CONTRACT",
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "An empty gap list produces no request."
+  }
+}

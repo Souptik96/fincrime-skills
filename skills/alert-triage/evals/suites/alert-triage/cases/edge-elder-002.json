@@ -1,0 +1,62 @@
+{
+  "case_id": "edge-elder-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A large cash business makes four hundred deposits below the threshold in a month, all explained by its declared profile.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-9306",
+        "accounts": [
+          "acct-9306"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9350",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposits of 9,400 USD across 400 separate days in the month"
+          },
+          {
+            "source_id": "doc:9351",
+            "kind": "document",
+            "present": true,
+            "summary": "Declared cash-intensive business profile of 10,000 USD per day"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Volume is not evidence of intent. The pattern is present and the declared profile accounts for it."
+  }
+}

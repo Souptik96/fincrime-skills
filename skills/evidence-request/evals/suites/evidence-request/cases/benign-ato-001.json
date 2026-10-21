@@ -1,0 +1,78 @@
+{
+  "case_id": "benign-ato-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The customer has already provided the document the gap called for, unprompted.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Evidence of who controls the account",
+          "decisive": true,
+          "blocks_conclusion": false
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6105",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "doc:6150",
+            "kind": "document",
+            "present": true,
+            "summary": "Signed control declaration supplied by the customer"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "REQ-PAYROLL-REGISTER",
+      "REQ-MORTGAGE-APPLICATION",
+      "REQ-LODGING-TAX-RETURNS",
+      "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "REQ-PROPERTY-TITLE-RECORD",
+      "REQ-EMPLOYMENT-CONTRACT",
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The gap is closed before the request is drafted."
+  }
+}

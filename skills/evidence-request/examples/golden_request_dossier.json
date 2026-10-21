@@ -1,0 +1,201 @@
+{
+  "contract_version": "fincrime/finding/1.0.0",
+  "artifact": {
+    "skill_id": "evidence-request",
+    "skill_version": "1.0.0",
+    "artifact_type": "request_dossier",
+    "subject_ids": ["SUB-6610"],
+    "jurisdictions": ["US"],
+    "created_at": "2026-04-22T09:00:00Z",
+    "completeness": "partial",
+    "scope_note": "The dossier covers the two gaps recorded by the triage of alert ALT-6610 and the evidence set that triage was run against."
+  },
+  "provenance": {
+    "skill_id": "evidence-request",
+    "skill_version": "1.0.0",
+    "model": { "provider": "example", "id": "example-model-1", "temperature": 0, "seed": 42 },
+    "prompt_sha256": "f19142536c355744b228704c445089bff7c1b4ec5754800a90731d57d14a8012",
+    "evidence_set_sha256": "87301c1b0fec9ce1bb7dbf3b883bb88fda99884c887191179cadec112b71b554",
+    "knowledge_pack": { "id": "fincrime-knowledge", "version": "core-2026-10", "as_of": "2026-10-01" },
+    "policy_set": { "id": "firm-aml", "version": "7.2" },
+    "run_id": "run-phase3-evidence-request-001",
+    "timestamp": "2026-04-22T09:00:00Z"
+  },
+  "claims": [
+    {
+      "id": "C-001",
+      "class": "fact",
+      "statement": "Card receipts of 1,850 USD, 1,940 USD and 2,010 USD were received on 2026-04-02, 2026-04-03 and 2026-04-06.",
+      "evidence_refs": ["txn:TXN-6611#/amount", "txn:TXN-6612#/amount", "txn:TXN-6615#/amount"],
+      "confidence": {
+        "level": "high",
+        "basis": "Read directly from the transaction records in the supplied evidence set."
+      }
+    },
+    {
+      "id": "C-002",
+      "class": "fact",
+      "statement": "Two cash deposits of 9,200 USD and 9,400 USD were received on 2026-04-03 and 2026-04-04.",
+      "evidence_refs": ["txn:TXN-6613#/amount", "txn:TXN-6614#/amount"],
+      "confidence": {
+        "level": "high",
+        "basis": "Read directly from the transaction records in the supplied evidence set."
+      }
+    },
+    {
+      "id": "C-003",
+      "class": "observation",
+      "statement": "The card receipts in the window total 5,800 USD against a declared monthly card volume of 12,000 USD, while the two cash deposits total 18,600 USD in the same window.",
+      "evidence_refs": [
+        "txn:TXN-6611#/amount",
+        "txn:TXN-6612#/amount",
+        "txn:TXN-6615#/amount",
+        "txn:TXN-6613#/amount",
+        "txn:TXN-6614#/amount",
+        "doc:DOC-6616#/fields/declared_monthly_card_volume"
+      ],
+      "confidence": {
+        "level": "moderate",
+        "basis": "A comparison of the recorded amounts against the declared monthly card volume on file. The window is a single month and is not complete."
+      }
+    },
+    {
+      "id": "C-004",
+      "class": "hypothesis",
+      "epistemic_type": "adverse_reading",
+      "statement": "The cash deposits may not correspond to the declared trading activity of the customer.",
+      "evidence_refs": ["txn:TXN-6613#/amount", "txn:TXN-6614#/amount"],
+      "falsifier": "Settlement batches and terminal logs showing the cash deposits correspond to the declared market takings.",
+      "confidence": {
+        "level": "low",
+        "basis": "The settlement side of the takings is not in the evidence set, so neither reading can be corroborated."
+      }
+    },
+    {
+      "id": "C-005",
+      "class": "hypothesis",
+      "epistemic_type": "benign_reading",
+      "statement": "The cash deposits may be the ordinary daily takings of a market business whose settlement records have simply not been supplied.",
+      "evidence_refs": [
+        "doc:DOC-6616#/fields/declared_business",
+        "doc:DOC-6616#/fields/declared_cash_intensity"
+      ],
+      "falsifier": "Settlement batches and terminal logs showing the cash takings are unrelated to the declared business, or showing takings materially above the declared cash intensity.",
+      "competing_with": ["C-004"],
+      "confidence": {
+        "level": "low",
+        "basis": "The declared profile is on file, but the records that would corroborate it are absent."
+      }
+    },
+    {
+      "id": "C-006",
+      "class": "risk_assessment",
+      "statement": "Whether the cash deposits correspond to the declared trading activity cannot be decided on the records held. The settlement and terminal records that would answer it are absent, so the assessment is stated at the level the evidence supports and no further.",
+      "evidence_refs": ["txn:TXN-6613#/amount", "txn:TXN-6614#/amount", "txn:TXN-6611#/amount"],
+      "confidence": {
+        "level": "low",
+        "basis": "A decisive gap that blocks a conclusion is on the record."
+      }
+    },
+    {
+      "id": "C-007",
+      "class": "recommendation",
+      "statement": "Request the point-of-sale settlement batches and the automated teller machine transaction logs for 2026-04-01 to 2026-04-30 from the acquirer, and re-assess the takings on receipt.",
+      "evidence_refs": ["txn:TXN-6613#/amount", "txn:TXN-6614#/amount"],
+      "knowledge_ids": ["REQ-POS-SETTLEMENT-BATCH", "REQ-ATM-TRANSACTION-LOG"],
+      "explains": ["C-006"],
+      "human_approval_required": true,
+      "confidence": {
+        "level": "moderate",
+        "basis": "The two named catalogue records establish the card side and the cash side of the same takings, which is what the gap calls for."
+      }
+    },
+    {
+      "id": "C-008",
+      "class": "recommendation",
+      "statement": "Request twelve months of account statements to establish the takings baseline for the period before the monitoring window.",
+      "evidence_refs": ["txn:TXN-6611#/amount"],
+      "knowledge_ids": ["REQ-BANK-STATEMENTS-12M"],
+      "explains": ["C-006"],
+      "human_approval_required": true,
+      "confidence": {
+        "level": "moderate",
+        "basis": "A single month is a weak basis for a pattern, and the twelve-month statement is the record that separates a pattern from an episode."
+      }
+    }
+  ],
+  "evidence_inventory": [
+    {
+      "source_id": "txn:TXN-6611",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Card receipt of 1,850 USD on 2026-04-02.",
+      "decisive": true
+    },
+    {
+      "source_id": "txn:TXN-6612",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Card receipt of 1,940 USD on 2026-04-03."
+    },
+    {
+      "source_id": "txn:TXN-6613",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of 9,200 USD at BR-031 on 2026-04-03.",
+      "decisive": true
+    },
+    {
+      "source_id": "txn:TXN-6614",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Cash deposit of 9,400 USD at BR-031 on 2026-04-04.",
+      "decisive": true
+    },
+    {
+      "source_id": "txn:TXN-6615",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Card receipt of 2,010 USD on 2026-04-06."
+    },
+    {
+      "source_id": "subject:SUB-6610",
+      "kind": "subject",
+      "present": true,
+      "summary": "Entity trading as Harbourside Market Ltd, declared cash intensity medium."
+    },
+    {
+      "source_id": "doc:DOC-6616",
+      "kind": "document",
+      "present": true,
+      "summary": "KYC docket recording the declared business, cash intensity and monthly card volume."
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "G-01",
+      "description": "The point-of-sale settlement batches and the automated teller machine logs behind the cash deposits are absent, so the cash side of the takings cannot be compared with the card side.",
+      "decisive": true,
+      "blocks_conclusion": true,
+      "request_ref": "REQ-ATM-TRANSACTION-LOG"
+    },
+    {
+      "gap_id": "G-02",
+      "description": "Only a single month of activity is in the evidence set, so no pattern can be separated from an episode.",
+      "decisive": false,
+      "blocks_conclusion": false,
+      "request_ref": "REQ-BANK-STATEMENTS-12M"
+    }
+  ],
+  "human_decision_required": [
+    {
+      "decision_id": "D-01",
+      "question": "Which of the drafted requests are issued, to whom, and in what order.",
+      "owner_role": "AML Investigations Manager",
+      "would_change_if": [
+        "Receipt of settlement batches and terminal logs consistent with the declared business, which would close the decisive gap.",
+        "A decision to issue the twelve-month statement request first, which lengthens the time before the takings can be assessed."
+      ]
+    }
+  ]
+}

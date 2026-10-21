@@ -1,0 +1,62 @@
+{
+  "case_id": "edge-mule-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "An account with no transactions at all in the monitoring window is the subject of an alert.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-9304",
+        "accounts": [
+          "acct-9304"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:9330",
+            "kind": "document",
+            "present": true,
+            "summary": "Account statement showing no transactions in the window"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "expected_gaps": [
+      "no_transactions_in_window"
+    ],
+    "human_approval_required": false,
+    "notes": "An empty window is an absence of activity. It is not evidence of anything."
+  }
+}

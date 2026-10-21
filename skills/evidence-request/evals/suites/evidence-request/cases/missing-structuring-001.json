@@ -1,0 +1,60 @@
+{
+  "case_id": "missing-structuring-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "missing_data",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "No gap list was supplied, so there is nothing to evaluate.",
+  "input": {
+    "inline": {
+      "gap_list": [],
+      "subject_scope": {
+        "subject_id": "subject-6401",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": []
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "insufficient_information",
+    "expected_gaps": [
+      "gap_list"
+    ],
+    "human_approval_required": true,
+    "notes": "Without the gap list the dossier has no subject. The precondition fails and the skill stops."
+  }
+}

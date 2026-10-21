@@ -1,0 +1,79 @@
+{
+  "case_id": "missing-mule-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "missing_data",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "No account statement and no expected-activity profile were supplied, so the pass-through indicator has no baseline to be measured against.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-9107",
+        "accounts": [
+          "acct-9107"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9180",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 22,000 USD on 2026-03-04"
+          },
+          {
+            "source_id": "txn:9181",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 21,600 USD on 2026-03-04"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "insufficient_information",
+    "expected_gaps": [
+      "baseline_history"
+    ],
+    "human_approval_required": true,
+    "notes": "Without the account's own shape there is nothing to compare against, and the skill must say so."
+  }
+}

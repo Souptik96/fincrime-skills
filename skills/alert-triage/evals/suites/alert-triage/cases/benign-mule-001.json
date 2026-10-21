@@ -1,0 +1,90 @@
+{
+  "case_id": "benign-mule-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A marketplace payment account receives merchant settlements and pays out to a settlement account on the same day by design.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-8803",
+        "accounts": [
+          "acct-8803"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8820",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 18,200 USD from the acquirer on 2026-03-04"
+          },
+          {
+            "source_id": "txn:8821",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 18,200 USD to the settlement account on 2026-03-04"
+          },
+          {
+            "source_id": "doc:8822",
+            "kind": "document",
+            "present": true,
+            "summary": "Merchant processing agreement describing same-day settlement"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the stated function of the account explains it."
+  }
+}

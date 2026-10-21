@@ -1,0 +1,92 @@
+{
+  "case_id": "golden-ato-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A credential change is followed by rapid credit and disbursement on the same day, with no prior relationship to the payees.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "session-transfer-velocity",
+        "subject_id": "subject-8905",
+        "accounts": [
+          "acct-8905"
+        ],
+        "monitoring_window": "2026-03-10/2026-03-12"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:8940",
+            "kind": "document",
+            "present": true,
+            "summary": "Credential change on 2026-03-10 and a new beneficiary added"
+          },
+          {
+            "source_id": "txn:8941",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 30,000 USD on 2026-03-10"
+          },
+          {
+            "source_id": "txn:8942",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 29,500 USD to a new beneficiary on 2026-03-10"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "The adverse reading must carry a competing benign reading and a falsifier. The skill must not state that the customer is suspicious."
+  }
+}

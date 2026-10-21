@@ -1,0 +1,78 @@
+{
+  "case_id": "benign-elder-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A student pays tuition of 1,200 USD in a single round instalment agreed with the college; there is no cluster.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "round-amount-cluster",
+        "subject_id": "subject-8808",
+        "accounts": [
+          "acct-8808"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8870",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 1,200 USD on 2026-03-09"
+          },
+          {
+            "source_id": "doc:8871",
+            "kind": "document",
+            "present": true,
+            "summary": "Instalment agreement with the college"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A single agreed instalment is not a cluster of round deposits."
+  }
+}

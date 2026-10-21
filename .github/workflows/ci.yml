@@ -49,6 +49,62 @@ jobs:
           python -m pip install --quiet "jsonschema>=4.21"
           python scripts/check_schema_parity.py
 
+  cli:
+    name: CLI and skills
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install the core and the CLI (editable, with dev extras)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "packages/fincrime-core[dev]" -e "packages/fincrime-cli[dev]"
+
+      - name: CLI tests
+        run: python -m pytest packages/fincrime-cli/tests -q
+
+      - name: Cross-check the YAML subset parser against PyYAML
+        run: |
+          python -m pip install --quiet "pyyaml>=6.0"
+          python -m pytest packages/fincrime-cli/tests/test_yamlite.py -q
+
+      - name: The workflow files are themselves a contract
+        run: python -m pytest packages/fincrime-cli/tests/test_workflows.py -q
+
+      - name: Network-blocked CLI test run (air-gap safety)
+        run: python scripts/check_no_network.py -- packages/fincrime-cli/tests -q
+
+      - name: Validate the skill packages
+        run: |
+          python -m fincrime_cli.main validate skills/investigation-qa
+          python -m fincrime_cli.main validate skills/alert-triage
+          python -m fincrime_cli.main validate skills/case-summarize
+          python -m fincrime_cli.main validate skills/evidence-request
+          python -m fincrime_cli.main knowledge validate --pack knowledge/examples/sample-pack
+          python -m fincrime_cli.main knowledge validate --pack knowledge/packs/core-2026-10
+
+      - name: Validate the case suites
+        run: |
+          python -m fincrime_cli.main validate skills/alert-triage/evals/suites/alert-triage
+          python -m fincrime_cli.main validate skills/case-summarize/evals/suites/case-summarize
+          python -m fincrime_cli.main validate skills/evidence-request/evals/suites/evidence-request
+
+      - name: Validate the golden artifacts
+        run: |
+          python -m fincrime_cli.main validate skills/alert-triage/examples/golden_triage_report.json --evidence-set skills/alert-triage/examples/golden_evidence_set.json --knowledge-pack knowledge/packs/core-2026-10
+          python -m fincrime_cli.main validate skills/case-summarize/examples/golden_case_summary.json --evidence-set skills/case-summarize/examples/golden_evidence_set.json --knowledge-pack knowledge/packs/core-2026-10
+          python -m fincrime_cli.main validate skills/evidence-request/examples/golden_request_dossier.json --evidence-set skills/evidence-request/examples/golden_evidence_set.json --knowledge-pack knowledge/packs/core-2026-10
+
+      - name: The default policy set produces no violations on the golden artifact
+        run: |
+          python -m fincrime_cli.main policy check \
+            --set policies/default/policy-set.json \
+            --artifact examples/01-alert-triage-structuring/artifact.json
+
   matrix:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
@@ -64,8 +120,67 @@ jobs:
       - name: Install and test
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e "packages/fincrime-core[dev]"
-          python -m pytest packages/fincrime-core/tests -q
+          python -m pip install -e "packages/fincrime-core[dev]" -e "packages/fincrime-cli[dev]"
+          python -m pytest packages/fincrime-core/tests packages/fincrime-cli/tests -q
+
+  promotion:
+    name: Promotion gate
+    # ADR-0006 grades enforcement by change type. A pull request that
+    # promotes a new skill, a new version of a skill, or a new pack version
+    # cannot be built on expired knowledge: that is a hard block. A pull
+    # request that changes nothing promotable is an ordinary CI run, in which
+    # stale knowledge is disclosed rather than blocked — otherwise a pack
+    # going stale would brick the repository for every contributor, which is
+    # the failure the review that produced ADR-0006 caught.
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # The promotion gate diffs against the base branch, so the history
+          # has to be there. No API call is made: the whole job is offline.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install the core and the CLI (editable, with dev extras)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "packages/fincrime-core[dev]" -e "packages/fincrime-cli[dev]"
+
+      - name: Does this pull request promote new or changed content?
+        id: promote
+        run: |
+          set -euo pipefail
+          BASE="origin/${{ github.base_ref }}"
+          if ! git rev-parse --verify --quiet "$BASE" >/dev/null; then
+            echo "Base ref $BASE is not available; falling back to HEAD^1."
+            BASE="HEAD^1"
+          fi
+          # The diff is taken on its own so that a failure to compute it
+          # stops the job. A gate that cannot see the change must not
+          # silently decide that there is no change.
+          CHANGED="$(git diff --name-only "$BASE...HEAD")"
+          PROMOTABLE="$(printf '%s\n' "$CHANGED" | grep -E '^(skills/[^/]+/(fincrime\.skill\.yaml|SKILL\.md)|knowledge/packs/)' || true)"
+          if [ -n "$PROMOTABLE" ]; then
+            echo "promote=true" >> "$GITHUB_OUTPUT"
+            echo "This pull request promotes changed content:"
+            printf '%s\n' "$PROMOTABLE"
+          else
+            echo "promote=false" >> "$GITHUB_OUTPUT"
+            echo "No promotable content changed; the release context applies."
+          fi
+
+      - name: A skill and a pack cannot be promoted on expired knowledge
+        if: steps.promote.outputs.promote == 'true'
+        run: |
+          python -m fincrime_cli.main validate skills/investigation-qa --promotion
+          python -m fincrime_cli.main validate skills/alert-triage --promotion
+          python -m fincrime_cli.main validate skills/case-summarize --promotion
+          python -m fincrime_cli.main validate skills/evidence-request --promotion
+          python -m fincrime_cli.main knowledge validate --pack knowledge/packs/core-2026-10 --promotion
 
   security:
     name: Security posture

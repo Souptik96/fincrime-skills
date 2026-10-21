@@ -1,0 +1,99 @@
+{
+  "case_id": "golden-structuring-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Funds leave one account and return to a commonly owned account through an unrelated counterparty within a stated window.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4310",
+          "acct-4311"
+        ],
+        "counterparties": [
+          "intermediary"
+        ],
+        "period": "2026-02-01/2026-02-28"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4320",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 20,000 USD from acct-4310 on 2026-02-06"
+          },
+          {
+            "source_id": "txn:4321",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 20,000 USD to an unrelated intermediary on 2026-02-06"
+          },
+          {
+            "source_id": "txn:4322",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 19,800 USD to acct-4311 on 2026-02-09"
+          },
+          {
+            "source_id": "doc:4323",
+            "kind": "document",
+            "present": true,
+            "summary": "Registry extract showing a common owner of both accounts"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-CIRCULAR-TRANSFER-CHAIN"
+    ],
+    "required_strings": [
+      "txn:",
+      "IND-CIRCULAR-TRANSFER-CHAIN"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "Every timeline entry must carry a resolving pointer. No assertion may be made that the records do not carry."
+  }
+}

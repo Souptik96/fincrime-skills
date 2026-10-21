@@ -1,0 +1,98 @@
+{
+  "case_id": "golden-elder-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Round-amount cash deposits cluster above the account's usual amounts, and the deposits are withdrawn by a third party at a different branch.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "round-amount-cluster",
+        "subject_id": "subject-8907",
+        "accounts": [
+          "acct-8907"
+        ],
+        "monitoring_window": "2026-02-01/2026-02-28"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:8960",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 4,000 USD on 2026-02-04"
+          },
+          {
+            "source_id": "txn:8961",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 4,000 USD on 2026-02-11"
+          },
+          {
+            "source_id": "txn:8962",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash withdrawal of 7,900 USD by a third party at branch 031 on 2026-02-12"
+          },
+          {
+            "source_id": "doc:8963",
+            "kind": "document",
+            "present": true,
+            "summary": "Account history showing usual activity of 50 USD per month"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "required_strings": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "The adverse reading must carry a competing benign reading and a falsifier. The skill must not state that the customer is suspicious."
+  }
+}

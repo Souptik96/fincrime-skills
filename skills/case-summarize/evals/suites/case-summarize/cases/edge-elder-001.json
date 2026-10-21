@@ -1,0 +1,77 @@
+{
+  "case_id": "edge-elder-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A voided transaction is present in the record and must not appear in the timeline as an event.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4706"
+        ],
+        "counterparties": [
+          "voided-transaction"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4750",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 900 USD on 2026-03-02"
+          },
+          {
+            "source_id": "txn:4751",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Voided payment of 900 USD on 2026-03-02, reversed the same day"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "txn:"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A voided entry is not an event, and the summary must say why it is absent."
+  }
+}

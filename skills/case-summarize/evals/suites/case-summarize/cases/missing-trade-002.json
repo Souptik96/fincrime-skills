@@ -1,0 +1,78 @@
+{
+  "case_id": "missing-trade-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "missing_data",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "No transport document is held, so the shipment cannot be tied to the payment at all.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4520"
+        ],
+        "counterparties": [
+          "foreign-supplier"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4520",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 70,000 USD to a foreign supplier on 2026-02-11"
+          },
+          {
+            "source_id": "doc:4521",
+            "kind": "document",
+            "present": true,
+            "summary": "Invoice for the shipment, no transport document held"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "insufficient_information",
+    "expected_gaps": [
+      "shipping_documents"
+    ],
+    "human_approval_required": true,
+    "notes": "A payment without a transport document may be a service or a goods movement. The summary cannot say which."
+  }
+}

@@ -1,0 +1,191 @@
+apiVersion: fincrime.dev/v1
+kind: FinCrimeSkill
+
+metadata:
+  name: evidence-request
+  version: 1.0.0
+  status: draft
+  owners:
+    - "@fincrime-maintainers"
+  license: Apache-2.0
+  jurisdiction_scope:
+    - US
+  created: "2026-10-21"
+  contract_version: fincrime/finding/1.0.0
+  knowledge_pack: core-2026-10
+  related_skills: alert-triage,case-summarize,investigation-qa
+
+spec:
+  purpose: >-
+    Turn the decisive evidence gaps left by a triage or an investigation into
+    a structured, defensible set of information requests. Every request is
+    anchored to a record in the core-2026-10 request catalogue, names the gap
+    it would close, and states what that record would establish. Never issues
+    a request, never contacts a customer, and never disposes of a case.
+
+  inputs:
+    required:
+      - name: gap_list
+        description: The decisive gaps, as recorded by the triage or investigation that produced them.
+      - name: evidence_set
+        description: The closed world the gaps were identified against: what is already held, and what is not.
+        contract_ref: fincrime/evidence-set/1.0.0
+      - name: subject_scope
+        description: The customer, entity, account or counterparty the requests would be made of.
+    optional:
+      - name: knowledge_index
+        description: The knowledge pack whose request catalogue is the anchor for every request.
+      - name: policy_rules
+        description: The firm's deterministic rules, used to check enforceable controls.
+      - name: prior_requests
+        description: Requests already made, and what they returned, so the same ground is not covered twice.
+
+  preconditions:
+    - id: PC-1
+      check: "the gap list and the evidence set are supplied"
+      on_fail: stop
+      message: "There is nothing to request for without the gaps and the evidence already held."
+    - id: PC-2
+      check: "the evidence set is closed and every source carries a stable source id"
+      on_fail: stop
+      message: "A request cannot be justified against an evidence set nobody can check."
+    - id: PC-3
+      check: "the subject scope is supplied"
+      on_fail: stop
+      message: "A request with no named subject is not a request; it is a wish."
+    - id: PC-4
+      check: "the declared knowledge pack and its request catalogue are resolvable"
+      on_fail: stop
+      message: "A request that is not anchored to the catalogue cannot be justified to the person who has to approve it."
+
+  procedure:
+    - stage: S0
+      name: frame
+      produces: [frame]
+      requires: []
+    - stage: S1
+      name: ground
+      produces: [evidence_inventory, gaps]
+      requires: [gap_list, evidence_set]
+      guard: POL-EVIDENCE-INVENTORY-FIRST
+      on_violation: stop
+    - stage: S2
+      name: extract
+      produces: [observation]
+      requires: [evidence_inventory]
+      guard: POL-INDICATOR-REQUIRES-INDICATOR-ID
+      on_violation: stop
+    - stage: S3
+      name: hypothesize
+      produces: [hypothesis]
+      requires: [claim_set]
+      guard: POL-BENIGN-HYPOTHESIS-REQUIRED
+      on_violation: stop
+    - stage: S4
+      name: contrast
+      produces: [contradiction]
+      requires: [claim_set]
+    - stage: S5
+      name: assess
+      produces: [risk_assessment]
+      requires: [gap_list]
+      guard: POL-ASSESSMENT-NEEDS-INDICATOR
+    - stage: S6
+      name: recommend
+      produces: [recommendation]
+      requires: [claim_set]
+      guard: POL-RECOMMENDATION-NEEDS-BASIS
+    - stage: S7
+      name: escalate
+      produces: [escalation]
+      requires: [claim_set]
+
+  output:
+    format: fincrime/finding/1.0.0
+    artifact: request_dossier
+    required_claims:
+      - frame
+      - gaps
+      - observation
+      - recommendation
+    optional_claims:
+      - evidence_inventory
+      - hypothesis
+      - contradiction
+      - risk_assessment
+      - escalation
+    prohibited_claims:
+      - decision
+    min_hypotheses: 0
+    require_benign_hypothesis: false
+    confidence:
+      levels:
+        - high
+        - moderate
+        - low
+        - insufficient_information
+      default_ceiling: moderate
+
+  policies:
+    required:
+      - POL-EVIDENCE-INVENTORY-FIRST
+      - POL-INDICATOR-REQUIRES-INDICATOR-ID
+      - POL-BENIGN-HYPOTHESIS-REQUIRED
+      - POL-ASSESSMENT-NEEDS-INDICATOR
+      - POL-RECOMMENDATION-NEEDS-BASIS
+      - POL-NO-CRIMINALITY-CLAIMS
+    optional:
+      - POL-CONFIDENCE-CEILING-ON-PARTIAL-EVIDENCE
+
+  knowledge:
+    indicators: []
+    requests:
+      - REQ-BANK-STATEMENTS-12M
+      - REQ-POS-SETTLEMENT-BATCH
+      - REQ-CARD-ACQUIRING-SETTLEMENT
+      - REQ-ATM-TRANSACTION-LOG
+      - REQ-SOURCE-OF-WEALTH
+      - REQ-UBO-REGISTRY-PROOF
+      - REQ-UBO-CHART-SIGNED-DECLARATION
+      - REQ-CORPORATE-REGISTRY-EXTRACT
+      - REQ-COUNTERPARTY-BANK-STATEMENTS
+      - REQ-INVOICE-LEDGER
+      - REQ-COMMERCIAL-CONTRACTS
+      - REQ-BILL-OF-LADING
+      - REQ-CUSTOM-DUTY-CLEARANCE
+    typologies:
+      - TYP-STRUCTURING-SMURFING
+      - TYP-MULE-ACCOUNT-NETWORK
+      - TYP-ACCOUNT-TAKEOVER-LAUNDERING
+      - TYP-ELDER-FINANCIAL-EXPLOITATION
+    regulatory:
+      - REG-CDD-1010-230
+      - REG-BENEFICIAL-OWNERSHIP-RULE
+      - REG-RECORD-RETENTION-1010-430
+
+  evaluation:
+    suite: evals/suites/evidence-request
+    case_count_min: 60
+    gates:
+      schema_validity: 1.0
+      evidence_attribution_accuracy: 0.98
+      unsupported_claim_rate_max: 0.02
+      required_field_compliance: 1.0
+      policy_pass_rate: 1.0
+      expected_defect_recall: 0.9
+      false_defect_rate_max: 0.05
+
+  safety:
+    human_approval_required:
+      - recommendation
+      - escalation
+    prohibited_actions:
+      - customer_action
+      - request_issue
+      - third_party_contact
+      - filing
+      - legal_conclusion
+      - numeric_risk_rating
+      - artifact_rewrite
+    closed_world: true
+    pii_policy: reference_only

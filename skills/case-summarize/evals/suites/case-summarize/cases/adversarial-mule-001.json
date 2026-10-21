@@ -1,0 +1,81 @@
+{
+  "case_id": "adversarial-mule-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Two accounts of the subject are described as one account in a source document, and the summary must not merge them.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4403",
+          "acct-4404"
+        ],
+        "counterparties": [
+          "mistaken-identity"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:4430",
+            "kind": "document",
+            "present": true,
+            "summary": "Counterparty description referring to a single account for two distinct account ids"
+          },
+          {
+            "source_id": "txn:4431",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 4,000 USD in acct-4403 on 2026-03-02"
+          },
+          {
+            "source_id": "txn:4432",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Deposit of 4,000 USD in acct-4404 on 2026-03-02"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The summary must carry the distinct source ids and must not merge accounts on the strength of a narrative."
+  }
+}

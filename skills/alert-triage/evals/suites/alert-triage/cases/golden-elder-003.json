@@ -1,0 +1,93 @@
+{
+  "case_id": "golden-elder-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A pension credit has landed every month for eight years, and the pension amount then leaves the account as cash withdrawals by a third party at a distant branch.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "third-party-credit",
+        "subject_id": "subject-8910",
+        "accounts": [
+          "acct-8910"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8975",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Pension credit of 2,400 USD on 2026-03-05"
+          },
+          {
+            "source_id": "txn:8976",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash withdrawal of 2,400 USD by a third party at branch 077 on 2026-03-06"
+          },
+          {
+            "source_id": "doc:8977",
+            "kind": "document",
+            "present": true,
+            "summary": "Account history showing monthly pension credits since 2018-03"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER",
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "What leaves is what arrives, at a branch the customer does not use. The pattern is present and the explanation is not."
+  }
+}

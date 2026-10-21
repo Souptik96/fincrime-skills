@@ -1,0 +1,76 @@
+{
+  "case_id": "contradictory-mule-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The account statement records the credit settling, and the counterparty's statement records that the payment was never sent.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-9207",
+        "accounts": [
+          "acct-9207"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "doc:9260",
+            "kind": "document",
+            "present": true,
+            "summary": "Account statement showing a credit of 12,000 USD received on 2026-03-03"
+          },
+          {
+            "source_id": "doc:9261",
+            "kind": "document",
+            "present": true,
+            "summary": "Counterparty statement recording that no payment was sent on 2026-03-03"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "One side of the movement is in dispute, and the triage must not pick one."
+  }
+}

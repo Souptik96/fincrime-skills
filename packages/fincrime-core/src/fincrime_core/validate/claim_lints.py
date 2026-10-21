@@ -315,6 +315,30 @@ def lint_claims(
                 )
             )
 
+    # R-1b: EVERY reference on a timeline entry must resolve against the
+    # evidence set. A timeline is the artifact's account of what happened
+    # and when; an entry whose pointer dangles is an event asserted with
+    # nothing behind it. The rule is deliberately independent of R-1a: R-1a
+    # governs the claims, and a timeline entry is not a claim, so a skill
+    # could otherwise carry an unanchored event past the validator.
+    for index, entry in enumerate(finding.timeline):
+        for ref in entry.evidence_refs:
+            resolution = source_index.resolve(ref)
+            if not resolution.ok:
+                code = {
+                    "over_broad_citation": "over_broad_citation",
+                    "malformed_ref": "malformed_evidence_ref",
+                }.get(resolution.error_code or "", "unsupported_claim")
+                defects.append(
+                    _defect(
+                        code,
+                        f"Timeline entry {index} ({entry.timestamp}) cites {ref!r} which does not resolve: "
+                        f"{resolution.error_message}",
+                        None,
+                        "R-1b",
+                    )
+                )
+
     # R-8: a partial evidence set caps the confidence of every *conclusion*
     # drawn from it. It does not cap the confidence of a fact read directly
     # from a record that is present: that fact is complete in itself. What a

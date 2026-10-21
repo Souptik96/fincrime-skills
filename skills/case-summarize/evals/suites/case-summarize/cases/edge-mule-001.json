@@ -1,0 +1,77 @@
+{
+  "case_id": "edge-mule-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Two events share an identical timestamp, and the summary must not imply an order between them.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4702"
+        ],
+        "counterparties": [
+          "identical-timestamps"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4720",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 1,100 USD at 2026-03-02T10:15:00Z"
+          },
+          {
+            "source_id": "txn:4721",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 1,100 USD at 2026-03-02T10:15:00Z"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "txn:"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Ordering that the record does not support must not be asserted."
+  }
+}

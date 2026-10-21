@@ -1,0 +1,90 @@
+{
+  "case_id": "benign-elder-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A retailer prices in round figures, its takings settle at round amounts every day, and the account history shows the same shape for two years.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "round-amount-cluster",
+        "subject_id": "subject-8807",
+        "accounts": [
+          "acct-8807"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8860",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 5,000 USD on 2026-03-02"
+          },
+          {
+            "source_id": "txn:8861",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 5,000 USD on 2026-03-03"
+          },
+          {
+            "source_id": "doc:8862",
+            "kind": "document",
+            "present": true,
+            "summary": "Account history showing round takings since 2024-03"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "required_strings": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The amounts are round because the business prices that way. A long baseline separates the pattern from the episode."
+  }
+}

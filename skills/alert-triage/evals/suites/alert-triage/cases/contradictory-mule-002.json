@@ -1,0 +1,76 @@
+{
+  "case_id": "contradictory-mule-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The payroll register names a different entity as the payer than the account records do.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-9204",
+        "accounts": [
+          "acct-9204"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9230",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 12,000 USD from Entity Alpha on 2026-03-03"
+          },
+          {
+            "source_id": "doc:9231",
+            "kind": "document",
+            "present": true,
+            "summary": "Payroll register naming Entity Beta as the payer"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "Two sources disagree about who paid. The skill must not pick one."
+  }
+}

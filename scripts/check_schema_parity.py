@@ -114,6 +114,106 @@ CORPUS: list[tuple[str, object, bool]] = [
         False,
     ),
     ("skill-manifest.schema.json", {"apiVersion": "fincrime.dev/v1", "kind": "FinCrimeSkill"}, False),
+    # A manifest that cites request-catalogue records. The knowledge block
+    # carries a `requests` list of its own, so a record type that is neither
+    # an indicator nor a scenario is still resolved against the pack.
+    (
+        "skill-manifest.schema.json",
+        {
+            "apiVersion": "fincrime.dev/v1",
+            "kind": "FinCrimeSkill",
+            "metadata": {
+                "name": "example-skill",
+                "version": "1.0.0",
+                "status": "draft",
+                "owners": ["@someone"],
+                "license": "Apache-2.0",
+                "jurisdiction_scope": ["US"],
+            },
+            "spec": {
+                "purpose": "p",
+                "inputs": {"required": [{"name": "evidence_set", "description": "d"}]},
+                "preconditions": [
+                    {"id": "PC-1", "check": "c", "on_fail": "stop", "message": "m"}
+                ],
+                "procedure": [
+                    {"stage": "S0", "name": "frame", "produces": ["frame"], "requires": []}
+                ],
+                "output": {
+                    "format": "fincrime/finding/1.0.0",
+                    "artifact": "request_dossier",
+                    "required_claims": ["frame"],
+                    "prohibited_claims": ["decision"],
+                    "min_hypotheses": 0,
+                    "require_benign_hypothesis": False,
+                    "confidence": {"levels": ["low"], "default_ceiling": "low"},
+                },
+                "policies": {"required": ["POL-NO-CRIMINALITY-CLAIMS"]},
+                "knowledge": {
+                    "indicators": [],
+                    "requests": ["REQ-BANK-STATEMENTS-12M"],
+                },
+                "evaluation": {
+                    "suite": "evals/suites/example",
+                    "case_count_min": 60,
+                    "gates": {"schema_validity": 1.0},
+                },
+                "safety": {
+                    "human_approval_required": ["recommendation"],
+                    "prohibited_actions": ["filing"],
+                    "closed_world": True,
+                },
+            },
+        },
+        True,
+    ),
+    (
+        "skill-manifest.schema.json",
+        {
+            "apiVersion": "fincrime.dev/v1",
+            "kind": "FinCrimeSkill",
+            "metadata": {
+                "name": "example-skill",
+                "version": "1.0.0",
+                "status": "draft",
+                "owners": ["@someone"],
+                "license": "Apache-2.0",
+                "jurisdiction_scope": ["US"],
+            },
+            "spec": {
+                "purpose": "p",
+                "inputs": {"required": [{"name": "evidence_set", "description": "d"}]},
+                "preconditions": [
+                    {"id": "PC-1", "check": "c", "on_fail": "stop", "message": "m"}
+                ],
+                "procedure": [
+                    {"stage": "S0", "name": "frame", "produces": ["frame"], "requires": []}
+                ],
+                "output": {
+                    "format": "fincrime/finding/1.0.0",
+                    "artifact": "request_dossier",
+                    "required_claims": ["frame"],
+                    "prohibited_claims": ["decision"],
+                    "min_hypotheses": 0,
+                    "require_benign_hypothesis": False,
+                    "confidence": {"levels": ["low"], "default_ceiling": "low"},
+                },
+                "policies": {"required": ["POL-NO-CRIMINALITY-CLAIMS"]},
+                "knowledge": {"requests": [42]},
+                "evaluation": {
+                    "suite": "evals/suites/example",
+                    "case_count_min": 60,
+                    "gates": {"schema_validity": 1.0},
+                },
+                "safety": {
+                    "human_approval_required": ["recommendation"],
+                    "prohibited_actions": ["filing"],
+                    "closed_world": True,
+                },
+            },
+        },
+        False,
+    ),
     ("evidence-ref-grammar.schema.json", {}, False),
     ("case.schema.json", {"case_id": "x", "suite": "s", "version": "1.0.0", "kind": "golden"}, False),
     # The policy set references the rule contract across files. The two

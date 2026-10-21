@@ -1,0 +1,68 @@
+{
+  "case_id": "edge-elder-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A newly opened account takes one deposit of 9,400 USD and no history exists to compare it with.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-9305",
+        "accounts": [
+          "acct-9305"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:9340",
+            "kind": "document",
+            "present": true,
+            "summary": "Account opened 2026-03-01"
+          },
+          {
+            "source_id": "txn:9341",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-02"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "expected_gaps": [
+      "baseline_history"
+    ],
+    "human_approval_required": false,
+    "notes": "One deposit, no cluster, no baseline. The skill must record the gap rather than a finding."
+  }
+}

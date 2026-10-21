@@ -1,0 +1,75 @@
+{
+  "case_id": "golden-trade-002",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The transport and customs records for the shipment are not held, so the declared value cannot be tested.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "The transport and customs records for the shipment",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6210",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6290",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 75,000 USD to a foreign supplier on 2026-02-11"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "REQ-BILL-OF-LADING",
+      "REQ-CUSTOM-DUTY-CLEARANCE"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "A bill of lading and a customs clearance are what establish that goods moved and what they were declared at."
+  }
+}

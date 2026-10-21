@@ -1,0 +1,136 @@
+{
+  "case_id": "edge-mule-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Twelve gaps are open and only two are decisive; the dossier must request for the two and record the rest.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Account statements for the period",
+          "decisive": true,
+          "blocks_conclusion": true
+        },
+        {
+          "gap_id": "G-02",
+          "description": "Who owns the beneficiary entity",
+          "decisive": true,
+          "blocks_conclusion": true
+        },
+        {
+          "gap_id": "G-03",
+          "description": "Confirmation of trading name",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-04",
+          "description": "Confirmation of registered address",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-05",
+          "description": "The contact telephone number on file",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-06",
+          "description": "Confirmation of the branch relationship",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-07",
+          "description": "The customer correspondence file",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-08",
+          "description": "Confirmation of the product terms",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-09",
+          "description": "The interest rate applied",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-10",
+          "description": "Confirmation of the statement cycle",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-11",
+          "description": "The fee schedule",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-12",
+          "description": "Confirmation of the pricing schedule",
+          "decisive": false,
+          "blocks_conclusion": false
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6602",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6620",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 30,000 USD on 2026-03-02"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Twelve gaps, two decisive. The request set is the minimum that closes the decisive ones."
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "case_id": "missing-structuring-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "missing_data",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The statements of one account in scope were not provided, so the timeline has a hole.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4501",
+          "acct-4502"
+        ],
+        "counterparties": [
+          "one-account-absent"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4510",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD in acct-4501 on 2026-03-02"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "insufficient_information",
+    "expected_gaps": [
+      "account_statements_missing"
+    ],
+    "human_approval_required": true,
+    "notes": "A hole in the timeline is a gap and must be marked as one, not smoothed over."
+  }
+}

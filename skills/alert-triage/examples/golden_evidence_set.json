@@ -1,0 +1,123 @@
+{
+  "evidence_set_version": "fincrime/evidence-set/1.0.0",
+  "alert": {
+    "alert_id": "ALT-4410",
+    "rule_id": "SC-TM-CASH-STRUCTURING",
+    "rule_name": "Cash deposit clustering",
+    "triggered_at": "2026-05-18T00:00:00Z",
+    "window": { "from": "2026-05-01T00:00:00Z", "to": "2026-05-18T00:00:00Z" },
+    "subject_id": "SUB-4410"
+  },
+  "subject": {
+    "subject_id": "SUB-4410",
+    "type": "individual",
+    "segment": "small_business",
+    "onboarded_at": "2024-02-11",
+    "kyc_status": "current",
+    "declared_profile": {
+      "business": "Northgate Convenience Store",
+      "expected_activity": "Daily card and cash takings",
+      "expected_monthly_volume": 58000,
+      "cash_intensity": "medium"
+    }
+  },
+  "transactions": [
+    {
+      "txn_id": "TXN-4411",
+      "ts": "2026-05-04T09:14:00Z",
+      "direction": "inbound",
+      "amount": 9400,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "ACC-4410",
+      "branch_id": "BR-011"
+    },
+    {
+      "txn_id": "TXN-4412",
+      "ts": "2026-05-05T10:02:00Z",
+      "direction": "inbound",
+      "amount": 9600,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "ACC-4410",
+      "branch_id": "BR-014"
+    },
+    {
+      "txn_id": "TXN-4413",
+      "ts": "2026-05-06T08:41:00Z",
+      "direction": "inbound",
+      "amount": 9500,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "ACC-4410",
+      "branch_id": "BR-022"
+    },
+    {
+      "txn_id": "TXN-4414",
+      "ts": "2026-05-07T12:20:00Z",
+      "direction": "inbound",
+      "amount": 9300,
+      "currency": "USD",
+      "channel": "cash",
+      "account_id": "ACC-4410",
+      "branch_id": "BR-011"
+    },
+    {
+      "txn_id": "TXN-4415",
+      "ts": "2026-05-09T17:05:00Z",
+      "direction": "inbound",
+      "amount": 1240,
+      "currency": "USD",
+      "channel": "card",
+      "account_id": "ACC-4410",
+      "branch_id": "BR-011"
+    }
+  ],
+  "documents": [
+    {
+      "doc_id": "DOC-4416",
+      "kind": "kyc_docket",
+      "present": true,
+      "received_at": "2024-02-11",
+      "fields": {
+        "business_registration_number": "BR-8891",
+        "declared_business": "Northgate Convenience Store",
+        "declared_cash_intensity": "medium"
+      }
+    },
+    {
+      "doc_id": "DOC-4417",
+      "kind": "business_registration",
+      "present": true,
+      "received_at": "2024-02-11",
+      "fields": {
+        "registered_address": "14 Northgate Row",
+        "registration_number": "BR-8891"
+      }
+    }
+  ],
+  "policies": {
+    "policy_set_id": "firm-aml",
+    "policy_set_version": "7.2",
+    "jurisdictions": ["US"],
+    "scenarios": [
+      {
+        "rule_id": "SC-TM-CASH-STRUCTURING",
+        "name": "Cash structuring",
+        "question": "Does cash activity deviate from the expected profile in a way consistent with evasion of reporting thresholds?",
+        "severity": "high",
+        "min_window_coverage": 0.8
+      }
+    ],
+    "thresholds": [
+      {
+        "policy_id": "POL-STRUCT-THRESHOLD-PROXIMITY",
+        "name": "Currency transaction reporting threshold",
+        "value": 10000,
+        "currency": "USD",
+        "jurisdictions": ["US"],
+        "effective_from": "2020-01-01"
+      }
+    ]
+  }
+}

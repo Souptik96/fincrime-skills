@@ -1,0 +1,65 @@
+{
+  "case_id": "edge-structuring-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Deposits are denominated in euro, and the threshold policy is denominated in dollars; no cluster may be asserted across the two.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-9302",
+        "accounts": [
+          "acct-9302"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9310",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 8,900 EUR on 2026-03-03"
+          },
+          {
+            "source_id": "txn:9311",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 8,900 EUR on 2026-03-04"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The comparison requires a stated currency and a conversion basis. Neither is in the set."
+  }
+}

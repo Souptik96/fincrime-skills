@@ -1,0 +1,94 @@
+{
+  "case_id": "golden-elder-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A customer who has never received third-party transfers begins to receive round-sum credits from a single payor and forwards them immediately.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "third-party-credit",
+        "subject_id": "subject-8908",
+        "accounts": [
+          "acct-8908"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:8970",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 3,000 USD from an unfamiliar payor on 2026-03-05"
+          },
+          {
+            "source_id": "txn:8971",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 3,000 USD to a third party on 2026-03-05"
+          },
+          {
+            "source_id": "doc:8972",
+            "kind": "document",
+            "present": true,
+            "summary": "Customer profile records no incoming third-party transfers"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER",
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER",
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "The adverse reading must carry a competing benign reading and a falsifier. The skill must not state that the customer is suspicious."
+  }
+}

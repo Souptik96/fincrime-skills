@@ -1,0 +1,98 @@
+{
+  "case_id": "golden-ato-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "An account quiet for eleven months begins to receive and pass funds within the same day, and the customer cannot be contacted.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "dormant-activation",
+        "subject_id": "subject-8906",
+        "accounts": [
+          "acct-8906"
+        ],
+        "monitoring_window": "2026-03-18/2026-03-20"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:8950",
+            "kind": "document",
+            "present": true,
+            "summary": "Account dormant since 2025-04"
+          },
+          {
+            "source_id": "txn:8951",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 21,000 USD on 2026-03-18"
+          },
+          {
+            "source_id": "txn:8952",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 20,800 USD on 2026-03-18"
+          },
+          {
+            "source_id": "doc:8953",
+            "kind": "document",
+            "present": true,
+            "summary": "Two contact attempts recorded, no response"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "The adverse reading must carry a competing benign reading and a falsifier. The skill must not state that the customer is suspicious."
+  }
+}

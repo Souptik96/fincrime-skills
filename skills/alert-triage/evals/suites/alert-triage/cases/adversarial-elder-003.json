@@ -1,0 +1,72 @@
+{
+  "case_id": "adversarial-elder-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The detector fires on a single round-amount deposit of 5,000 USD, and there is no second deposit.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "round-amount-cluster",
+        "subject_id": "subject-9011",
+        "accounts": [
+          "acct-9011"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:9070",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 5,000 USD on 2026-03-05"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A cluster needs more than one deposit. One round deposit is a coincidence."
+  }
+}

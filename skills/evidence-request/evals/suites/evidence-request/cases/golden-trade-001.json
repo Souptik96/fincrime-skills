@@ -1,0 +1,75 @@
+{
+  "case_id": "golden-trade-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The trade side of the payments is undocumented, so the divergence between the declared and invoiced values cannot be examined.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "The invoices raised and received for the period",
+          "decisive": true,
+          "blocks_conclusion": true
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6208",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6280",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 80,000 USD to a foreign supplier on 2026-02-11"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "REQ-INVOICE-LEDGER",
+      "REQ-COMMERCIAL-CONTRACTS"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "The invoice ledger and the underlying contracts are what a trade comparison is built on."
+  }
+}

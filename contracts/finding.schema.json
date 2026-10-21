@@ -66,6 +66,7 @@
             "case_summary",
             "sar_narrative",
             "evidence_request_plan",
+            "request_dossier",
             "qa_result",
             "sanctions_assessment"
           ]

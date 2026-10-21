@@ -1,0 +1,79 @@
+{
+  "case_id": "missing-elder-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "missing_data",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The customer's mandate to a third party is not in the evidence set, so a third-party withdrawal cannot be assessed for authorisation at all.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "third-party-credit",
+        "subject_id": "subject-9109",
+        "accounts": [
+          "acct-9109"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:9200",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash withdrawal of 3,000 USD by a third party at branch 044 on 2026-03-04"
+          },
+          {
+            "source_id": "doc:9201",
+            "kind": "document",
+            "present": true,
+            "summary": "Withdrawal record naming the third party, no mandate held"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "gaps",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "insufficient_information",
+    "expected_gaps": [
+      "third_party_mandate"
+    ],
+    "human_approval_required": true,
+    "notes": "An unauthorised withdrawal and an authorised one look identical until the mandate is known."
+  }
+}

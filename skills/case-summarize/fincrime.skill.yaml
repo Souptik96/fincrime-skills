@@ -1,0 +1,183 @@
+apiVersion: fincrime.dev/v1
+kind: FinCrimeSkill
+
+metadata:
+  name: case-summarize
+  version: 1.0.0
+  status: draft
+  owners:
+    - "@fincrime-maintainers"
+  license: Apache-2.0
+  jurisdiction_scope:
+    - US
+  created: "2026-10-21"
+  contract_version: fincrime/finding/1.0.0
+  knowledge_pack: core-2026-10
+  related_skills: alert-triage,evidence-request,investigation-qa
+
+spec:
+  purpose: >-
+    Synthesize the transactions, accounts, counterparties and documents of an
+    open case into a single investigative summary whose every event is
+    anchored to a resolvable RFC 6901 evidence pointer. Separates a pattern
+    from an episode, keeps a claim no stronger than the evidence behind it,
+    and marks the gaps that block a conclusion. Never decides, never files
+    and never closes a case.
+
+  inputs:
+    required:
+      - name: evidence_set
+        description: The closed world of transaction, account, counterparty and document records across every account in scope.
+        contract_ref: fincrime/evidence-set/1.0.0
+      - name: subject_scope
+        description: The accounts, counterparties and entities in scope, and the period the summary covers.
+    optional:
+      - name: knowledge_index
+        description: The knowledge pack used to resolve indicator ids, their benign explanations and their dates.
+      - name: policy_rules
+        description: The firm's deterministic rules, used to check enforceable controls.
+      - name: prior_findings
+        description: Earlier artifacts for the same case, whose claims may be carried forward under the drift rule.
+
+  preconditions:
+    - id: PC-1
+      check: "the evidence set and the subject scope are supplied"
+      on_fail: stop
+      message: "There is nothing to summarize without the evidence and the scope it covers."
+    - id: PC-2
+      check: "the evidence set is closed and every source carries a stable source id"
+      on_fail: stop
+      message: "Evidence attribution cannot be checked against an open or unaddressable evidence set."
+    - id: PC-3
+      check: "every source in scope resolves by pointer"
+      on_fail: stop
+      message: "A timeline anchored to a pointer that does not resolve is a timeline of assertions."
+    - id: PC-4
+      check: "the declared knowledge pack is resolvable"
+      on_fail: annotate
+      message: "Indicator existence and freshness cannot be verified; disclose it."
+
+  procedure:
+    - stage: S0
+      name: frame
+      produces: [frame]
+      requires: []
+    - stage: S1
+      name: ground
+      produces: [evidence_inventory, gaps]
+      requires: [evidence_set]
+      guard: POL-EVIDENCE-INVENTORY-FIRST
+      on_violation: stop
+    - stage: S2
+      name: extract
+      produces: [observation, timeline]
+      requires: [evidence_inventory]
+      guard: POL-INDICATOR-REQUIRES-INDICATOR-ID
+      on_violation: stop
+    - stage: S3
+      name: hypothesize
+      produces: [hypothesis]
+      requires: [claim_set]
+      guard: POL-BENIGN-HYPOTHESIS-REQUIRED
+      on_violation: stop
+    - stage: S4
+      name: contrast
+      produces: [contradiction]
+      requires: [claim_set]
+    - stage: S5
+      name: assess
+      produces: [risk_assessment]
+      requires: [gap_list]
+      guard: POL-ASSESSMENT-NEEDS-INDICATOR
+    - stage: S6
+      name: recommend
+      produces: [recommendation]
+      requires: [claim_set]
+      guard: POL-RECOMMENDATION-NEEDS-BASIS
+    - stage: S7
+      name: escalate
+      produces: [escalation]
+      requires: [claim_set]
+
+  output:
+    format: fincrime/finding/1.0.0
+    artifact: case_summary
+    required_claims:
+      - frame
+      - evidence_inventory
+      - gaps
+      - observation
+      - timeline
+      - risk_assessment
+      - recommendation
+    optional_claims:
+      - hypothesis
+      - contradiction
+      - indicator
+      - escalation
+    prohibited_claims:
+      - decision
+    min_hypotheses: 0
+    require_benign_hypothesis: false
+    confidence:
+      levels:
+        - high
+        - moderate
+        - low
+        - insufficient_information
+      default_ceiling: moderate
+
+  policies:
+    required:
+      - POL-EVIDENCE-INVENTORY-FIRST
+      - POL-INDICATOR-REQUIRES-INDICATOR-ID
+      - POL-BENIGN-HYPOTHESIS-REQUIRED
+      - POL-ASSESSMENT-NEEDS-INDICATOR
+      - POL-RECOMMENDATION-NEEDS-BASIS
+      - POL-NO-CRIMINALITY-CLAIMS
+    optional:
+      - POL-CONFIDENCE-CEILING-ON-PARTIAL-EVIDENCE
+
+  knowledge:
+    indicators:
+      - IND-MULTI-ACCOUNT-AGGREGATION
+      - IND-FUNNEL-ACCOUNT-AGGREGATION
+      - IND-CIRCULAR-TRANSFER-CHAIN
+      - IND-THIRD-PARTY-TRANSFER-CHAIN
+      - IND-COMMON-OWNERSHIP-SHELL-CHAIN
+    scenarios: []
+    typologies:
+      - TYP-STRUCTURING-SMURFING
+      - TYP-MULE-ACCOUNT-NETWORK
+      - TYP-ACCOUNT-TAKEOVER-LAUNDERING
+      - TYP-SHELL-COMPANY-LAYERING
+      - TYP-TRADE-BASED-MONEY-LAUNDERING
+    regulatory:
+      - REG-TRANSFER-1010-410F
+      - REG-TRAVEL-RULE-1010-410E
+
+  evaluation:
+    suite: evals/suites/case-summarize
+    case_count_min: 60
+    gates:
+      schema_validity: 1.0
+      evidence_attribution_accuracy: 0.98
+      unsupported_claim_rate_max: 0.02
+      required_field_compliance: 1.0
+      policy_pass_rate: 1.0
+      expected_defect_recall: 0.9
+      false_defect_rate_max: 0.05
+
+  safety:
+    human_approval_required:
+      - recommendation
+      - escalation
+    prohibited_actions:
+      - customer_action
+      - filing
+      - legal_conclusion
+      - numeric_risk_rating
+      - case_disposition
+      - artifact_rewrite
+    closed_world: true
+    pii_policy: reference_only

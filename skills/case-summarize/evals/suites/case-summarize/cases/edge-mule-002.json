@@ -1,0 +1,77 @@
+{
+  "case_id": "edge-mule-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A credit and a debit of the same amount on the same day to and from the same counterparty, which is a refund and not a pass-through.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4555"
+        ],
+        "counterparties": [
+          "merchant"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4555",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 2,600 USD from a merchant on 2026-03-09"
+          },
+          {
+            "source_id": "txn:4556",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 2,600 USD back to the same merchant on 2026-03-09"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "txn:"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A round trip to the same party is not funds moving onward."
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "case_id": "edge-structuring-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Three accounts each take a 9,400 USD deposit on the same day, and the threshold policy applies per account rather than per subject.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-9310",
+        "accounts": [
+          "acct-A",
+          "acct-B",
+          "acct-C"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:9370",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD in acct-A on 2026-03-04"
+          },
+          {
+            "source_id": "txn:9371",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD in acct-B on 2026-03-04"
+          },
+          {
+            "source_id": "txn:9372",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD in acct-C on 2026-03-04"
+          },
+          {
+            "source_id": "doc:9373",
+            "kind": "document",
+            "present": true,
+            "summary": "Threshold policy stating that the threshold applies to each account"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "Three deposits of 9,400 USD in three accounts are three deposits below the threshold. Adding them up is the move the policy forbids."
+  }
+}

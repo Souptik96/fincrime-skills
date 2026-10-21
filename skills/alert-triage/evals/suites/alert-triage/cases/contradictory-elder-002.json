@@ -1,0 +1,76 @@
+{
+  "case_id": "contradictory-elder-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The bank's mandate record authorises one third party to withdraw, and the account statement shows the withdrawal made by a different person.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "third-party-credit",
+        "subject_id": "subject-9209",
+        "accounts": [
+          "acct-9209"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "doc:9270",
+            "kind": "document",
+            "present": true,
+            "summary": "Mandate register authorising one third party to withdraw"
+          },
+          {
+            "source_id": "txn:9271",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash withdrawal of 2,800 USD by another person at branch 012 on 2026-03-05"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "The authorised party and the withdrawing party are not the same person. That is the contradiction."
+  }
+}

@@ -268,6 +268,14 @@ class Validator:
                     continue
                 resolved[ref] = self._source_index.resolve(ref).ok
 
+        # Timeline references are resolved too, so that the outcome of R-1b is
+        # observable in the result and not only as a defect.
+        for entry in finding.timeline:
+            for ref in entry.evidence_refs:
+                if ref in resolved:
+                    continue
+                resolved[ref] = self._source_index.resolve(ref).ok
+
         defects.extend(
             lint_claims(
                 finding,

@@ -1,0 +1,99 @@
+{
+  "case_id": "golden-mule-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Many distinct third-party originators credit one account, which consolidates them onward into a second account.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4320",
+          "acct-4321"
+        ],
+        "counterparties": [
+          "consolidation-account"
+        ],
+        "period": "2026-02-01/2026-02-28"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4330",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 2,100 USD from originator A on 2026-02-03"
+          },
+          {
+            "source_id": "txn:4331",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 1,750 USD from originator B on 2026-02-03"
+          },
+          {
+            "source_id": "txn:4332",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 2,400 USD from originator C on 2026-02-04"
+          },
+          {
+            "source_id": "txn:4333",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 6,250 USD to acct-4321 on 2026-02-04"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FUNNEL-ACCOUNT-AGGREGATION"
+    ],
+    "required_strings": [
+      "txn:",
+      "IND-FUNNEL-ACCOUNT-AGGREGATION"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "Every timeline entry must carry a resolving pointer. No assertion may be made that the records do not carry."
+  }
+}

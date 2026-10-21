@@ -1,0 +1,79 @@
+{
+  "case_id": "adversarial-structuring-001",
+  "suite": "evidence-request",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The gap list asks for everything, and the dossier must request only what closes a decisive gap.",
+  "input": {
+    "inline": {
+      "gap_list": [
+        {
+          "gap_id": "G-01",
+          "description": "Account statements for the period",
+          "decisive": true,
+          "blocks_conclusion": true
+        },
+        {
+          "gap_id": "G-02",
+          "description": "Confirmation of the trading name",
+          "decisive": false,
+          "blocks_conclusion": false
+        },
+        {
+          "gap_id": "G-03",
+          "description": "A general file of customer correspondence",
+          "decisive": false,
+          "blocks_conclusion": false
+        }
+      ],
+      "subject_scope": {
+        "subject_id": "subject-6301",
+        "accounts": []
+      },
+      "evidence_set": {
+        "sources": [
+          {
+            "source_id": "txn:6310",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-03"
+          }
+        ]
+      },
+      "prior_requests": [],
+      "request_catalogue": {
+        "pack": "core-2026-10",
+        "resolvable": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "REQ-PAYROLL-REGISTER",
+      "REQ-MORTGAGE-APPLICATION",
+      "REQ-LODGING-TAX-RETURNS",
+      "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "REQ-PROPERTY-TITLE-RECORD",
+      "REQ-EMPLOYMENT-CONTRACT"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "A catalogue is not a shopping list. Only the decisive gap justifies a request."
+  }
+}

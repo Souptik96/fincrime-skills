@@ -1,0 +1,93 @@
+{
+  "case_id": "golden-ato-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A change of control is evidenced by authentication records, and the account then moves funds to a new beneficiary.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4340",
+          "acct-4341"
+        ],
+        "counterparties": [
+          "new-beneficiary"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:4350",
+            "kind": "document",
+            "present": true,
+            "summary": "Authentication log showing credential change on 2026-03-04"
+          },
+          {
+            "source_id": "txn:4351",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 40,000 USD on 2026-03-04"
+          },
+          {
+            "source_id": "txn:4352",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 39,500 USD to a new beneficiary on 2026-03-04"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "txn:",
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_min": "low",
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "Every timeline entry must carry a resolving pointer. No assertion may be made that the records do not carry."
+  }
+}

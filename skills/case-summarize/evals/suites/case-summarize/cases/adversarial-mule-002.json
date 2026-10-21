@@ -1,0 +1,84 @@
+{
+  "case_id": "adversarial-mule-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A pattern visible across two accounts is an episode in each account, and the summary must not present it as a pattern in one.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4405",
+          "acct-4406"
+        ],
+        "counterparties": [
+          "fragmented-pattern"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4440",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 9,000 USD in acct-4405 on 2026-03-02"
+          },
+          {
+            "source_id": "txn:4441",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 9,000 USD in acct-4406 on 2026-03-02"
+          },
+          {
+            "source_id": "doc:4442",
+            "kind": "document",
+            "present": true,
+            "summary": "No record connecting the two accounts"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "required_strings": [
+      "IND-MULTI-ACCOUNT-AGGREGATION"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The indicator is defined only where the common control is evidenced rather than assumed."
+  }
+}

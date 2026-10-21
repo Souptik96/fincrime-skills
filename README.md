@@ -3,11 +3,12 @@
 **Skills that make AI agents behave like financial-crime investigators — and a
 test suite that proves they don't hallucinate.**
 
-> **Status: Phase 1 (core skill specification).** The contracts, the validator,
-> the skill format, and the `fincrime` command are in place. A skill can now be
-> authored, validated, and tested from
-> [`docs/skill-authoring.md`](docs/skill-authoring.md) alone. No skills have
-> shipped yet, and there is no published conformance result.
+> **Status: Phase 3 (the first skills).** The contracts, the validator, the
+> skill format, and the `fincrime` command are in place, and three skills now
+> work end to end against dated knowledge: `alert-triage`, `case-summarize` and
+> `evidence-request`. Each ships 60 evaluation cases and a golden artifact the
+> QA gate is measured against. There is still no published conformance result:
+> the harness that runs the suites is Phase 4.
 
 ---
 
@@ -129,7 +130,7 @@ docs/          the authoring guide, the jurisdiction statement, and the ADRs
 
 ## Architecture decisions
 
-Ten ADRs, each ≤ 2 pages, stating context / decision / consequences:
+Eleven ADRs, each ≤ 2 pages, stating context / decision / consequences:
 
 | ADR | Decision |
 |---|---|
@@ -143,6 +144,7 @@ Ten ADRs, each ≤ 2 pages, stating context / decision / consequences:
 | [0008](docs/adr/0008-v1-scope.md) | v1 scope: six skills, one jurisdiction, Part V only |
 | [0009](docs/adr/0009-tool-generated-safety-notices.md) | Tool-generated safety notices (non-strippable) |
 | [0010](docs/adr/0010-skill-format-and-cli-boundary.md) | The skill format and the engine/tooling boundary |
+| [0011](docs/adr/0011-request-dossier-and-manifest-catalogue-binding.md) | The request dossier and the manifest catalogue binding |
 
 ## Development
 

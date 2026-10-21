@@ -1,0 +1,93 @@
+{
+  "case_id": "benign-mule-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A payment gateway account legitimately receives credits from many merchants and consolidates them into a settlement account.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4120",
+          "acct-4121"
+        ],
+        "counterparties": [
+          "payment-gateway"
+        ],
+        "period": "2026-02-01/2026-02-28"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4130",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 1,200 USD from merchant A on 2026-02-04"
+          },
+          {
+            "source_id": "txn:4131",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 900 USD from merchant B on 2026-02-04"
+          },
+          {
+            "source_id": "txn:4132",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 3,400 USD to the settlement account on 2026-02-04"
+          },
+          {
+            "source_id": "doc:4133",
+            "kind": "document",
+            "present": true,
+            "summary": "Gateway contract describing merchant settlement"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FUNNEL-ACCOUNT-AGGREGATION"
+    ],
+    "required_strings": [
+      "IND-FUNNEL-ACCOUNT-AGGREGATION"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the ordinary explanation accounts for it. The summary must not escalate."
+  }
+}

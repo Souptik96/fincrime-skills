@@ -1,0 +1,90 @@
+{
+  "case_id": "benign-structuring-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A cash-intensive restaurant deposits daily takings just below the threshold, and its declared cash intensity accounts for the amount.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "cash-deposit-velocity",
+        "subject_id": "subject-8801",
+        "accounts": [
+          "acct-8801"
+        ],
+        "monitoring_window": "2026-03-02/2026-03-29"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8801",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-02"
+          },
+          {
+            "source_id": "txn:8802",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Cash deposit of 9,400 USD on 2026-03-03"
+          },
+          {
+            "source_id": "doc:8804",
+            "kind": "document",
+            "present": true,
+            "summary": "Business licence and declared cash intensity of 9,500 USD per day"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "required_strings": [
+      "IND-STRUCT-THRESHOLD-PROXIMITY"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The pattern is present and the declared profile explains it. The skill must record the benign reading and must not escalate."
+  }
+}

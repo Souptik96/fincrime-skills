@@ -1,0 +1,450 @@
+{
+  "suite_id": "alert-triage",
+  "skill": "alert-triage",
+  "version": "1.0.0",
+  "as_of": "2026-10-21",
+  "description": "The alert triage population: benign lookalikes, golden findings, adversarial cases the skill must not be fooled by, decisive gaps, contradictory sources and the awkward but ordinary.",
+  "requirements": {
+    "min_cases": 60,
+    "min_mixed_ratio": 0.4,
+    "min_negative_ratio": 0.15,
+    "required_kinds": [
+      "golden",
+      "adversarial",
+      "benign",
+      "missing_data",
+      "contradictory",
+      "edge"
+    ],
+    "min_benign_per_typology": true
+  },
+  "typologies": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-MULE-ACCOUNT-NETWORK",
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING",
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "cases": [
+    {
+      "case_id": "benign-structuring-001",
+      "path": "cases/benign-structuring-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-structuring-002",
+      "path": "cases/benign-structuring-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-mule-001",
+      "path": "cases/benign-mule-001.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-mule-002",
+      "path": "cases/benign-mule-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-ato-001",
+      "path": "cases/benign-ato-001.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-ato-002",
+      "path": "cases/benign-ato-002.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-elder-001",
+      "path": "cases/benign-elder-001.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "benign-elder-002",
+      "path": "cases/benign-elder-002.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "golden-structuring-001",
+      "path": "cases/golden-structuring-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-structuring-002",
+      "path": "cases/golden-structuring-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-mule-001",
+      "path": "cases/golden-mule-001.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-mule-002",
+      "path": "cases/golden-mule-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-ato-001",
+      "path": "cases/golden-ato-001.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-ato-002",
+      "path": "cases/golden-ato-002.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-elder-001",
+      "path": "cases/golden-elder-001.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "golden-elder-002",
+      "path": "cases/golden-elder-002.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "adversarial-structuring-001",
+      "path": "cases/adversarial-structuring-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-structuring-002",
+      "path": "cases/adversarial-structuring-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-structuring-003",
+      "path": "cases/adversarial-structuring-003.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-structuring-004",
+      "path": "cases/adversarial-structuring-004.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-mule-001",
+      "path": "cases/adversarial-mule-001.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-mule-002",
+      "path": "cases/adversarial-mule-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-elder-001",
+      "path": "cases/adversarial-elder-001.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "adversarial-elder-002",
+      "path": "cases/adversarial-elder-002.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "missing-structuring-001",
+      "path": "cases/missing-structuring-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-structuring-002",
+      "path": "cases/missing-structuring-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-mule-001",
+      "path": "cases/missing-mule-001.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "missing-ato-001",
+      "path": "cases/missing-ato-001.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-elder-001",
+      "path": "cases/missing-elder-001.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "missing-mule-002",
+      "path": "cases/missing-mule-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-structuring-001",
+      "path": "cases/contradictory-structuring-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "contradictory-structuring-002",
+      "path": "cases/contradictory-structuring-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "contradictory-mule-001",
+      "path": "cases/contradictory-mule-001.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-mule-002",
+      "path": "cases/contradictory-mule-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-ato-001",
+      "path": "cases/contradictory-ato-001.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-elder-001",
+      "path": "cases/contradictory-elder-001.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "edge-structuring-001",
+      "path": "cases/edge-structuring-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "edge-structuring-002",
+      "path": "cases/edge-structuring-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "edge-mule-001",
+      "path": "cases/edge-mule-001.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "edge-mule-002",
+      "path": "cases/edge-mule-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "edge-elder-001",
+      "path": "cases/edge-elder-001.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "edge-elder-002",
+      "path": "cases/edge-elder-002.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "benign-ato-003",
+      "path": "cases/benign-ato-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-mule-003",
+      "path": "cases/benign-mule-003.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-ato-003",
+      "path": "cases/golden-ato-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-elder-003",
+      "path": "cases/golden-elder-003.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "adversarial-mule-003",
+      "path": "cases/adversarial-mule-003.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-ato-002",
+      "path": "cases/adversarial-ato-002.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-elder-003",
+      "path": "cases/adversarial-elder-003.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "adversarial-structuring-005",
+      "path": "cases/adversarial-structuring-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-mule-003",
+      "path": "cases/missing-mule-003.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "missing-ato-002",
+      "path": "cases/missing-ato-002.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-elder-002",
+      "path": "cases/missing-elder-002.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "contradictory-mule-003",
+      "path": "cases/contradictory-mule-003.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-ato-002",
+      "path": "cases/contradictory-ato-002.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-elder-002",
+      "path": "cases/contradictory-elder-002.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "edge-ato-002",
+      "path": "cases/edge-ato-002.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "edge-elder-003",
+      "path": "cases/edge-elder-003.json",
+      "tags": [
+        "TYP-ELDER-FINANCIAL-EXPLOITATION"
+      ]
+    },
+    {
+      "case_id": "edge-mule-003",
+      "path": "cases/edge-mule-003.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "edge-structuring-003",
+      "path": "cases/edge-structuring-003.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    }
+  ],
+  "notes": "Generated by scripts/generate_phase3_cases.py. Every case carries at least one negative expectation, so a skill that says everything fails this suite."
+}

@@ -1,0 +1,74 @@
+{
+  "case_id": "adversarial-trade-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A declared value differs from an invoice value, and the summary must not assert that the goods are other than invoiced.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4410"
+        ],
+        "counterparties": [
+          "value-divergence"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:4470",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Payment of 60,000 USD on 2026-03-05"
+          },
+          {
+            "source_id": "doc:4471",
+            "kind": "document",
+            "present": true,
+            "summary": "Invoice for 60,000 USD and a customs declaration for 15,000 USD for the same shipment"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "The divergence is the observation. The reason for it is not."
+  }
+}

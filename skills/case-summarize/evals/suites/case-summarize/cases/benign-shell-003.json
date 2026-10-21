@@ -1,0 +1,81 @@
+{
+  "case_id": "benign-shell-003",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Two companies in the same group trade with each other, and the intragroup agreement and the tax filings are on file.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4210",
+          "acct-4211"
+        ],
+        "counterparties": [
+          "group-internal"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:4210",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Transfer of 14,000 USD from Company Gamma on 2026-02-08"
+          },
+          {
+            "source_id": "doc:4211",
+            "kind": "document",
+            "present": true,
+            "summary": "Intragroup supply agreement and the corresponding tax filings"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-COMMON-OWNERSHIP-SHELL-CHAIN"
+    ],
+    "required_strings": [
+      "IND-COMMON-OWNERSHIP-SHELL-CHAIN"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "The overlap is present and the group documentation accounts for it."
+  }
+}

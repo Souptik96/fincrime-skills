@@ -1,0 +1,82 @@
+{
+  "case_id": "contradictory-ato-002",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "The alert narrative asserts that the account was taken over, and the authentication log records no credential change at all.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "session-transfer-velocity",
+        "subject_id": "subject-9208",
+        "accounts": [
+          "acct-9208"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "alert:9265",
+            "kind": "alert",
+            "present": true,
+            "summary": "Narrative asserting an account takeover"
+          },
+          {
+            "source_id": "doc:9266",
+            "kind": "document",
+            "present": true,
+            "summary": "Authentication log recording no credential change in the window"
+          },
+          {
+            "source_id": "txn:9267",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 9,000 USD to a new beneficiary on 2026-03-09"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "The alert's assertion is one source and the authentication log is another, and they disagree."
+  }
+}

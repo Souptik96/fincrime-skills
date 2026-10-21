@@ -1,0 +1,81 @@
+{
+  "case_id": "adversarial-shell-002",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A registry extract shows a common director and a shared address, and the trades are at market rate under signed contracts; the summary must not infer layering.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4490",
+          "acct-4491"
+        ],
+        "counterparties": [
+          "related-counterparty"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:4490",
+            "kind": "document",
+            "present": true,
+            "summary": "Registry extract showing a director and address common to both companies"
+          },
+          {
+            "source_id": "txn:4491",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Settlement of 20,000 USD between the two companies on 2026-02-11"
+          },
+          {
+            "source_id": "doc:4492",
+            "kind": "document",
+            "present": true,
+            "summary": "Signed commercial contract at a market rate"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "human_approval_required": false,
+    "notes": "An overlap in ownership is not an intent to conceal. The summary reports the overlap and the rate."
+  }
+}

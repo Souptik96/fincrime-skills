@@ -1,0 +1,90 @@
+{
+  "case_id": "benign-ato-001",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A corporate treasury account sweeps surplus to a group account at the end of each day, and the sweep is documented.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "credit-debit-velocity",
+        "subject_id": "subject-8805",
+        "accounts": [
+          "acct-8805"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8840",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Credit of 40,000 USD from an operating account on 2026-03-03"
+          },
+          {
+            "source_id": "txn:8841",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Debit of 40,000 USD to group treasury on 2026-03-03"
+          },
+          {
+            "source_id": "doc:8842",
+            "kind": "document",
+            "present": true,
+            "summary": "Treasury policy describing end-of-day sweeping"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "A documented sweep explains the turnover without an account takeover."
+  }
+}

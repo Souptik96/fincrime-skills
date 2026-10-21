@@ -1,0 +1,84 @@
+{
+  "case_id": "benign-ato-003",
+  "suite": "alert-triage",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "A new beneficiary is added to a corporate account, and the beneficiary is the account holder's own registered supplier with the invoice on file.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "new-beneficiary-alert",
+        "subject_id": "subject-8809",
+        "accounts": [
+          "acct-8809"
+        ],
+        "monitoring_window": "2026-03-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:8852",
+            "kind": "transaction",
+            "present": true,
+            "summary": "Transfer of 3,200 USD to the named supplier on 2026-03-07"
+          },
+          {
+            "source_id": "doc:8853",
+            "kind": "document",
+            "present": true,
+            "summary": "Invoice for 3,200 USD and the supplier's registration details on file"
+          }
+        ]
+      },
+      "threshold_policy": {
+        "threshold_usd": 10000.0,
+        "in_force_from": "2026-01-01",
+        "as_of": "2026-10-21",
+        "supplied": true
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "expected_indicators": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "required_strings": [
+      "IND-FAST-MOVEMENT-PASS-THROUGH"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "A new beneficiary is not a takeover. The invoice and the registration explain the payment."
+  }
+}

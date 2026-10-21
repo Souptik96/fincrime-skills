@@ -1,0 +1,75 @@
+{
+  "case_id": "contradictory-structuring-001",
+  "suite": "case-summarize",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Two statements record different closing balances on the same date for the same account.",
+  "input": {
+    "inline": {
+      "subject_scope": {
+        "accounts": [
+          "acct-4601"
+        ],
+        "counterparties": [
+          "balance-disagreement"
+        ],
+        "period": "2026-01-01/2026-03-31"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:4610",
+            "kind": "document",
+            "present": true,
+            "summary": "Statement for 2026-02-28 showing a closing balance of 18,400 USD"
+          },
+          {
+            "source_id": "doc:4611",
+            "kind": "document",
+            "present": true,
+            "summary": "Statement for 2026-02-28 showing a closing balance of 21,900 USD"
+          }
+        ]
+      },
+      "prior_findings": []
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required",
+      "it is understood",
+      "it is believed",
+      "presumably"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "low",
+    "expected_contradictions": 1,
+    "human_approval_required": true,
+    "notes": "Two sources disagree about the balance. The summary must surface both."
+  }
+}
