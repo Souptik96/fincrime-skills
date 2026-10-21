@@ -1,0 +1,54 @@
+{
+  "id": "TYP-STRUCTURING-SMURFING",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Structuring and smurfing",
+  "definition": "The use of many small transactions, conducted by or for one person, so that the value is moved in amounts that fall below a reporting threshold, and the underlying activity is never reported as a single transaction. The defining feature is the relationship between the transaction and the reporting requirement it sits beneath, not the amount itself.",
+  "behavioral_attributes": [
+    "amount_to_threshold_ratio",
+    "deposit_frequency",
+    "branch_dispersion",
+    "common_control_evidence_strength"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the individual transactions, each cited by its own source id",
+    "the threshold in force and the aggregation rule applied",
+    "the evidence of common control between the accounts used"
+  ],
+  "benign_explanations": [
+    "A cash-intensive business whose takings genuinely fall below the threshold on ordinary days.",
+    "A customer who splits a payment across accounts for operational reasons such as daily limits.",
+    "A business depositing at several branches because each site banks its own takings.",
+    "A consumer who makes several small payments to different merchants on one occasion."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on the avoidance of reporting requirements, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "The typology is the *pattern*. Any single small transaction is ordinary, and the pattern is only visible across transactions, accounts and counterparties."
+}

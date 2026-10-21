@@ -1,0 +1,29 @@
+{
+  "id": "REQ-CARGO-INSURANCE-POLICY",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Cargo insurance policies",
+  "definition": "The insurance policy covering a shipment, showing the insured value and the insurer. It is requested where the insured value of goods is being compared with the invoiced value, because a policy is priced against the value of the goods and is a more independent figure than an invoice.",
+  "evidence_to_cite": [
+    "the policy, with the insurer, the policy number and the period of cover",
+    "the insured value, and the basis on which it was set",
+    "the parties to the policy, against the parties to the trade"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Insurance documentation as an independent reference for the value of goods, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

@@ -1,0 +1,57 @@
+{
+  "id": "IND-STRUCT-THRESHOLD-PROXIMITY",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Cash deposits clustered immediately below the currency transaction reporting threshold",
+  "definition": "Cash deposits that cluster immediately below the currency transaction reporting threshold in force for the monitoring window, across one or more accounts or branches. The indicator describes a measured distribution of amounts; it does not describe intent, and it is not on its own evidence that a reporting requirement was avoided.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "behavioral_attributes": [
+    "deposit_amount",
+    "deposit_frequency",
+    "branch_dispersion",
+    "cash_intensity_of_declared_business"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "each deposit record that forms the cluster, cited by its own source id and pointer",
+    "the threshold value in force for the monitoring window, and the date it changed",
+    "the subject's declared business profile and stated cash intensity, where one exists"
+  ],
+  "benign_explanations": [
+    "A cash-intensive legitimate business depositing daily takings that happen to fall below the reporting threshold.",
+    "A business splitting deposits across branches for operational reasons such as a branch's daily cash limit or a till shortage.",
+    "Seasonal or end-of-week takings that cluster below the threshold by coincidence of trading volume.",
+    "A recently formed business whose declared cash intensity is below its actual takings because it has not yet been re-profiled."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, currency transaction reporting requirements and the aggregation rule, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate",
+  "notes": "The benign explanations are the most valuable part of this record. An indicator without them is a detector with no false-positive population."
+}

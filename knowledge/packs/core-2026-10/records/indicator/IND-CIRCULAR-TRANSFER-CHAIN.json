@@ -1,0 +1,56 @@
+{
+  "id": "IND-CIRCULAR-TRANSFER-CHAIN",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Funds returning to their origin through a chain of counterparties",
+  "definition": "A sequence of transfers in which value leaves an account and returns to it, or to an account with a common owner, after passing through one or more unrelated counterparties. The indicator measures the return of value to the origin within a stated window.",
+  "typology_refs": [
+    "TYP-SHELL-COMPANY-LAYERING",
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "behavioral_attributes": [
+    "return_to_origin_ratio",
+    "chain_length",
+    "chain_completion_time"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the full chain of transfers, each leg cited by its own source id",
+    "the ownership or control relationship between the endpoints",
+    "the stated commercial reason for each leg"
+  ],
+  "benign_explanations": [
+    "A group treasury that sweeps funds between operating accounts daily.",
+    "A merchant that refunds a deposit to the original payment method.",
+    "A payment processor that returns a chargeback or a settlement adjustment.",
+    "A business lending money to itself through a subsidiary for a documented reason."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, money laundering offences as summarised in the FinCrime regulatory index; the indicator is a behavioural measure.",
+      "url": "https://www.law.cornell.edu/uscode/text/18/1956",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

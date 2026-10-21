@@ -1,0 +1,57 @@
+{
+  "id": "IND-REAL-ESTATE-CASH-LAYERING",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Property bought with layered cash funding from unrelated contributors",
+  "definition": "A property purchase funded in cash, or in a small deposit followed by cash payments, where the funds arrive in tranches from several contributors who have no declared connection to the buyer. The indicator measures the number and diversity of the funders and the layer in which they are paid.",
+  "typology_refs": [
+    "TYP-REAL-ESTATE-CASH-LAYERING",
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "behavioral_attributes": [
+    "funder_count",
+    "funder_relationship_diversity",
+    "cash_share_of_purchase",
+    "payment_layering_depth"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the purchase agreement, the funding records and the title record",
+    "the source of each contribution and the relationship between the contributor and the buyer",
+    "any stated explanation for the funding structure"
+  ],
+  "benign_explanations": [
+    "A family purchase where several relatives contribute and the arrangement is documented.",
+    "A property bought with a mortgage and a cash deposit from a genuine savings account.",
+    "An investor who has used several lenders sequentially and has documented each.",
+    "A buyer who prefers cash for a purchase where a cash offer was genuinely made."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on real estate and residential property money laundering, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

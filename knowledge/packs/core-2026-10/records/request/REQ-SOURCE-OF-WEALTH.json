@@ -1,0 +1,29 @@
+{
+  "id": "REQ-SOURCE-OF-WEALTH",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Source of wealth statement",
+  "definition": "A signed statement from the customer describing how their wealth was accumulated, supported by the underlying documentation. It is requested where the balance is high relative to the documented income, and it establishes a stated explanation, which is a hypothesis and not a verified fact until the supporting documents are in.",
+  "evidence_to_cite": [
+    "the signed statement, with its date and the person who signed it",
+    "the supporting documents relied on, each cited by its own source id",
+    "the stated period over which the wealth was accumulated"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Customer due diligence and source-of-wealth expectations, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "REQ-CUSTODY-AGREEMENT",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Custody and safekeeping agreements",
+  "definition": "The agreement under which a third party holds assets on the customer's behalf, with the schedule of what is held. It is requested where the source of wealth depends on the value of assets that the customer does not hold directly, and it establishes what is held, by whom, and on what terms.",
+  "evidence_to_cite": [
+    "the agreement, with its date and the parties",
+    "the schedule of assets held, and the most recent valuation date",
+    "the terms on which the assets may be dealt with"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Ownership and control evidence for source-of-wealth assessment, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

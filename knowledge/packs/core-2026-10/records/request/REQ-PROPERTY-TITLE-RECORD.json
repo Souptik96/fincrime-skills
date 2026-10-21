@@ -1,0 +1,29 @@
+{
+  "id": "REQ-PROPERTY-TITLE-RECORD",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Property title records",
+  "definition": "The register of title for the property, showing the registered proprietor, the charges registered and the dates of transfer. It is requested because the registered proprietor is a different question from the person who paid, and it establishes the ownership and encumbrance position independently of the parties.",
+  "evidence_to_cite": [
+    "the register of title, with the date of retrieval",
+    "the registered proprietor and the dates of transfer",
+    "the registered charges, and the amounts secured"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Independent ownership evidence for real estate assessment, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

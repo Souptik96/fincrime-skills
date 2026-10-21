@@ -1,0 +1,55 @@
+{
+  "id": "IND-CASH-STORE-REFUND-RATIO",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Cash refunds that make up an unusual share of a retail business's takings",
+  "definition": "Cash refunds issued by a retail business that exceed what its product mix and return policy would predict, concentrated on cash transactions. The indicator measures the divergence between the refund profile and the stated return policy.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "behavioral_attributes": [
+    "refund_to_sales_ratio",
+    "cash_refund_share",
+    "refund_pattern_regularity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the refund records, each cited by its own source id",
+    "the sales records for the same period",
+    "the published return policy the refund rate is compared against"
+  ],
+  "benign_explanations": [
+    "A retailer in a sector with a genuinely high return rate, such as clothing or electrical goods.",
+    "A seasonal peak in returns following a period of heavy sales.",
+    "A business whose till system defaults to cash refunds for any reversal.",
+    "A business that has recently tightened its returns policy, or recently loosened it."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on cash-intensive retail activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low"
+}

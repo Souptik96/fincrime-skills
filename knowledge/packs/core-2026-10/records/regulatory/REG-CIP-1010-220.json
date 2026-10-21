@@ -1,0 +1,30 @@
+{
+  "id": "REG-CIP-1010-220",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Customer identification programme",
+  "definition": "The requirement to maintain a written programme for identifying and verifying the identity of a customer, and the person acting on the customer's behalf, before the account is opened. The programme must state the identifying information that will be collected, the documents that will be accepted, how the information will be compared, and the records that will be kept, and it must provide for non-discrimination in its application. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the institution's customer identification programme, and its approval date",
+    "the identifying information collected for the customer in question",
+    "the documents relied on and the comparison performed"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Customer identification programme requirements (31 CFR 1020.220 and 1010.230), summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "The non-discrimination requirement is part of the rule, not an addition to it: a programme that cannot be applied to every customer is not a compliant programme."
+}

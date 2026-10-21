@@ -1,0 +1,29 @@
+{
+  "id": "REQ-UBO-REGISTRY-PROOF",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Beneficial ownership registry extract",
+  "definition": "The extract of the official beneficial-ownership register showing the persons who own or control a legal entity customer, obtained from the register itself rather than from the customer. It is requested where the customer's own account of its ownership is in question, and it establishes what the register says, which is a different claim from what the customer said.",
+  "evidence_to_cite": [
+    "the register extract, with the date of retrieval and the register version",
+    "the ownership and control entries for the entity",
+    "any difference between the extract and the customer's own account"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Beneficial ownership identification requirements, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

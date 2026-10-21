@@ -1,0 +1,53 @@
+{
+  "id": "TYP-SHELL-COMPANY-LAYERING",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Shell company layering",
+  "definition": "The use of entities that exist on paper — with no genuine operations, staff or premises — to receive, hold and pass value, so that the party behind the value is separated from the transaction by one or more layers of corporate form. The defining feature is the absence of a real business behind the entity, which has to be tested against operations rather than inferred from a registration.",
+  "behavioral_attributes": [
+    "shared_owner_count",
+    "shared_address_ratio",
+    "intra_group_flow_ratio",
+    "return_to_origin_ratio"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the ownership and control evidence for each entity in the chain",
+    "the operational evidence — staff, premises, inventory, customers — relied on",
+    "the flows between the entities and their stated commercial rationale"
+  ],
+  "benign_explanations": [
+    "A family group of companies that share directors and premises and trade honestly.",
+    "A holding or joint-venture vehicle used for tax or risk reasons, with the trades documented.",
+    "A newly incorporated company that has not yet traded and holds an opening balance.",
+    "Two businesses that share a serviced office address by coincidence."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on shell companies and beneficial ownership, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

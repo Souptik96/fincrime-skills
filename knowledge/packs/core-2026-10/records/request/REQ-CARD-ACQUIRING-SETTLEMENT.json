@@ -1,0 +1,29 @@
+{
+  "id": "REQ-CARD-ACQUIRING-SETTLEMENT",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Acquiring and settlement records",
+  "definition": "The acquiring bank's records of the card transactions acquired for a merchant, with the settlement totals and the fees. They are requested where the merchant's cash intensity is being assessed and the card side of the business is not visible in the account, and they establish the scale of the card business.",
+  "evidence_to_cite": [
+    "the acquiring records, with the merchant identifier and the period",
+    "the gross and net settlement totals, and the fees applied",
+    "the reconciliation to the amounts credited to the account"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Acquiring and settlement records supporting a cash-intensity assessment, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

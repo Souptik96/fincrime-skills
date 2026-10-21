@@ -1,0 +1,29 @@
+{
+  "id": "REQ-LETTER-OF-CREDIT",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Letters of credit and documentary credits",
+  "definition": "The documents for a documentary credit, showing the parties, the amount, the documents the credit is to be issued against and the terms of the credit. They are requested where a trade has been financed, and they establish the terms the parties agreed independently of the invoice.",
+  "evidence_to_cite": [
+    "the credit, with the issuing and advising banks and the amount",
+    "the documents required and those presented",
+    "the discrepancies raised, and their disposition"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Trade finance documentation in the assessment of trade-based activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

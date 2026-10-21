@@ -1,0 +1,53 @@
+{
+  "id": "TYP-TERRORIST-FINANCING-DIVERSION",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Terrorist financing diversion",
+  "definition": "The provision or collection of funds for, or on behalf of, a person or body designated under the sanctions regimes, however small the amounts and whatever the ostensible purpose. The defining feature is the destination, not the mechanism: small, ordinary transactions become material because of whom they reach.",
+  "behavioral_attributes": [
+    "third_party_payment_routing",
+    "counterparty_screening_hit_count",
+    "payment_size_versus_profile_ratio"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the payment records and the routing through any intermediaries",
+    "the screening result that identified the designated party, with its date and source",
+    "the stated purpose of the payment and any supporting documentation"
+  ],
+  "benign_explanations": [
+    "A name match that is a different person with the same name, and was cleared on further evidence.",
+    "A payment to a person who shares a surname with a designated party.",
+    "A charitable donation to an organisation later designated, made before the designation.",
+    "A correspondent bank routing that included a designated party in its chain without that party's knowledge."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Office of Foreign Assets Control, sanctions compliance and reporting guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://ofac.treasury.gov/",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "Designation status is checked against the date of the transaction, not against today's list. A party designated after the payment does not make the payment reportable, and a party delisted today was still designated then."
+}

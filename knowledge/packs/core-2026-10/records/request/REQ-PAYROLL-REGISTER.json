@@ -1,0 +1,29 @@
+{
+  "id": "REQ-PAYROLL-REGISTER",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Payroll registers",
+  "definition": "The payroll register for the relevant periods, listing the employees, their status and the amounts paid. It is requested where the outbound payments from an account are being compared against the workforce the account is said to fund, and it establishes the scale of the declared activity.",
+  "evidence_to_cite": [
+    "the register, with the pay periods it covers",
+    "the headcount and the total payroll for each period",
+    "any discrepancy with the payroll payments in the account"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Payroll records supporting a comparison of declared and observed activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

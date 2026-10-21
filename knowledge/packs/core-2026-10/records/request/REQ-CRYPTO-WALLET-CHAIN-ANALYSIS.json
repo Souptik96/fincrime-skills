@@ -1,0 +1,30 @@
+{
+  "id": "REQ-CRYPTO-WALLET-CHAIN-ANALYSIS",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Wallet and on-chain linkage records",
+  "definition": "The records linking a fiat account to a digital-asset wallet, and the transaction history of that wallet. It is requested where the movement of value has to be followed past the fiat boundary, and it establishes an analytical inference, which has to be stated as an inference with its basis.",
+  "evidence_to_cite": [
+    "the linkage evidence, with its type and its strength",
+    "the wallet transaction history over the stated period",
+    "the counterparty addresses and any attribution applied to them"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Convertible virtual currency guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low",
+  "notes": "A wallet attribution is an inference with a stated basis, never an established fact. The distinction belongs in the finding, not only in the working notes."
+}

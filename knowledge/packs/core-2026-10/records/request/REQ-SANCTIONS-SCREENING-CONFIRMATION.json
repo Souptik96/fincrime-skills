@@ -1,0 +1,29 @@
+{
+  "id": "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Sanctions screening records",
+  "definition": "The screening results for the customer, the counterparty and the payment, with the list versions used and the dates the screens were run. It is requested wherever a transaction involves a party in a higher-risk jurisdiction, and it establishes what was checked, against which list, and when — which is what decides whether the check was adequate.",
+  "evidence_to_cite": [
+    "the screening results, with the list versions and the screening date",
+    "any hit, and the disposition of the hit, with the basis",
+    "the re-screening date, where the lists have changed since"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Sanctions compliance and reporting obligations, summarised in the FinCrime regulatory index.",
+      "url": "https://ofac.treasury.gov/",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

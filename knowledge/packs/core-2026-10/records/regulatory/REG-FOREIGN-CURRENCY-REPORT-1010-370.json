@@ -1,0 +1,29 @@
+{
+  "id": "REG-FOREIGN-CURRENCY-REPORT-1010-370",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Reports of foreign currency and monetary instrument transactions",
+  "definition": "The requirement to report transactions in foreign currency and monetary instruments exceeding the stated threshold, conducted by one person in one business day, and to keep the supporting records. The report is a separate obligation from currency transaction reporting and is not satisfied by it.",
+  "evidence_to_cite": [
+    "the report filed, its identifier and the period it covers",
+    "the foreign currency and monetary instrument records for the period",
+    "the aggregation applied across the person's accounts and locations"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Reporting of foreign currency and monetary instrument transactions (31 CFR 1010.370), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

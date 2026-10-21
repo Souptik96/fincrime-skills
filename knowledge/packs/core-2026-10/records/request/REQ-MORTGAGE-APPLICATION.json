@@ -1,0 +1,29 @@
+{
+  "id": "REQ-MORTGAGE-APPLICATION",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Mortgage application files",
+  "definition": "The lender's application file for a mortgage or facility: the applicant's stated income, assets, liabilities and the property offered as security. It is requested where a property purchase was funded by borrowing, and it establishes what the borrower told a third party at the time, which is a different claim from what they told the institution.",
+  "evidence_to_cite": [
+    "the application, with the date and the lender",
+    "the income, asset and liability declarations, and the supporting documents",
+    "the amount advanced and the terms"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Lending records used in the assessment of property funding, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

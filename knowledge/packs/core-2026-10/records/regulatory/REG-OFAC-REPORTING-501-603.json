@@ -1,0 +1,30 @@
+{
+  "id": "REG-OFAC-REPORTING-501-603",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Reporting blocked and rejected transactions",
+  "definition": "The requirement to report property that has been blocked because it is believed to be owned or controlled by a designated party, and property that has been rejected because a party with whom it would be transacted is designated. The reports are made to the sanctions authority, and the periods for making them are set out in the rule and differ between blocking and rejection. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the blocked or rejected property record, and the date of the decision",
+    "the report made, and the date it was made",
+    "the screening result and the date the designation was checked against"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Reporting of blocked and rejected transactions, and the associated time limits (31 CFR 501.603 and 501.604), summarised in the FinCrime regulatory index.",
+      "url": "https://ofac.treasury.gov/",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "Designation status is checked against the date of the transaction, not against today's list: a party designated after the payment does not make the payment reportable, and a party delisted today was still designated then."
+}

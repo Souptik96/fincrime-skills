@@ -1,0 +1,56 @@
+{
+  "id": "IND-CHECK-SEQUENCING-THEN-WIRE",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "A cheque deposit followed closely by an outbound wire of similar size",
+  "definition": "A cheque or other payable instrument deposited and followed within a short window by an outbound electronic transfer of a similar amount, where the account's ordinary activity does not involve that sequence. The indicator measures the sequence and its timing; it does not establish the purpose of either leg.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "deposit_to_transfer_lag",
+    "amount_similarity_ratio",
+    "sequence_frequency"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the deposit record and the outbound transfer record",
+    "the account's ordinary activity pattern, over a stated period",
+    "the stated purpose of the outbound transfer, where a payment instruction exists"
+  ],
+  "benign_explanations": [
+    "A business that takes a cheque for a sale and settles the supplier the same week.",
+    "A customer paying a deposit on a property or a vehicle.",
+    "An agent who receives a cheque and remits the proceeds, as their business model states.",
+    "A payment processor settling a merchant's takings the day after the deposit."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, funds transfer and reporting guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

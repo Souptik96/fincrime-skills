@@ -1,0 +1,30 @@
+{
+  "id": "REG-SAR-1020-320",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Suspicious activity reporting",
+  "definition": "The requirement to file a report on transactions conducted, or attempted, that are suspicious by the institution's judgement, subject to a stated reporting threshold. For covered institutions the threshold is set by reference to the amount involved and to whether the transaction has an apparent lawful purpose, and a continuing-activity rule requires a further report while the activity continues. This record summarises the obligation; the thresholds and the applicable rules are set out in the source.",
+  "evidence_to_cite": [
+    "the filed report, its identifier and the period it covers",
+    "the transaction records the report was based on",
+    "the basis for the suspicion, as recorded at the time"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Suspicious activity reporting requirements for banks (31 CFR 1020.320), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "The decision to report is a judgement the institution makes and documents, not a computation. The record of that judgement is what has to be evidenced."
+}

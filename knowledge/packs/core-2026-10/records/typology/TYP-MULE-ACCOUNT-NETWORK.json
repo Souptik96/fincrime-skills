@@ -1,0 +1,53 @@
+{
+  "id": "TYP-MULE-ACCOUNT-NETWORK",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Mule account networks",
+  "definition": "The use of a network of personal or small-business accounts, opened or used by people who do not know what the funds are for, to receive and onward-pass value on behalf of others. The defining feature is the absence of a declared relationship between the account holder and the movement of the money, together with the account's use as an intermediary.",
+  "behavioral_attributes": [
+    "credit_to_debit_ratio",
+    "non_related_party_outflow_ratio",
+    "distinct_originator_count",
+    "account_opening_velocity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the inbound and outbound records for each account in the network",
+    "the evidence linking the accounts, cited by its own source id",
+    "each account holder's customer due diligence file and their stated purpose"
+  ],
+  "benign_explanations": [
+    "A payment processor or marketplace settlement account that passes funds by design.",
+    "A charity collecting donations and remitting them to a central fund.",
+    "A consumer running a resale business on a marketplace.",
+    "A family member managing another person's money, candidly and with the family's knowledge."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on money mule activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

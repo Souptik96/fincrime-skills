@@ -1,0 +1,57 @@
+{
+  "id": "IND-CRYPTO-ONRAMP-LAYERING",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Digital-asset conversion activity layered across on-ramps and wallets",
+  "definition": "A sequence of conversions between fiat and digital assets across several on-ramps, wallets and counterparties, in which no single step is notable and the sequence as a whole moves value without an apparent commercial purpose. The indicator measures the layering; it does not identify the value's owner or its purpose, and much legitimate activity has the same shape.",
+  "typology_refs": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "behavioral_attributes": [
+    "conversion_count",
+    "onramp_diversity",
+    "wallet_diversity",
+    "dwell_time_between_conversions"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the conversion or transaction records, each cited by its own source id and pointer",
+    "the account and wallet linkage evidence relied on, and how the linkage was established",
+    "the stated business purpose of the digital-asset activity, where one exists"
+  ],
+  "benign_explanations": [
+    "A customer rebalancing a long-held position across two exchanges for custody reasons.",
+    "A merchant accepting digital assets and converting them at several on-ramps to reduce processing fees.",
+    "A treasury operation moving funds between an exchange and a cold wallet on a schedule.",
+    "A cross-border worker converting remittances at the best available rate."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on convertible virtual currency and money services businesses, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low",
+  "notes": "Linkage between a fiat account and a wallet is an analytical inference, not a fact. It has to be cited as an inference with its basis stated."
+}

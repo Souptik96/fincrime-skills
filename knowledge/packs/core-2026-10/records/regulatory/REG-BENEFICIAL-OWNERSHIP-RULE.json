@@ -1,0 +1,29 @@
+{
+  "id": "REG-BENEFICIAL-OWNERSHIP-RULE",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Beneficial ownership identification and reporting",
+  "definition": "The requirement, for a covered financial institution, to identify and verify the natural persons who ultimately own or control a legal entity customer, to the threshold stated in the rule, and to obtain and maintain a certification from the customer. A customer that has certified the information for a previous verification is not required to collect it again, and a customer with more owners than the rule permits may be exempted from certification. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the ownership and control evidence for the entity customer",
+    "the certification obtained, with its date",
+    "any reliance on a previous certification, and the basis for it"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Beneficial ownership identification and certification requirements (31 CFR 1010.230), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

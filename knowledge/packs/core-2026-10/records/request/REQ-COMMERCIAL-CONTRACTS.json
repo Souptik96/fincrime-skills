@@ -1,0 +1,29 @@
+{
+  "id": "REQ-COMMERCIAL-CONTRACTS",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Underlying commercial contracts",
+  "definition": "The contracts, purchase orders and delivery terms that explain why the subject transacted with the counterparty in question, at the price in question. It is requested wherever an invoice value has to be compared with a market value, and it establishes the commercial rationale, which is what distinguishes a benign price from an unexplained one.",
+  "evidence_to_cite": [
+    "the contract, with its date, the parties and the price terms",
+    "the purchase orders or delivery notes that evidence performance",
+    "any amendment to the contract between the stated parties"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Trade-based activity is assessed against the underlying commercial relationship, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

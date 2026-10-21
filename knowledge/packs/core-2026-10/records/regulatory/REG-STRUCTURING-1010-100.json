@@ -1,0 +1,30 @@
+{
+  "id": "REG-STRUCTURING-1010-100",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Prohibition on avoiding a reporting requirement",
+  "definition": "The prohibition on breaking up or structuring a transaction, or a series of transactions, so as to avoid a reporting or recordkeeping requirement that would have applied to the transaction as a whole. The prohibition applies to the purpose, so the pattern of conduct and the surrounding facts matter, and not only the amounts. Conduct by a person associated with a financial institution, but not by the institution itself, is covered by a separate provision. This record summarises the prohibition.",
+  "evidence_to_cite": [
+    "the individual transactions, each cited by its own source id",
+    "the reportable transaction they would have formed, if it had been made in one",
+    "the facts relied on to establish purpose, and their source"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Definitions governing the avoidance of reporting requirements (31 CFR 1010.100), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "The prohibition is about purpose, which is why a pattern of small transactions is not by itself a violation, and why the surrounding facts have to be evidenced."
+}

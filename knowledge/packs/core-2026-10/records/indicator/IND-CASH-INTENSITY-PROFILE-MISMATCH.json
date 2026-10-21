@@ -1,0 +1,56 @@
+{
+  "id": "IND-CASH-INTENSITY-PROFILE-MISMATCH",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Cash activity inconsistent with the customer's stated business model",
+  "definition": "Cash volume on an account that is materially out of line with the cash intensity of the business the customer described at onboarding, or that changes sharply without a stated change in the business. The indicator measures the mismatch between the stated profile and the observed activity.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "cash_ratio_vs_declared_profile",
+    "profile_drift_over_time",
+    "product_mix_mismatch"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the customer due diligence file, with the date the profile was taken and the profile itself",
+    "the cash and non-cash transaction totals over the comparison period",
+    "the stated industry benchmark, or the subject's own expected mix, relied on"
+  ],
+  "benign_explanations": [
+    "A business that moved from wholesale to retail, or from card to cash, without updating its profile.",
+    "A seasonal business whose cash share swings with the season and whose profile is a mid-year snapshot.",
+    "A customer whose stated turnover was understated at onboarding and later corrected.",
+    "A cash-intensive profession — such as cash-only retail or vending — that was profiled too narrowly."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, customer due diligence and risk assessment guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

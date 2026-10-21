@@ -1,0 +1,511 @@
+{
+  "id": "core-2026-10",
+  "version": "1.0.0",
+  "as_of": "2026-10-01",
+  "description": "The first dated knowledge pack: the US indicators, typologies, regulatory mappings and request-catalogue entries a skill needs to reason about financial crime without asserting what it cannot support.",
+  "jurisdictions": [
+    "US"
+  ],
+  "maintainer": "@fincrime-maintainers",
+  "records": [
+    {
+      "id": "IND-ATO-SESSION-TRANSFER-VELOCITY",
+      "type": "indicator",
+      "path": "records/indicator/IND-ATO-SESSION-TRANSFER-VELOCITY.json",
+      "sha256": "5147cc9ab5bb6ece9c26f091721cf549914236f05000cb2cfec4cfc3ed13feb2"
+    },
+    {
+      "id": "IND-CASH-INTENSITY-PROFILE-MISMATCH",
+      "type": "indicator",
+      "path": "records/indicator/IND-CASH-INTENSITY-PROFILE-MISMATCH.json",
+      "sha256": "d5995d95b0a2cc6bb25488d94b5d1c3c4b3c66149f421f2b28cd1ddc2ea10c41"
+    },
+    {
+      "id": "IND-CASH-STORE-REFUND-RATIO",
+      "type": "indicator",
+      "path": "records/indicator/IND-CASH-STORE-REFUND-RATIO.json",
+      "sha256": "d9c1224c7b4abb54832f13ce1fdacc6fc21f2e3e92a7da82d6178148bb7bf212"
+    },
+    {
+      "id": "IND-CHECK-SEQUENCING-THEN-WIRE",
+      "type": "indicator",
+      "path": "records/indicator/IND-CHECK-SEQUENCING-THEN-WIRE.json",
+      "sha256": "ca4e668007a00786a92f19a46c9bd63f96629f1d611d89bb7223ec1a7f72c73d"
+    },
+    {
+      "id": "IND-CIRCULAR-TRANSFER-CHAIN",
+      "type": "indicator",
+      "path": "records/indicator/IND-CIRCULAR-TRANSFER-CHAIN.json",
+      "sha256": "dc625c16781b34399ffae947c6c8dcd983a2317348251be7566515944718866f"
+    },
+    {
+      "id": "IND-COMMON-OWNERSHIP-SHELL-CHAIN",
+      "type": "indicator",
+      "path": "records/indicator/IND-COMMON-OWNERSHIP-SHELL-CHAIN.json",
+      "sha256": "1793163c073fa191519964aee756828afbcc74bd1a12d482e3e290db6bac85e9"
+    },
+    {
+      "id": "IND-CRYPTO-ONRAMP-LAYERING",
+      "type": "indicator",
+      "path": "records/indicator/IND-CRYPTO-ONRAMP-LAYERING.json",
+      "sha256": "62265547c59d20c1a5ccc85b5a3263f1b04d36c123922ab6a21bbe22de10e67f"
+    },
+    {
+      "id": "IND-DORMANT-ACCOUNT-ACTIVATION-VELOCITY",
+      "type": "indicator",
+      "path": "records/indicator/IND-DORMANT-ACCOUNT-ACTIVATION-VELOCITY.json",
+      "sha256": "47ee4924609a0e493b5b31fb7ea1eebde1b13848bc58973da6c3814493bfb5a2"
+    },
+    {
+      "id": "IND-ELDER-CREDENTIAL-CHANGE-TRANSFER",
+      "type": "indicator",
+      "path": "records/indicator/IND-ELDER-CREDENTIAL-CHANGE-TRANSFER.json",
+      "sha256": "fa52f9a0633d75ec65c06e1886393dc49c248a44ae606e14ebaa2769ac2e0888"
+    },
+    {
+      "id": "IND-FAST-MOVEMENT-PASS-THROUGH",
+      "type": "indicator",
+      "path": "records/indicator/IND-FAST-MOVEMENT-PASS-THROUGH.json",
+      "sha256": "3b90f13fcb5b4d5090baba1e336d08bf51acc74c63489a61ca41e4dd65ec6cce"
+    },
+    {
+      "id": "IND-FUNNEL-ACCOUNT-AGGREGATION",
+      "type": "indicator",
+      "path": "records/indicator/IND-FUNNEL-ACCOUNT-AGGREGATION.json",
+      "sha256": "e7ab38670254b9c97724d0a03be8fd7b8da66b5bf2adfd55fd89e09545133cb2"
+    },
+    {
+      "id": "IND-GEOGRAPHIC-ATM-DISPERSION",
+      "type": "indicator",
+      "path": "records/indicator/IND-GEOGRAPHIC-ATM-DISPERSION.json",
+      "sha256": "4cbd41b63f734394aaf7b4b74159fd03e45c1b5dc6e0fafaab3fcf0e40685362"
+    },
+    {
+      "id": "IND-GIFT-CARD-PURCHASE-VELOCITY",
+      "type": "indicator",
+      "path": "records/indicator/IND-GIFT-CARD-PURCHASE-VELOCITY.json",
+      "sha256": "2aec885a3989d51e0506f9d71ff13d1d41dc40827b9d6c31b0e0a221bc8fb0ba"
+    },
+    {
+      "id": "IND-MULE-ONBOARDING-BURST",
+      "type": "indicator",
+      "path": "records/indicator/IND-MULE-ONBOARDING-BURST.json",
+      "sha256": "752a30f4c15eef341b29902543e2c9078f5e4408dd2ff3cca2a5d783cdcf09b1"
+    },
+    {
+      "id": "IND-MULTI-ACCOUNT-AGGREGATION",
+      "type": "indicator",
+      "path": "records/indicator/IND-MULTI-ACCOUNT-AGGREGATION.json",
+      "sha256": "b7a10633a0c637611e6f10beac33ffed1a5ff365702cfee28501f082c18e95e2"
+    },
+    {
+      "id": "IND-PAYROLL-TO-OUTFLOW-MISMATCH",
+      "type": "indicator",
+      "path": "records/indicator/IND-PAYROLL-TO-OUTFLOW-MISMATCH.json",
+      "sha256": "3a92d2ebddca36ad0dc917ac46999c36d45d811269fe3d8afaacf10345bdfbf2"
+    },
+    {
+      "id": "IND-REAL-ESTATE-CASH-LAYERING",
+      "type": "indicator",
+      "path": "records/indicator/IND-REAL-ESTATE-CASH-LAYERING.json",
+      "sha256": "ef7769f77ae0d90ec3d24217c0697075595b498b173be428386922a89e2677b8"
+    },
+    {
+      "id": "IND-REGULAR-EXCHANGE-INDEXED-PATTERN",
+      "type": "indicator",
+      "path": "records/indicator/IND-REGULAR-EXCHANGE-INDEXED-PATTERN.json",
+      "sha256": "10a0b6b9708b1d9f10fb8c8bb04bfaa4347366b8367d4134dba1df4e4021735b"
+    },
+    {
+      "id": "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER",
+      "type": "indicator",
+      "path": "records/indicator/IND-ROUND-AMOUNT-DEPOSIT-CLUSTER.json",
+      "sha256": "3a062f92bf50525354e3f673db65b0ff83f7040f8ce9bde2b59a049366c51e90"
+    },
+    {
+      "id": "IND-STRUCT-THRESHOLD-PROXIMITY",
+      "type": "indicator",
+      "path": "records/indicator/IND-STRUCT-THRESHOLD-PROXIMITY.json",
+      "sha256": "dbef68dd7a119f38a40f93c048c7e796baee9d7b629029b101754c0019e42a56"
+    },
+    {
+      "id": "IND-STRUCTURED-CASH-DEP-BRANCH-CROSS",
+      "type": "indicator",
+      "path": "records/indicator/IND-STRUCTURED-CASH-DEP-BRANCH-CROSS.json",
+      "sha256": "a5d6a8793cb797383e3a7c09d5b1f916a6dba38adf9c5fa52f92fd3250e91fae"
+    },
+    {
+      "id": "IND-THIRD-PARTY-TRANSFER-CHAIN",
+      "type": "indicator",
+      "path": "records/indicator/IND-THIRD-PARTY-TRANSFER-CHAIN.json",
+      "sha256": "d6938e32e785857d65c590d130dd0313b3c35397e3f865d0ee85027f9c3ebb80"
+    },
+    {
+      "id": "IND-TRADE-INVOICE-VALUE-ANOMALY",
+      "type": "indicator",
+      "path": "records/indicator/IND-TRADE-INVOICE-VALUE-ANOMALY.json",
+      "sha256": "9bc8f7dcd42df25260b32409e98698ada9920b086ab09930b0a00d50bc357d7f"
+    },
+    {
+      "id": "IND-UNBACKED-LOAN-PAYOFF",
+      "type": "indicator",
+      "path": "records/indicator/IND-UNBACKED-LOAN-PAYOFF.json",
+      "sha256": "0ec07fdb2f3abdb85cb08bb3c5c937fa0ede79ffd3632cda01ec223338d2a301"
+    },
+    {
+      "id": "IND-WIRE-SEQUENCING-NEUTHRESHOLD",
+      "type": "indicator",
+      "path": "records/indicator/IND-WIRE-SEQUENCING-NEUTHRESHOLD.json",
+      "sha256": "31d5005e62e1ac1422cba90526d97bf13227a015febe66e40c5657766ef919f9"
+    },
+    {
+      "id": "REG-BENEFICIAL-OWNERSHIP-RULE",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-BENEFICIAL-OWNERSHIP-RULE.json",
+      "sha256": "7c24772644a49348cddf30ce37a9436bc0c2db7879207173c7052bd7e805f7e0"
+    },
+    {
+      "id": "REG-BSA-AML-PROGRAM",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-BSA-AML-PROGRAM.json",
+      "sha256": "4bfbf0c1b903a85c1a2ec3eaa10853726b401616959c915a0614ee255023d35d"
+    },
+    {
+      "id": "REG-CDD-1010-230",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-CDD-1010-230.json",
+      "sha256": "3cb1a831a4d695196e71fd6c75e8fdf6e8d5fed82c504bf3a2c2800322c97972"
+    },
+    {
+      "id": "REG-CIP-1010-220",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-CIP-1010-220.json",
+      "sha256": "a87eadb8afb6953059c1a54eaecb69fbcbe4dcc4ebda9d6f4438778c5a82b446"
+    },
+    {
+      "id": "REG-CTR-1010-311",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-CTR-1010-311.json",
+      "sha256": "47ce28dd7f0682b3400ef6806cb16741faf2fd732f095df4697c8026230d841b"
+    },
+    {
+      "id": "REG-FINCEN-CIVIL-PENALTY",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-FINCEN-CIVIL-PENALTY.json",
+      "sha256": "37a2f8d4abf874ee0d53ba8caa7adc474e0db55e6a8c8c96a3716015066a2bbe"
+    },
+    {
+      "id": "REG-FOREIGN-CURRENCY-REPORT-1010-370",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-FOREIGN-CURRENCY-REPORT-1010-370.json",
+      "sha256": "4f4335ce7ad3f7744f31cb9c11d1e5af62435a5f8f8728853c605b06db2ceb11"
+    },
+    {
+      "id": "REG-MLA-1956-1957",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-MLA-1956-1957.json",
+      "sha256": "7a3bed4f7849057de7a756d9e07630c1c9aba63d3997c962a03aff4b41353433"
+    },
+    {
+      "id": "REG-MONEY-SERVICES-REGISTRATION",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-MONEY-SERVICES-REGISTRATION.json",
+      "sha256": "3a40df3f36ea6c412951a67a901cd1ac18fc327c88d3c4092d15cf5b152fcc16"
+    },
+    {
+      "id": "REG-OFAC-REPORTING-501-603",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-OFAC-REPORTING-501-603.json",
+      "sha256": "8e83063b7349ca3af7cf911294d0190eb15fa286a3a7be77446380423d84182d"
+    },
+    {
+      "id": "REG-OFAC-TERRORIST-ASSETS-501-601",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-OFAC-TERRORIST-ASSETS-501-601.json",
+      "sha256": "da5150b01d8cbc53fbd2701e0e5518eb6b2b273da871d45b98f08b7bc5637743"
+    },
+    {
+      "id": "REG-PATRIOT-314A",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-PATRIOT-314A.json",
+      "sha256": "2a9571c7e26eaadf2f7b7302ec95ef6be25bf134f472eafb4be296759deaeb3d"
+    },
+    {
+      "id": "REG-PATRIOT-314B",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-PATRIOT-314B.json",
+      "sha256": "dccdbd623b2e53ac467d9eb38e31f2e1fdc79d6ce554864041d05d03be37aaa5"
+    },
+    {
+      "id": "REG-RECORD-RETENTION-1010-430",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-RECORD-RETENTION-1010-430.json",
+      "sha256": "0195d0604313beac7d2c7940849e26a910a5110ea5bc9b228cc0d2e647d2dcfd"
+    },
+    {
+      "id": "REG-SAR-1020-320",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-SAR-1020-320.json",
+      "sha256": "cc658577df29ec3365b011337da93447e9194325cd8a9455a5f3d201b54957f0"
+    },
+    {
+      "id": "REG-SAR-CONFIDENTIALITY-1020-320D",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-SAR-CONFIDENTIALITY-1020-320D.json",
+      "sha256": "ededf7be721a41d161fa522a4062696c1234320a6d69c7e364bc1698590c8a0f"
+    },
+    {
+      "id": "REG-SAR-FILING-DEADLINE",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-SAR-FILING-DEADLINE.json",
+      "sha256": "1de61362d4e61f392766d8bf283fb71cec79f1ae03d7ce62fedd2e81c93462f5"
+    },
+    {
+      "id": "REG-STRUCTURING-1010-100",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-STRUCTURING-1010-100.json",
+      "sha256": "f7cf712eb33923418a9fc2e609811a165bc38f4dd8ba9d23212faa57a6464646"
+    },
+    {
+      "id": "REG-TRANSFER-1010-410F",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-TRANSFER-1010-410F.json",
+      "sha256": "be6aac1658b8830759dab64d7cf3dce3812fcbb4015ad4c1797e758d60919344"
+    },
+    {
+      "id": "REG-TRAVEL-RULE-1010-410E",
+      "type": "regulatory",
+      "path": "records/regulatory/REG-TRAVEL-RULE-1010-410E.json",
+      "sha256": "3434bc89f68714590435bfd74c29cd64112b79443d4f2f5e71eaf6b659299e87"
+    },
+    {
+      "id": "REQ-ATM-TRANSACTION-LOG",
+      "type": "request",
+      "path": "records/request/REQ-ATM-TRANSACTION-LOG.json",
+      "sha256": "80db6c12cdbc893b42310e0dfcf8211003a4dcf80477fa5a940b3e2b21369575"
+    },
+    {
+      "id": "REQ-AUDITED-FINANCIAL-STATEMENTS",
+      "type": "request",
+      "path": "records/request/REQ-AUDITED-FINANCIAL-STATEMENTS.json",
+      "sha256": "afb491710de492999ec02643318ef7c0e917805ecf6cc1939665bfa74da3bdeb"
+    },
+    {
+      "id": "REQ-BANK-STATEMENTS-12M",
+      "type": "request",
+      "path": "records/request/REQ-BANK-STATEMENTS-12M.json",
+      "sha256": "656b4cdc21c13c74b858d631b77357c847627033840636df828fabe053f33c74"
+    },
+    {
+      "id": "REQ-BILL-OF-LADING",
+      "type": "request",
+      "path": "records/request/REQ-BILL-OF-LADING.json",
+      "sha256": "91ea3c54c11404e43a840228a8bb795055d244b4f86d82fb8476632236cb85bc"
+    },
+    {
+      "id": "REQ-CAPITALIZATION-TABLE",
+      "type": "request",
+      "path": "records/request/REQ-CAPITALIZATION-TABLE.json",
+      "sha256": "8ac42c8b73de4e50c10f27021ee289de484a1133fb66f000a544abfa2cd43e0b"
+    },
+    {
+      "id": "REQ-CARD-ACQUIRING-SETTLEMENT",
+      "type": "request",
+      "path": "records/request/REQ-CARD-ACQUIRING-SETTLEMENT.json",
+      "sha256": "0991c1ddb797f4911728c7b86aa0aebf8b6a091a0f36e560caae4e91c1fc8241"
+    },
+    {
+      "id": "REQ-CARGO-INSURANCE-POLICY",
+      "type": "request",
+      "path": "records/request/REQ-CARGO-INSURANCE-POLICY.json",
+      "sha256": "1f2cc49a648f8efd339ed1cad6507ccde5a097bd4709e1d3dc5fce46e5876bef"
+    },
+    {
+      "id": "REQ-COMMERCIAL-CONTRACTS",
+      "type": "request",
+      "path": "records/request/REQ-COMMERCIAL-CONTRACTS.json",
+      "sha256": "2ced19451f3f8e7e6ea349f6ceabe691fd25573bb315bd6a45e6b317d2a5fdd0"
+    },
+    {
+      "id": "REQ-CORPORATE-REGISTRY-EXTRACT",
+      "type": "request",
+      "path": "records/request/REQ-CORPORATE-REGISTRY-EXTRACT.json",
+      "sha256": "0e0ee62e581b7a02d7ba5354876585aba535d63929e1035efd337bba3b0cfc7e"
+    },
+    {
+      "id": "REQ-COUNTERPARTY-BANK-STATEMENTS",
+      "type": "request",
+      "path": "records/request/REQ-COUNTERPARTY-BANK-STATEMENTS.json",
+      "sha256": "7687f76b7b78294d221813ba343d6330b3dbb65a61ed8ad135887d37d781286f"
+    },
+    {
+      "id": "REQ-CRYPTO-EXCHANGE-KYC",
+      "type": "request",
+      "path": "records/request/REQ-CRYPTO-EXCHANGE-KYC.json",
+      "sha256": "594832028659a6b5754620d369d7eec97b882beebbb18287f943479471cd6fee"
+    },
+    {
+      "id": "REQ-CRYPTO-WALLET-CHAIN-ANALYSIS",
+      "type": "request",
+      "path": "records/request/REQ-CRYPTO-WALLET-CHAIN-ANALYSIS.json",
+      "sha256": "768209480e76e467ab847f06e2e4bb476514d79f4b4b97d2140a006601b7d6e9"
+    },
+    {
+      "id": "REQ-CUSTODY-AGREEMENT",
+      "type": "request",
+      "path": "records/request/REQ-CUSTODY-AGREEMENT.json",
+      "sha256": "cf17f501f3496732ad900b8e3313815ddd5cd5f8a4b911e948b998b00673f756"
+    },
+    {
+      "id": "REQ-CUSTOM-DUTY-CLEARANCE",
+      "type": "request",
+      "path": "records/request/REQ-CUSTOM-DUTY-CLEARANCE.json",
+      "sha256": "58f8e541f5ea9c16a685f16bf28042f8a281ede47db95ae95cfe744b3433f6bd"
+    },
+    {
+      "id": "REQ-EMPLOYMENT-CONTRACT",
+      "type": "request",
+      "path": "records/request/REQ-EMPLOYMENT-CONTRACT.json",
+      "sha256": "0be6a07afc1f43c50decc113daec1de5486c6554457ce8b9ff7b8d1e14048665"
+    },
+    {
+      "id": "REQ-INSURANCE-POLICY-CASH-VALUE",
+      "type": "request",
+      "path": "records/request/REQ-INSURANCE-POLICY-CASH-VALUE.json",
+      "sha256": "b0e69d55faf53d4a334d98a22f00e6039ce0149547fbb1fe45ee759c3637bf6f"
+    },
+    {
+      "id": "REQ-INVOICE-LEDGER",
+      "type": "request",
+      "path": "records/request/REQ-INVOICE-LEDGER.json",
+      "sha256": "46a3cb88f1b25be892e72eb3d0b7265842d536b63bc4ebed86cdf5fa0b6ae9ab"
+    },
+    {
+      "id": "REQ-LETTER-OF-CREDIT",
+      "type": "request",
+      "path": "records/request/REQ-LETTER-OF-CREDIT.json",
+      "sha256": "140d9fed38c6864a7960698c401cb7651e43d604b06b0761aab2d209a1bbb053"
+    },
+    {
+      "id": "REQ-LODGING-TAX-RETURNS",
+      "type": "request",
+      "path": "records/request/REQ-LODGING-TAX-RETURNS.json",
+      "sha256": "6120009fcab578243760e770d9640115a8108741bbc57a9ff1b6d4a34b8f0c3e"
+    },
+    {
+      "id": "REQ-MORTGAGE-APPLICATION",
+      "type": "request",
+      "path": "records/request/REQ-MORTGAGE-APPLICATION.json",
+      "sha256": "74bc50e0c351eeeb26d17c534500dd529e8884cdd3cea17d9b2f691bc7e0d660"
+    },
+    {
+      "id": "REQ-PAYROLL-REGISTER",
+      "type": "request",
+      "path": "records/request/REQ-PAYROLL-REGISTER.json",
+      "sha256": "175e4b7f70aaa5eace1438500fcb2831e39d303b95323bc6e140839b2fb42642"
+    },
+    {
+      "id": "REQ-POS-SETTLEMENT-BATCH",
+      "type": "request",
+      "path": "records/request/REQ-POS-SETTLEMENT-BATCH.json",
+      "sha256": "5614af65261585965804162a43b70aa551de7ed1af384b13ffac82357bc71c72"
+    },
+    {
+      "id": "REQ-PROPERTY-PURCHASE-AGREEMENT",
+      "type": "request",
+      "path": "records/request/REQ-PROPERTY-PURCHASE-AGREEMENT.json",
+      "sha256": "8dffe54a560c55a3befdb9272debdd22b43201166983949a16947b420ccc7463"
+    },
+    {
+      "id": "REQ-PROPERTY-TITLE-RECORD",
+      "type": "request",
+      "path": "records/request/REQ-PROPERTY-TITLE-RECORD.json",
+      "sha256": "7c73baccb818ddd8872444a5ceb0fc22410d7e298ee2d57fc5a5dab466c6925a"
+    },
+    {
+      "id": "REQ-SANCTIONS-SCREENING-CONFIRMATION",
+      "type": "request",
+      "path": "records/request/REQ-SANCTIONS-SCREENING-CONFIRMATION.json",
+      "sha256": "3de84a78dee2246485ff48feb97bfbfd3191c45df6a15cfd95e9cc066ea0d629"
+    },
+    {
+      "id": "REQ-SHAREHOLDER-REGISTER",
+      "type": "request",
+      "path": "records/request/REQ-SHAREHOLDER-REGISTER.json",
+      "sha256": "9dbb61556fdc58faefeafde06eaf397ee07e1cdf62fc207065dd42600258d5e9"
+    },
+    {
+      "id": "REQ-SOURCE-OF-WEALTH",
+      "type": "request",
+      "path": "records/request/REQ-SOURCE-OF-WEALTH.json",
+      "sha256": "65c1e54e315b93b3d10a05637db54166809dd3aac29d98d9773e7790d40a04eb"
+    },
+    {
+      "id": "REQ-UBO-CHART-SIGNED-DECLARATION",
+      "type": "request",
+      "path": "records/request/REQ-UBO-CHART-SIGNED-DECLARATION.json",
+      "sha256": "51f65f53bbb373c8845b5ab3826b13113f69bac5d66df1a88c7f076892eef53c"
+    },
+    {
+      "id": "REQ-UBO-REGISTRY-PROOF",
+      "type": "request",
+      "path": "records/request/REQ-UBO-REGISTRY-PROOF.json",
+      "sha256": "cdb50736d27fe605852fda67b58bad91479df0fd200606ca6f24f0a29d72aafe"
+    },
+    {
+      "id": "REQ-VENDOR-INVOICES",
+      "type": "request",
+      "path": "records/request/REQ-VENDOR-INVOICES.json",
+      "sha256": "d940e82f05a0b0fa9eafb856f5743dd5a13956a0911d8d9ba244df059764a853"
+    },
+    {
+      "id": "TYP-ACCOUNT-TAKEOVER-LAUNDERING",
+      "type": "typology",
+      "path": "records/typology/TYP-ACCOUNT-TAKEOVER-LAUNDERING.json",
+      "sha256": "f081b91d6e74fca298c0888be82fa122d4923240a8ad0c74d7a3bf67b4f7d1e2"
+    },
+    {
+      "id": "TYP-ELDER-FINANCIAL-EXPLOITATION",
+      "type": "typology",
+      "path": "records/typology/TYP-ELDER-FINANCIAL-EXPLOITATION.json",
+      "sha256": "d5ac6ba219e27961d6eafcee09fe9401a2ed28bdd0eeb47da9af56eec3998d8d"
+    },
+    {
+      "id": "TYP-MULE-ACCOUNT-NETWORK",
+      "type": "typology",
+      "path": "records/typology/TYP-MULE-ACCOUNT-NETWORK.json",
+      "sha256": "167fa897780e8b0ed0e54bf86045d0e54ed219d4b48d81c7a109871cec596a4b"
+    },
+    {
+      "id": "TYP-REAL-ESTATE-CASH-LAYERING",
+      "type": "typology",
+      "path": "records/typology/TYP-REAL-ESTATE-CASH-LAYERING.json",
+      "sha256": "fadc59af9c08ef34940834b6d9a256ab8a4fdb4ff7fd78ae4752427987bd4323"
+    },
+    {
+      "id": "TYP-SHELL-COMPANY-LAYERING",
+      "type": "typology",
+      "path": "records/typology/TYP-SHELL-COMPANY-LAYERING.json",
+      "sha256": "ef07b9c6642ae29a80dd088d791b6f92d5b0a534257578c8834f5133d4f46010"
+    },
+    {
+      "id": "TYP-STRUCTURING-SMURFING",
+      "type": "typology",
+      "path": "records/typology/TYP-STRUCTURING-SMURFING.json",
+      "sha256": "b0d6fe99949176c93bc69181df8fa166abc217b47efb1c95c31b9011747e58c6"
+    },
+    {
+      "id": "TYP-TERRORIST-FINANCING-DIVERSION",
+      "type": "typology",
+      "path": "records/typology/TYP-TERRORIST-FINANCING-DIVERSION.json",
+      "sha256": "2279cabe43021c35a114317277f21e825faecd5d0776e67ffb81491f8c7364a3"
+    },
+    {
+      "id": "TYP-TRADE-BASED-MONEY-LAUNDERING",
+      "type": "typology",
+      "path": "records/typology/TYP-TRADE-BASED-MONEY-LAUNDERING.json",
+      "sha256": "fb35f654d17919ea3adf9ef39e985ce72cced772841da69e7b93cf52a1975326"
+    }
+  ],
+  "checksum": "f02ddc86a2c9d27a8d5192aee5ef4d947df06360ff8920da409d8d50aa0ed828"
+}

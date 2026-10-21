@@ -1,0 +1,58 @@
+{
+  "id": "IND-FAST-MOVEMENT-PASS-THROUGH",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Funds received and disbursed with little or no economic residence in the account",
+  "definition": "Credits to an account followed by debits of a similar or greater amount within a short window, leaving little balance and little time for the funds to be used in the account's apparent line of business. The pattern measures the residence time and turnover of the balance; it does not establish that the funds were proceeds.",
+  "typology_refs": [
+    "TYP-MULE-ACCOUNT-NETWORK",
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "credit_to_debit_ratio",
+    "dwell_time_of_balance",
+    "balance_residual_after_drain",
+    "counterparty_diversity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the credit and debit records, each cited by its own source id and pointer",
+    "the account's expected activity profile, and the account's normal balance range",
+    "the payors and payees involved, including whether they recur across accounts"
+  ],
+  "benign_explanations": [
+    "A payment processor or marketplace settlement account that receives and pays out on the same day by design.",
+    "A payroll account that receives a funding transfer and disburses salaries in the same window.",
+    "A professional escrow or clearing account whose stated function is to pass funds through.",
+    "A commercial account used to sweep surplus funds to a treasury account at the end of each day."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, money laundering offences as summarised in the FinCrime regulatory index; the indicator is a behavioural measure, not a legal test.",
+      "url": "https://www.law.cornell.edu/uscode/text/18/1956",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate",
+  "notes": "A short dwell time is only meaningful relative to the account's stated function. The function has to be established before the pattern means anything."
+}

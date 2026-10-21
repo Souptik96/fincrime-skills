@@ -1,0 +1,58 @@
+{
+  "id": "IND-REGULAR-EXCHANGE-INDEXED-PATTERN",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "A repeating pattern of activity that is regular rather than irregular",
+  "definition": "Activity that recurs on a fixed cycle — the same amounts, on the same days, to the same counterparties — which is the shape of a scheduled arrangement rather than a response to events. The indicator measures the regularity, which is a fact about the data, and not its purpose.",
+  "typology_refs": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING",
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "behavioral_attributes": [
+    "periodicity_estimate",
+    "amount_repeat_ratio",
+    "counterparty_repeat_ratio",
+    "calendar_alignment"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the transaction series over a period long enough for the periodicity to be visible",
+    "the account's stated business model, and the schedule it implies",
+    "the counterparty relationships relied on"
+  ],
+  "benign_explanations": [
+    "A payroll or a standing order that runs on a fixed date every month.",
+    "A retailer that settles with a supplier on a fixed weekly cycle.",
+    "A customer paying a family member a fixed amount on a fixed date.",
+    "A subscription service whose charges recur on a billing cycle."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on trade-based money laundering and periodic transfer patterns, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low",
+  "notes": "Regularity is not suspiciousness. Most honest commerce is regular, and the indicator only carries weight where the regularity is unexplained by the stated business model."
+}

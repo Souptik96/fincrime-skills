@@ -1,0 +1,29 @@
+{
+  "id": "REQ-AUDITED-FINANCIAL-STATEMENTS",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Audited financial statements",
+  "definition": "The audited accounts of a company for the relevant financial years, with the auditor's opinion. They are requested where the transaction volume being assessed has to be placed against the entity's declared turnover, and they establish a figure that has been independently examined rather than a figure the customer asserted.",
+  "evidence_to_cite": [
+    "the audited accounts, the financial years they cover and the audit opinion",
+    "the turnover figure, and the note in which it is disclosed",
+    "the auditor's identity and the date of the opinion"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial information supporting customer due diligence and risk assessment, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

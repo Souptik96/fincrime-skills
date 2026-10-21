@@ -1,0 +1,29 @@
+{
+  "id": "REG-OFAC-TERRORIST-ASSETS-501-601",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Blocking property of designated persons",
+  "definition": "The requirement to block, and to hold blocked, property in which a designated person has an interest, and to report it. A financial institution is expected to screen its customers and its counterparties against the designations in force, to re-screen as the lists change, and to hold rather than return property that has been blocked. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the screening result, the list version used and the date of the screen",
+    "the property blocked, and the date of the block",
+    "the report made to the sanctions authority"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Blocking of property owned or controlled by designated persons (31 CFR 501.601 and 501.603), summarised in the FinCrime regulatory index.",
+      "url": "https://ofac.treasury.gov/",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

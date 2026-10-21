@@ -1,0 +1,53 @@
+{
+  "id": "TYP-TRADE-BASED-MONEY-LAUNDERING",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Trade-based money laundering",
+  "definition": "The use of the movement of goods and services — rather than of cash — to move value across a border, usually by over-invoicing or under-invoicing the trade, so that the value transferred and the value of the goods diverge. The defining feature is a divergence between a declared value and an independently supportable value, which requires a comparison class to be meaningful.",
+  "behavioral_attributes": [
+    "invoice_to_market_value_ratio",
+    "counterparty_price_divergence",
+    "counterparty_geography",
+    "trade_volume_vs_capacity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the invoices, the contracts and the payments, each cited by its own source id",
+    "the independent evidence of market value relied on, and the comparison class used",
+    "the shipping, customs and insurance documentation for the goods"
+  ],
+  "benign_explanations": [
+    "Related parties priced on a cost-plus basis as a matter of group policy.",
+    "A market with few comparable trades, in which any benchmark is weak.",
+    "Freight, insurance and tax bundled into one invoice and excluded from the other.",
+    "A genuine change of price, quantity or quality between the compared periods."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, trade-based money laundering guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

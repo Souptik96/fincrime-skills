@@ -1,0 +1,29 @@
+{
+  "id": "REQ-CUSTOM-DUTY-CLEARANCE",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Customs clearance records",
+  "definition": "The entry, declaration and clearance documentation for goods entering or leaving the country, showing the declared description, value, quantity and origin. They are requested where the value of a trade has to be tested against the value declared to a customs authority, which is a comparison the customer does not control.",
+  "evidence_to_cite": [
+    "the entry and declaration, with the entry number and date",
+    "the declared value, description and quantity, against the commercial documents",
+    "the ports of entry and exit, against the shipping documents"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Customs documentation in the assessment of trade-based activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

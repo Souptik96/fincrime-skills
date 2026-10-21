@@ -1,0 +1,57 @@
+{
+  "id": "IND-FUNNEL-ACCOUNT-AGGREGATION",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Many third-party credits concentrated into a small number of accounts",
+  "definition": "A set of accounts receiving credits from a large number of distinct third-party originators, with the credits then consolidated into one or a few downstream accounts. The indicator measures the concentration of originators and the consolidation that follows; it does not identify who the originators are or what their relationship is.",
+  "typology_refs": [
+    "TYP-MULE-ACCOUNT-NETWORK",
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "behavioral_attributes": [
+    "distinct_originator_count",
+    "credit_concentration_ratio",
+    "downstream_consolidation_ratio",
+    "account_age_of_originators"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the list of originators with the count of credits per originator",
+    "the downstream accounts and the consolidation totals",
+    "the account opening dates and the customer due diligence file for each account"
+  ],
+  "benign_explanations": [
+    "A payment gateway account that legitimately receives credits from many merchants and pays out to a settlement account.",
+    "A charitable or membership organisation collecting individual donations and remitting them to a central fund.",
+    "A ride-share or delivery platform that credits drivers on the customer's behalf.",
+    "An employer payroll process that credits employees' accounts and consolidates statutory deductions."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on money laundering and funnel accounts, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

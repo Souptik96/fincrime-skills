@@ -1,0 +1,29 @@
+{
+  "id": "REQ-BILL-OF-LADING",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Bills of lading",
+  "definition": "The transport documents for a shipment, showing what was shipped, the quantity, the route and the parties. They are requested where the declared value of a trade has to be tested against what physically moved, and they establish existence and movement of goods, which a set of invoices does not.",
+  "evidence_to_cite": [
+    "the bill of lading, with the carrier, the vessel or vehicle and the ports",
+    "the quantity and description of the goods, against the invoiced quantity",
+    "the shipper and the notify party, against the parties on the invoice"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Shipping and customs documentation supporting the assessment of trade-based activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

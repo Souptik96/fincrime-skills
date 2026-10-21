@@ -1,0 +1,29 @@
+{
+  "id": "REQ-ATM-TRANSACTION-LOG",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Automated teller machine transaction logs",
+  "definition": "The terminal-level log of cash withdrawals and deposits, showing the terminal, the location, the time and the amount. It is requested where a dispersion pattern is being assessed, and it establishes the physical dispersion of cash movements, which a summary of the account cannot show.",
+  "evidence_to_cite": [
+    "the terminal logs, with the terminals covered and the period",
+    "the terminal location reference used, and how it was resolved",
+    "the linkage between the terminal and the account"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Terminal-level records used in the assessment of cash activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

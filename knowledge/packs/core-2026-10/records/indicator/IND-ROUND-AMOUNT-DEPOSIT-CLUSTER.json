@@ -1,0 +1,57 @@
+{
+  "id": "IND-ROUND-AMOUNT-DEPOSIT-CLUSTER",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Deposits in round denominations that exceed the account's usual amounts",
+  "definition": "Cash or cheque deposits whose amounts are exact multiples of a round figure, clustered in time and materially larger than the amounts usually seen on the account. The indicator measures the shape of the amounts; it does not establish their source.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "behavioral_attributes": [
+    "amount_roundness_ratio",
+    "amount_deviation_from_account_baseline",
+    "deposit_sequence_regularity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the deposit records forming the cluster",
+    "the account's historical amount distribution, over a stated period",
+    "the source of the funds as stated by the customer, where a statement exists"
+  ],
+  "benign_explanations": [
+    "A business that prices in round figures or invoices in round amounts.",
+    "A customer paying a rent, tuition or instalment in a round amount agreed in advance.",
+    "A cash-heavy retail account whose daily takings happen to settle at round figures.",
+    "A bank or building society teller machine that credits the change in a round amount."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on the avoidance of reporting requirements, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low",
+  "notes": "Roundness on its own is close to meaningless; it is only useful in combination with frequency, dispersion across counterparties, and the account's baseline."
+}

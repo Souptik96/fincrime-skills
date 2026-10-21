@@ -1,0 +1,58 @@
+{
+  "id": "IND-DORMANT-ACCOUNT-ACTIVATION-VELOCITY",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "A long-dormant account becomes active and starts transacting",
+  "definition": "An account with little or no activity for a long period resumes and begins to receive and send transactions, often with a change in counterparty profile. The indicator measures the change in activity; it does not explain it, and a resumption of activity is a legitimate event in itself.",
+  "typology_refs": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING",
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "behavioral_attributes": [
+    "dormancy_duration",
+    "activity_resumption_velocity",
+    "counterparty_profile_shift",
+    "credential_change_indicator"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the account's transaction history over the dormant period and since resumption",
+    "the account opening and closure records",
+    "any change of credentials, contact details or authorised signers since dormancy"
+  ],
+  "benign_explanations": [
+    "A seasonal or cyclical customer returning to an account they still maintain.",
+    "A beneficiary or executor resuming use of an account after a period of inactivity.",
+    "A dormant account reactivated by a new product or a system migration.",
+    "A student or seasonal worker returning to the country and resuming transactions."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, customer identification and account takeover guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low",
+  "notes": "Dormancy is a normal customer behaviour, and an account that reactivates after a change of address is a different account from one that reactivates with a new device and a new counterparty set."
+}

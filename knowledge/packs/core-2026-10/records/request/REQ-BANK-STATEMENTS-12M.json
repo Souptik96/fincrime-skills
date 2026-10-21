@@ -1,0 +1,29 @@
+{
+  "id": "REQ-BANK-STATEMENTS-12M",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Account statements for a twelve-month period",
+  "definition": "The statements of the subject account for a full year, so that a pattern can be separated from an episode. It is requested wherever a single transaction or a single month would be a weak basis, and it establishes the baseline against which any deviation is measured.",
+  "evidence_to_cite": [
+    "the statements, with the account identifiers and the full period",
+    "the completeness of the period, and any gaps in the record",
+    "the baseline pattern derived, and the method used to derive it"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Account records used to establish a baseline, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

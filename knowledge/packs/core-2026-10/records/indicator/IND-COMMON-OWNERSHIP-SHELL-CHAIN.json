@@ -1,0 +1,57 @@
+{
+  "id": "IND-COMMON-OWNERSHIP-SHELL-CHAIN",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "A chain of entities sharing owners, addresses or directors",
+  "definition": "Two or more companies that transact with each other while sharing owners, directors, registered addresses or signatory details, with the pattern persisting across the relationship. The indicator measures the structural overlap; it does not establish that either entity is a front.",
+  "typology_refs": [
+    "TYP-SHELL-COMPANY-LAYERING",
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "shared_owner_count",
+    "shared_address_ratio",
+    "shared_signatory_count",
+    "intra_group_flow_ratio"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the ownership and control evidence for each entity, cited by its own source id",
+    "the invoices and payments between the entities",
+    "the stated commercial relationship between the entities"
+  ],
+  "benign_explanations": [
+    "A family group of companies that share directors and premises and trade honestly.",
+    "A holding structure used for tax or risk reasons, with the trades fully documented.",
+    "Two businesses that share a serviced-office address and a director by coincidence.",
+    "A group that centralises functions and invoices for them at a market rate."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on shell companies and beneficial ownership, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

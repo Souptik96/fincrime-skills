@@ -1,0 +1,56 @@
+{
+  "id": "IND-MULE-ONBOARDING-BURST",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "A burst of new accounts opened in a short window with a shared pattern",
+  "definition": "Many accounts opened within a short period, by different applicants, sharing characteristics such as a common address, a common device, a common contact number, or a common pattern of first transactions. The indicator measures the burst and the shared characteristics; it does not identify the organiser.",
+  "typology_refs": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "behavioral_attributes": [
+    "account_opening_velocity",
+    "shared_attribute_count",
+    "first_transaction_similarity",
+    "dormancy_before_activity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the account opening records and the applications behind them",
+    "the evidence for each shared characteristic, cited by its own source id",
+    "the first transactions on each account"
+  ],
+  "benign_explanations": [
+    "A marketing campaign that brought in a cohort of customers at once.",
+    "A students' union or a sports club registering members in batches.",
+    "A payroll migration that moved staff onto a new platform.",
+    "An employer onboarding seasonal workers at the start of a season."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, customer identification programme guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

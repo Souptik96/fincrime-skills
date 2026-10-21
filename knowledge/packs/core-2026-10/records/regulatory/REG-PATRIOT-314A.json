@@ -1,0 +1,30 @@
+{
+  "id": "REG-PATRIOT-314A",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Mandatory sharing of information with law enforcement",
+  "definition": "The provision that permits a financial institution to share information with a law-enforcement agency about a suspected violation of a law the institution is subject to, including a suspicion of money laundering and of structuring. The information is shared through the appropriate agency rather than directly, the disclosure may not be made to the customer, and the institution may not disclose the fact that it has made the disclosure. This record summarises the provision.",
+  "evidence_to_cite": [
+    "the request received, its date and the agency that made it",
+    "the information disclosed, and the date of the disclosure",
+    "the prohibition on disclosing the disclosure to the customer, and how it was met"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Voluntary sharing of information with law enforcement (31 USC 5318, subsections (l) and (m)), summarised in the FinCrime regulatory index.",
+      "url": "https://www.law.cornell.edu/uscode/text/31/5318",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "The provision is a permission, not an obligation to report. The duty to file a report comes from the reporting rules themselves, and the two are frequently confused."
+}

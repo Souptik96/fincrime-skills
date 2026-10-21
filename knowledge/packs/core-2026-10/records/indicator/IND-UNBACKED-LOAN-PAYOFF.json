@@ -1,0 +1,57 @@
+{
+  "id": "IND-UNBACKED-LOAN-PAYOFF",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "A loan repaid promptly from funds the borrower cannot have earned",
+  "definition": "A loan or credit facility repaid within a short period, from a source of funds that does not correspond to the borrower's documented income, and often shortly after the advance. The indicator measures the repayment and its funding; it does not establish the borrower's intent.",
+  "typology_refs": [
+    "TYP-SHELL-COMPANY-LAYERING",
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "behavioral_attributes": [
+    "days_to_repayment",
+    "repayment_source_relationship",
+    "income_documentation_coverage",
+    "advance_to_repayment_ratio"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the loan agreement, the disbursement record and the repayment record",
+    "the borrower's documented income over the relevant period",
+    "the source of the repayment funds, and the relationship between the parties"
+  ],
+  "benign_explanations": [
+    "A business repaying a facility from a seasonal cash peak.",
+    "A lender or broker repaying a facility that it had bridged on the customer's behalf.",
+    "A borrower whose income is not documented because it is paid in cash or in kind.",
+    "A refinance that the borrower's own cash flow supported but that was recorded in the wrong period."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, lending-related money laundering guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

@@ -1,0 +1,30 @@
+{
+  "id": "REG-MLA-1956-1957",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Money laundering and conspiracy offences",
+  "definition": "The federal offences of conducting a financial transaction with the intention of concealing the nature, source or location of the value, of disguising the proceeds as other property, of engaging in a transaction to conceal the beneficial owner of the value, and of transporting or transferring value knowing that it is the proceeds of criminal activity. The offences are framed around conduct and intention, which is why an indicator of a pattern is evidence of a pattern and not a finding of the offence. This record summarises the offences.",
+  "evidence_to_cite": [
+    "the transaction records relied on, each cited by its own source id",
+    "the facts relied on to establish the intent or knowledge alleged",
+    "the source of the value, and the evidence for it"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Money laundering offences and the prohibition on laundering the proceeds of specified activity (18 USC 1956 and 18 USC 1957), summarised in the FinCrime regulatory index.",
+      "url": "https://www.law.cornell.edu/uscode/text/18/1956",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "This record describes the offences for context. A skill must not reach a conclusion about them: the prohibition on a criminality conclusion is a control in the skill, not a matter of emphasis."
+}

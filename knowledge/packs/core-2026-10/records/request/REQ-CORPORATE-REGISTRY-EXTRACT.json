@@ -1,0 +1,30 @@
+{
+  "id": "REQ-CORPORATE-REGISTRY-EXTRACT",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Company registry extract and good standing",
+  "definition": "The official register entry for a company, showing its incorporation, its registered office, its directors and whether it is in good standing, together with the filings it has made. It is requested where a company customer is being assessed, and it establishes what the register says about the entity's existence and status independently of the entity's own account of itself.",
+  "evidence_to_cite": [
+    "the register extract, with the date of retrieval and the register version",
+    "the incorporation details, the registered office and the current directors",
+    "the filing history, including any recent change of officers or address"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Entity verification against an official register, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "A company that is not in good standing, or whose registered office is a serviced address, is a fact about the entity. Neither is a finding about the people behind it."
+}

@@ -1,0 +1,29 @@
+{
+  "id": "REG-FINCEN-CIVIL-PENALTY",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Civil penalty authority for reporting and programme failures",
+  "definition": "The authority to impose a civil monetary penalty for a violation of a reporting, recordkeeping or anti-money-laundering programme requirement, and the separate authority to impose penalties on a financial institution for a programme failure, which are assessed against a set of factors including the size of the institution, the duration of the failure and whether it was self-reported. The existence of the penalty authority is why a control failure is a supervisory matter and not only an operational one. This record summarises the authority.",
+  "evidence_to_cite": [
+    "the control that failed, and the period the failure covered",
+    "the self-assessment and remediation steps taken, with their dates",
+    "the regulatory correspondence, where there is any"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Civil monetary penalty provisions for violations of the reporting, recordkeeping and programme requirements (31 CFR 1010.810 and 1020.810), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

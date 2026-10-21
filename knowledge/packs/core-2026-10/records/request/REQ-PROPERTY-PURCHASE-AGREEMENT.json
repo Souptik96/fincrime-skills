@@ -1,0 +1,29 @@
+{
+  "id": "REQ-PROPERTY-PURCHASE-AGREEMENT",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Property purchase agreements",
+  "definition": "The signed contract for a property purchase, showing the price, the buyer, the seller, the deposit and the completion conditions. It is requested where a property transaction is part of the picture, and it establishes the price actually agreed and the identity of the parties to it.",
+  "evidence_to_cite": [
+    "the agreement, with its date and the parties",
+    "the price and the deposit structure",
+    "the completion date and the conditions attached to it"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Real estate transaction records supporting an assessment of value and funding, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

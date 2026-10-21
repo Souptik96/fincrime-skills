@@ -1,0 +1,29 @@
+{
+  "id": "REG-CDD-1010-230",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Customer due diligence and risk-based procedures",
+  "definition": "The requirement to establish and verify a customer's identity, to understand the nature and purpose of the relationship, to develop a risk profile, and to apply enhanced procedures where the profile warrants them. The obligation is risk-based: the depth of the procedures follows the risk, and the institution is expected to revisit the profile when circumstances change rather than at a fixed interval. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the customer due diligence file and the date each element was collected",
+    "the risk rating assigned and the basis for it",
+    "the enhanced procedures applied, and the trigger that required them"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Customer due diligence requirements for banks (31 CFR 1020.210 and 1020.220) and the customer due diligence rule (31 CFR 1010.230), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

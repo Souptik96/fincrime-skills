@@ -1,0 +1,29 @@
+{
+  "id": "REQ-LODGING-TAX-RETURNS",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Business and personal tax returns",
+  "definition": "The filed tax returns for a business or an individual, for the relevant years. They are requested where the declared income has to be compared with the money that moved, and they establish the income as it was reported to a tax authority, which is independent of the customer's own account.",
+  "evidence_to_cite": [
+    "the returns, with the years they cover and the filing dates",
+    "the reported income and the reported assets",
+    "any reconciliation between the return and the account activity"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Independent income evidence for customer due diligence, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

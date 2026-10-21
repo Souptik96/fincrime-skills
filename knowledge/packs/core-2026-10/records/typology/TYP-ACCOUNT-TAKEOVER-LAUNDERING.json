@@ -1,0 +1,53 @@
+{
+  "id": "TYP-ACCOUNT-TAKEOVER-LAUNDERING",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Account takeover and the laundering that follows",
+  "definition": "The acquisition of control of a victim's account — by credential theft, by impersonation, or by the coercion of the account holder — followed by the use of that account to move value, either into an account the attacker controls or on to third parties. The defining feature is a change in who controls the account, which the transaction history alone does not show.",
+  "behavioral_attributes": [
+    "session_to_transfer_lag",
+    "device_change_indicator",
+    "authentication_retry_count",
+    "credential_change_to_transfer_lag"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the session, device and authentication logs",
+    "the transfer records made after the change of control",
+    "the evidence of the change of control, cited by its own source id"
+  ],
+  "benign_explanations": [
+    "A customer who travelled and began a session from a new device in a new country.",
+    "A customer who replaced a phone and was signing in for the first time.",
+    "A customer whose password expired and who reset it before a scheduled payment.",
+    "A joint account holder returning to online banking after a long absence."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on account takeover, and the money laundering offences that may follow it, summarised in the FinCrime regulatory index.",
+      "url": "https://www.law.cornell.edu/uscode/text/18/1956",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

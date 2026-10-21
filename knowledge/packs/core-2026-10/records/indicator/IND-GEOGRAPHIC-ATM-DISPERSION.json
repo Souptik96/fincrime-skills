@@ -1,0 +1,57 @@
+{
+  "id": "IND-GEOGRAPHIC-ATM-DISPERSION",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Cash withdrawals dispersed across many ATMs in a wide geography",
+  "definition": "Cash withdrawals made from a large number of automated teller machines spread across a wide area, within a short period, at a rate above the account's usual withdrawal pattern. The indicator measures dispersion and rate; it does not establish why the money was withdrawn.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "atm_count",
+    "geographic_spread_radius",
+    "withdrawal_rate_deviation",
+    "withdrawal_amount_uniformity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the withdrawal records, each cited by its own source id and pointer",
+    "the terminal identifiers and their locations",
+    "the account's historical withdrawal pattern, over a stated period"
+  ],
+  "benign_explanations": [
+    "A traveller or a seasonal worker withdrawing cash in the places they visit.",
+    "A business that pays out daily cash to several sites and withdraws at the nearest terminal.",
+    "A customer who uses different terminals to avoid a per-terminal daily limit, as a matter of convenience.",
+    "Cash-intensive work, such as market trading or event staffing, paid partly in cash."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, currency transaction reporting and aggregation guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low"
+}

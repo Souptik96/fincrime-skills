@@ -1,0 +1,29 @@
+{
+  "id": "REG-MONEY-SERVICES-REGISTRATION",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Registration of money services businesses",
+  "definition": "The requirement that a person who conducts a money services business — such as dealing in foreign currency, issuing or redeeming stored-value instruments, or transmitting money — register with the financial crimes authority, and that a registered business maintain an anti-money-laundering programme of its own. A fintech or payments business may be a money services business without calling itself one, and the classification drives which obligations apply.",
+  "evidence_to_cite": [
+    "the registration record, and the registration identifier",
+    "the activities the business conducts, and the classification applied to each",
+    "the anti-money-laundering programme, where the business is a registrant"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Money services business registration and programme requirements (31 CFR 1020.380 and 1020.220), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

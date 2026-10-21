@@ -1,0 +1,30 @@
+{
+  "id": "REG-BSA-AML-PROGRAM",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Anti-money-laundering programme obligations for covered financial institutions",
+  "definition": "The obligation on a covered financial institution to maintain a written, board-approved anti-money-laundering programme that is appropriate to the size and complexity of the institution. The programme is expected to contain a risk assessment, effective internal controls, a designated compliance officer, training, and independent testing, and to be revised when the institution's risks change. This record summarises the requirement; it is not the text of the rule.",
+  "evidence_to_cite": [
+    "the institution's written anti-money-laundering programme and its approval date",
+    "the risk assessment the programme rests on, and its most recent review",
+    "the testing or independent review that the programme has been through"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Anti-money-laundering programme requirements for banks (31 CFR 1020.210) and for money services businesses (31 CFR 1020.220), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "A programme that exists but has not been revised since the institution's business or risk changed does not satisfy the requirement in substance."
+}

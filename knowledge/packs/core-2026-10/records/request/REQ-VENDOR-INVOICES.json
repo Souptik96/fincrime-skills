@@ -1,0 +1,29 @@
+{
+  "id": "REQ-VENDOR-INVOICES",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Vendor invoices and remittance records",
+  "definition": "The invoices raised by a vendor and the corresponding remittance records, showing what was billed, what was paid and when. They are requested where a supplier's invoices are being tested against the goods or services actually delivered, and they establish the billing relationship independently of the payer.",
+  "evidence_to_cite": [
+    "the invoices, with the vendor and the period",
+    "the remittance records, cited by their own source id",
+    "the reconciliation between invoiced and paid amounts"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Third-party billing records used in the assessment of trade, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

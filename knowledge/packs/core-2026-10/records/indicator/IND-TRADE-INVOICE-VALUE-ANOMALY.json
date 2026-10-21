@@ -1,0 +1,57 @@
+{
+  "id": "IND-TRADE-INVOICE-VALUE-ANOMALY",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Invoiced values inconsistent with the goods or services delivered",
+  "definition": "Invoice values that depart materially from what comparable trade would cost — the goods over-invoiced and the payments under-invoiced, or the reverse — with no commercial reason offered. The indicator measures the divergence between the declared value and the market value of the trade.",
+  "typology_refs": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING",
+    "TYP-REAL-ESTATE-CASH-LAYERING"
+  ],
+  "behavioral_attributes": [
+    "invoice_to_market_value_ratio",
+    "invoice_series_divergence",
+    "counterparty_price_divergence"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the invoice, the contract and the payment record, each cited by its own source id",
+    "the independent evidence of the market value relied on",
+    "the customs or tax documentation, where the trade crossed a border"
+  ],
+  "benign_explanations": [
+    "A long-standing relationship between related parties priced on a cost-plus basis.",
+    "A market with few comparable trades, so the benchmark is weak.",
+    "A genuine change in price, quantity or quality between the compared periods.",
+    "Freight, insurance and tax included in one invoice and excluded from the other."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, trade-based money laundering guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low",
+  "notes": "A comparison needs a comparison class. Without one, the divergence is an opinion, and the record has to say which class was used."
+}

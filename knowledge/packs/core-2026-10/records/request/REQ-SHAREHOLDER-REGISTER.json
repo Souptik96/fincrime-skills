@@ -1,0 +1,29 @@
+{
+  "id": "REQ-SHAREHOLDER-REGISTER",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Shareholder registers",
+  "definition": "The statutory register of members of a company, showing who holds the shares and since when. It is requested where the ownership of a company customer is in question, and it establishes the shareholders of record, which is not the same thing as the beneficial owners.",
+  "evidence_to_cite": [
+    "the register, with the date of extraction",
+    "the shareholders and their holdings, and the dates of acquisition",
+    "any transfers during the period, and the consideration recorded"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Ownership evidence for legal entity customers, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

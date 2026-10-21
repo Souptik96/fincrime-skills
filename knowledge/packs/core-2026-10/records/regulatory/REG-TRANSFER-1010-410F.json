@@ -1,0 +1,30 @@
+{
+  "id": "REG-TRANSFER-1010-410F",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Currency transfers and the reporting that follows them",
+  "definition": "The requirement to report a currency transfer, by a financial institution or a money services business, of currency or monetary instruments exceeding the applicable threshold, whether or not the funds physically travel in reportable form, and the requirement to collect the information the transfer rule prescribes from the person making the transfer. This record summarises the obligation.",
+  "evidence_to_cite": [
+    "the transfer records, and whether the funds travelled in reportable form",
+    "the information collected from the person making the transfer",
+    "the report filed, where one was required"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Currency transfer reporting and information requirements (31 CFR 1010.410), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate",
+  "notes": "Whether a report is required turns on the form of the funds, which is why the record has to say what physically travelled and not only what was booked."
+}

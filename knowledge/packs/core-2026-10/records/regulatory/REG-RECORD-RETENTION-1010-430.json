@@ -1,0 +1,29 @@
+{
+  "id": "REG-RECORD-RETENTION-1010-430",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Recordkeeping and retention periods",
+  "definition": "The requirement to create and retain the records that support a report, and to keep them for the period the rule specifies, generally five years from the date of the report. The records that must be kept are those a reasonable person would expect to be needed to demonstrate that the report was made and that the institution complied with the underlying obligations. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the retained record, and the date it was created",
+    "the retention period applied, and the date the record will be destroyed",
+    "the report the record supports, where there is one"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Recordkeeping and retention requirements (31 CFR 1010.430), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

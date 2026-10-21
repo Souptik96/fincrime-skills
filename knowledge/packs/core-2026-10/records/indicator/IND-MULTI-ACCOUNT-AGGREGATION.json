@@ -1,0 +1,57 @@
+{
+  "id": "IND-MULTI-ACCOUNT-AGGREGATION",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Activity spread across accounts that a single person controls",
+  "definition": "Transaction activity that looks unremarkable account by account, but which aggregates across several accounts with a common owner, signatory or address into a materially different picture. The indicator is defined only where the common control is evidenced rather than assumed.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "behavioral_attributes": [
+    "aggregate_volume_across_linked_accounts",
+    "common_control_evidence_strength",
+    "cross_account_counterparty_overlap"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the evidence of common control, cited by its own source id",
+    "the per-account and the aggregated transaction totals",
+    "the shared attributes used to link the accounts, and each one's strength"
+  ],
+  "benign_explanations": [
+    "A sole trader who operates several accounts for different branches of the business.",
+    "A family running a small business across a personal and a corporate account.",
+    "A customer who prefers several accounts for administrative reasons, such as separate funds.",
+    "Accounts that share an address because they belong to a common landlord, a school or a company house."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, customer identification programme guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate",
+  "notes": "The linkage has to be evidence-based. Shared attributes such as an address, a phone number or a device are indicators of linkage, not evidence of it."
+}

@@ -1,0 +1,56 @@
+{
+  "id": "IND-ATO-SESSION-TRANSFER-VELOCITY",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Transfers made soon after an account session begins in an unusual way",
+  "definition": "Outbound transfers made within a short window of a session that started in an unusual way — a new device, a new location, or a failed authentication followed by a successful one — and that depart from the account's usual transfer pattern. The indicator measures the conjunction of session anomaly and transfer velocity.",
+  "typology_refs": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "session_to_transfer_lag",
+    "device_change_indicator",
+    "authentication_retry_count",
+    "transfer_amount_vs_baseline"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the session and authentication logs",
+    "the outbound transfer records",
+    "the account's historical transfer pattern, over a stated period"
+  ],
+  "benign_explanations": [
+    "A customer who travels and starts a session from a new device in a new country.",
+    "A customer who replaced a phone and is signing in for the first time.",
+    "A customer whose password expired and who reset it before a scheduled payment.",
+    "A joint account holder who has not used online banking for some time."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on account takeover and fraud, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

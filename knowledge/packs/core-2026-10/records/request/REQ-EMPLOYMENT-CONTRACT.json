@@ -1,0 +1,29 @@
+{
+  "id": "REQ-EMPLOYMENT-CONTRACT",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Employment contracts",
+  "definition": "The contract of employment between the customer and a third party, showing the role, the remuneration and the term. It is requested where a stated source of income depends on a role that the customer has not otherwise evidenced, and it establishes the relationship and its terms.",
+  "evidence_to_cite": [
+    "the contract, with its date and the parties",
+    "the remuneration terms and the commencement date",
+    "any variation or termination agreement"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Evidence of a stated source of income, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

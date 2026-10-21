@@ -1,0 +1,56 @@
+{
+  "id": "IND-PAYROLL-TO-OUTFLOW-MISMATCH",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Outflows disproportionate to the payroll the account is said to fund",
+  "definition": "Outbound payments from an account that funds payroll, materially exceeding the payroll the account is documented to pay, and not accounted for by the stated business expenses. The indicator measures the difference between the declared purpose of the account and the money that leaves it.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-ELDER-FINANCIAL-EXPLOITATION"
+  ],
+  "behavioral_attributes": [
+    "payroll_coverage_ratio",
+    "non_payroll_outflow_share",
+    "destination_diversity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the payroll register and the corresponding payroll payments",
+    "the non-payroll outbound transfers, each cited by its own source id",
+    "the account's stated purpose and the customer's business description"
+  ],
+  "benign_explanations": [
+    "A business that pays some staff in cash collected from other sources.",
+    "An employer paying contractors or agencies alongside its own payroll.",
+    "A seasonal employer whose payroll register lags the actual hiring.",
+    "A family account that mixes a business payroll with household spending."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on the use of business accounts and payroll-related activity, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low"
+}

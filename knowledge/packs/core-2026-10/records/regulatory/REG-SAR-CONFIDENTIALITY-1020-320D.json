@@ -1,0 +1,30 @@
+{
+  "id": "REG-SAR-CONFIDENTIALITY-1020-320D",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Confidentiality of suspicious activity reports",
+  "definition": "The rule that the existence of a suspicious activity report, and the information it contains, may not be disclosed to a customer, a suspect or the wider organisation except in the limited ways the rule allows, and the safe harbour for a person who voluntarily discloses information from a report to a law enforcement agency. The confidentiality rule is a reason a report is not explained to a customer, and it is not a licence to mislead one about an unrelated matter.",
+  "evidence_to_cite": [
+    "the report identifier, and the basis on which its existence was disclosed to anyone",
+    "the disclosure itself, where one was made, and to whom",
+    "the rationale given to the customer for the account's treatment"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Confidentiality of suspicious activity reports and the related safe harbour (31 CFR 1020.320), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "This record is the one most often misused. The rule restricts what may be said about the report; it does not authorise any other misstatement to the customer."
+}

@@ -1,0 +1,30 @@
+{
+  "id": "REG-SAR-FILING-DEADLINE",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Filing deadlines for suspicious activity reports",
+  "definition": "The rule that a suspicious activity report is filed within a set number of calendar days from the initial detection of the activity that gave rise to the suspicion, with a shorter period where no earlier report has been filed for the subject, and an extension available only where the delay is explained by circumstances outside the institution's control. A continuing-activity report is due on its own cycle while the activity continues. The periods themselves are stated in the source and change; this record summarises the structure.",
+  "evidence_to_cite": [
+    "the initial detection date, and how it was established",
+    "the filing date of the report, and any justification for a delay",
+    "the basis for the continued-activity cycle used, where one applies"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Suspicious activity reporting filing deadlines, including the continuing-activity rule (31 CFR 1020.320), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high",
+  "notes": "The deadline runs from detection, not from the transaction. A record of the detection date is the single most important thing to keep."
+}

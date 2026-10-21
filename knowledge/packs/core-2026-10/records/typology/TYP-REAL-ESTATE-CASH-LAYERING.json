@@ -1,0 +1,53 @@
+{
+  "id": "TYP-REAL-ESTATE-CASH-LAYERING",
+  "type": "typology",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Real estate cash layering",
+  "definition": "The use of a property transaction — often one that sits outside the ordinary scope of a person's activity — as the place where value is converted from one form into another, with the funding arriving in cash or in layers from several contributors. The defining feature is the size of the value relative to the buyer's documented capacity to pay.",
+  "behavioral_attributes": [
+    "funder_count",
+    "cash_share_of_purchase",
+    "payment_layering_depth",
+    "buyer_capacity_ratio"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the purchase agreement, the funding records and the title record",
+    "the source of each contribution and the relationship between contributor and buyer",
+    "the buyer's documented income, assets and existing borrowing"
+  ],
+  "benign_explanations": [
+    "A purchase funded by a mortgage and a genuine cash deposit from savings.",
+    "A family purchase where several relatives contribute and the arrangement is documented.",
+    "An investor who used several lenders sequentially and documented each.",
+    "A buyer who paid in cash because a cash offer was genuinely made on the property."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on residential real estate money laundering, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

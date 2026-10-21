@@ -1,0 +1,30 @@
+{
+  "id": "REQ-COUNTERPARTY-BANK-STATEMENTS",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Counterparty account statements",
+  "definition": "The account statements of a counterparty, obtained with the counterparty's authority or through a lawful request, covering the period of the transactions in question. They are requested where the subject's own records show a payment but do not show what became of it, and they establish the funds' onward movement, or its absence.",
+  "evidence_to_cite": [
+    "the statements, with the account holder and the period covered",
+    "the transactions in question, cited by their own source id",
+    "the authority under which the statements were obtained"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Information sharing with financial institutions, summarised in the FinCrime regulatory index.",
+      "url": "https://www.law.cornell.edu/uscode/text/31/5318",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate",
+  "notes": "The means of obtaining the statements is a legal question, not an analytical one, and it belongs in the request's provenance rather than in its rationale."
+}

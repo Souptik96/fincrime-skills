@@ -1,0 +1,55 @@
+{
+  "id": "IND-STRUCTURED-CASH-DEP-BRANCH-CROSS",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Cash deposits split across branches of the same institution",
+  "definition": "Cash deposits made at different branches of the same institution within a short window, in amounts that would have been reportable had they been made in one transaction. The indicator measures the dispersion of deposits across a single institution's network; it does not establish that a reporting requirement was avoided, because branch dispersion has operational explanations.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "behavioral_attributes": [
+    "branch_dispersion_count",
+    "deposit_amount_uniformity",
+    "time_window_concentration"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the deposit records, each cited by its own source id and pointer",
+    "the branch identifiers and the aggregation rule applied for the date",
+    "the customer's stated reason for depositing at more than one branch, where recorded"
+  ],
+  "benign_explanations": [
+    "A customer who works near one branch and lives near another.",
+    "A business with several sites that deposits each site's takings at its local branch.",
+    "A customer avoiding a branch queue or a daily branch limit.",
+    "An automated cash-handling arrangement between a business and its branches."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, currency transaction reporting and the aggregation rule, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

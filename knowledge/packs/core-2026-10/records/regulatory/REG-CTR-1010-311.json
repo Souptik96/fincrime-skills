@@ -1,0 +1,29 @@
+{
+  "id": "REG-CTR-1010-311",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Currency transaction reporting",
+  "definition": "The requirement to file a report on currency transactions exceeding the applicable threshold, in cash or in monetary instruments, conducted by one person in one business day. Transactions by a person are aggregated across branches, accounts and automated teller machines for the day, and a report covers the whole of the person's activity rather than each individual transaction. A set of exceptions exists for transactions between financial institutions, and for certain listed businesses. This record summarises the obligation.",
+  "evidence_to_cite": [
+    "the filed report, its identifier and the period it covers",
+    "the aggregated transaction records for the person for the business day",
+    "the aggregation applied, and any exception relied on"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Currency transaction reporting requirements and the aggregation rule (31 CFR 1010.311, 1010.313 and 1020.315), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

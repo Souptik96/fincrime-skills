@@ -1,0 +1,29 @@
+{
+  "id": "REQ-CRYPTO-EXCHANGE-KYC",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Digital-asset service provider due diligence file",
+  "definition": "The customer identification and due diligence file a digital-asset service provider holds on the customer, together with the screening results and the source-of-funds record. It is requested where digital-asset activity is part of the picture, and it establishes what the provider actually verified, which is usually the only verification that exists.",
+  "evidence_to_cite": [
+    "the due diligence file, with the date the relationship began",
+    "the identity verification performed and its outcome",
+    "the screening results, with the list versions and the dates screened"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Money services business customer identification requirements, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

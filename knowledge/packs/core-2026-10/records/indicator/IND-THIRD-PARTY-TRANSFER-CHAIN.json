@@ -1,0 +1,56 @@
+{
+  "id": "IND-THIRD-PARTY-TRANSFER-CHAIN",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Funds sent onward to third parties the account holder does not transact with",
+  "definition": "Credits received from one party and debited onward to unrelated third parties, without the account holder appearing to have a commercial relationship with the recipients. The indicator measures the absence of a stated relationship; it does not establish that the funds were held for others.",
+  "typology_refs": [
+    "TYP-MULE-ACCOUNT-NETWORK",
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "behavioral_attributes": [
+    "non_related_party_outflow_ratio",
+    "outflow_granularity",
+    "recipient_diversity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the inbound and outbound transaction records",
+    "any statement of the account holder's role in the movement of the funds",
+    "the customer due diligence file and the declared purpose of the account"
+  ],
+  "benign_explanations": [
+    "A market stall holder who receives cash from traders and pays suppliers.",
+    "A concierge or a payment service that passes funds to end customers.",
+    "A customer who manages money for relatives and is candid about it.",
+    "A business holding funds briefly before a refund, with the refunds visible in the same account."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on third-party payment processing, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate"
+}

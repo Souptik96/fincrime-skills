@@ -1,0 +1,29 @@
+{
+  "id": "REQ-UBO-CHART-SIGNED-DECLARATION",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Ownership chart and signed control declaration",
+  "definition": "The customer's own ownership chart, together with a signed declaration identifying the natural persons who own or control the entity and the basis of their control. It is requested alongside, or in place of, a register extract, and it establishes what the customer asserts, which is only as good as the declaration's evidential basis.",
+  "evidence_to_cite": [
+    "the ownership chart, with the date it was produced",
+    "the signed declaration, and the identity of the signatory and their authority",
+    "the basis of control asserted for each owner"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Beneficial ownership identification and certification requirements, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

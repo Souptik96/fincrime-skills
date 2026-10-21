@@ -1,0 +1,57 @@
+{
+  "id": "IND-WIRE-SEQUENCING-NEUTHRESHOLD",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Electronic transfers sequenced just under a reporting or review threshold",
+  "definition": "A series of electronic transfers, each just below an applicable reporting or internal review threshold, whose sum would have crossed it. The indicator measures the sequencing of the amounts relative to the threshold; it does not establish that the threshold was known or intended.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-TERRORIST-FINANCING-DIVERSION"
+  ],
+  "behavioral_attributes": [
+    "amount_to_threshold_ratio",
+    "sequence_count",
+    "sequence_time_window",
+    "counterparty_diversity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "each transfer in the sequence, cited by its own source id",
+    "the threshold and its effective dates",
+    "the account's relationship to the recipients"
+  ],
+  "benign_explanations": [
+    "A customer who knows a per-payment limit and pays just under it for convenience.",
+    "A treasury team splitting an invoice payment across two settlements to meet two different cut-off times.",
+    "A wholesaler paying several suppliers each just under a contractual discount threshold.",
+    "A payment that is genuinely below a statutory threshold at each leg and only in aggregate reaches it."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, funds transfer and reporting guidance, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low"
+}

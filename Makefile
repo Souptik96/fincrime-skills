@@ -47,13 +47,15 @@ validate:  ## Validate the canonical contracts
 
 
 
-validate-skills:  ## Validate every skill package and the worked example pack
+validate-skills:  ## Validate every skill package and the knowledge packs
 	$(VENV_PY) -m fincrime_cli.main validate skills/investigation-qa
 	$(VENV_PY) -m fincrime_cli.main knowledge validate --pack knowledge/examples/sample-pack
+	$(VENV_PY) -m fincrime_cli.main knowledge validate --pack knowledge/packs/core-2026-10
 
 validate-promotion:  ## Apply the promotion gate (ADR-0006): stale knowledge blocks
 	$(VENV_PY) -m fincrime_cli.main validate skills/investigation-qa --promotion
 	$(VENV_PY) -m fincrime_cli.main knowledge validate --pack knowledge/examples/sample-pack --promotion
+	$(VENV_PY) -m fincrime_cli.main knowledge validate --pack knowledge/packs/core-2026-10 --promotion
 
 eval:  ## Run the evaluation suites (Phase 4)
 	@echo "No evaluation suites have shipped yet (Phase 4)."

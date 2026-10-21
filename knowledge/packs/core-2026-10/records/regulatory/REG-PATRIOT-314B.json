@@ -1,0 +1,29 @@
+{
+  "id": "REG-PATRIOT-314B",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Voluntary sharing of information between financial institutions",
+  "definition": "The provision that permits a financial institution to share information with another financial institution about a suspected violation of a law the institution is subject to, on a safe harbour, subject to conditions including that the sharing is for the purpose of investigating or preventing the violation, that the information is shared confidentially, and that the sharing is documented. This record summarises the provision.",
+  "evidence_to_cite": [
+    "the request received, and the basis on which the institution answered it",
+    "the record of the sharing, and the confidentiality undertaking given",
+    "the purpose the sharing was for"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Voluntary sharing between financial institutions (31 USC 5318, subsection (m)), summarised in the FinCrime regulatory index.",
+      "url": "https://www.law.cornell.edu/uscode/text/31/5318",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

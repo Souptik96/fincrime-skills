@@ -1,0 +1,29 @@
+{
+  "id": "REQ-INVOICE-LEDGER",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Sales and purchase invoice ledgers",
+  "definition": "The complete invoice ledger for a period, showing every invoice raised or received, the counterparty, the amount and the date. It is requested where a sample of transactions has to be tested against the whole population, and it establishes whether the sampled pattern is the norm or the exception.",
+  "evidence_to_cite": [
+    "the ledger, with the period it covers and the system it was taken from",
+    "the reconciliation of the ledger total to the reported turnover",
+    "the sampling method, where a sample was drawn"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Transaction records supporting a pattern assessment, summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

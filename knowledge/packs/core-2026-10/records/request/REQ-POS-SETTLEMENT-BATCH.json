@@ -1,0 +1,29 @@
+{
+  "id": "REQ-POS-SETTLEMENT-BATCH",
+  "type": "request",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Point-of-sale settlement batches",
+  "definition": "The batch-level settlement file a merchant's acquirer or processor settles on, showing the individual card transactions and the net amount remitted. It is requested when a cash-heavy merchant's card volume is being compared with the rest of its takings, and it establishes the card side of the picture, not the cash side.",
+  "evidence_to_cite": [
+    "the settlement batch, with the settlement date and the net amount",
+    "the individual transactions in the batch, cited by their own transaction ids",
+    "the acquirer's or processor's identification of the merchant account"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Card settlement data is requested to test a cash-intensity profile; the reporting and recordkeeping context is summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

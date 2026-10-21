@@ -1,0 +1,57 @@
+{
+  "id": "IND-GIFT-CARD-PURCHASE-VELOCITY",
+  "type": "indicator",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "High-velocity purchases of stored-value instruments",
+  "definition": "A pattern of purchases of stored-value or prepaid instruments at a high rate, often in repeated rounded amounts and from several points of sale, with rapid subsequent use. The indicator measures the velocity and the use pattern.",
+  "typology_refs": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "behavioral_attributes": [
+    "purchase_velocity",
+    "redemption_velocity",
+    "amount_rounding_ratio",
+    "point_of_sale_diversity"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the purchase records and the redemption records",
+    "the merchant category codes of the points of sale",
+    "the source of the funds used to buy the instruments, where known"
+  ],
+  "benign_explanations": [
+    "A retailer that sells stored-value cards as its own product line.",
+    "A consumer preparing for an event, holiday or celebration.",
+    "An employer distributing incentive or welfare vouchers on a scheduled cycle.",
+    "A business running a promotional discount funded by prepaid cards."
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, guidance on money services businesses and prepaid access, summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1020",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "low"
+}

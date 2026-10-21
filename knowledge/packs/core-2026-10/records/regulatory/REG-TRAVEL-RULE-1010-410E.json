@@ -1,0 +1,29 @@
+{
+  "id": "REG-TRAVEL-RULE-1010-410E",
+  "type": "regulatory",
+  "pack": "core-2026-10",
+  "version": "1.0.0",
+  "title": "Information accompanying funds transfers",
+  "definition": "The requirement that specified information travel with a funds transfer: for a payment in currency or monetary instruments, the originator's name, account number and address, or the identifying information the rule prescribes where a payment is made through an intermediary. The receiving institution is expected to have the information and to be able to produce it, and the information travels with the funds rather than being supplied separately. This record summarises the requirement.",
+  "evidence_to_cite": [
+    "the payment or wire message, and the information it carried",
+    "the receiving institution's response to a request for the information",
+    "the procedure applied where the information was incomplete or absent"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "sources": [
+    {
+      "citation": "Funds transfer information requirements (31 CFR 1010.410), summarised in the FinCrime regulatory index.",
+      "url": "https://www.ecfr.gov/current/title-31/subtitle-B/chapter-X/part-1010",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}
