@@ -15,6 +15,7 @@ __all__ = [
     "CLAIM_CLASSES",
     "EPISTEMIC_TYPES",
     "CONFIDENCE_LEVELS",
+    "FINDING_ELEMENTS",
     "Claim",
     "Confidence",
     "Provenance",
@@ -36,6 +37,24 @@ CLAIM_CLASSES: tuple[str, ...] = (
     "risk_assessment",
     "recommendation",
     "decision",
+)
+
+#: The output elements a skill may be required to produce: the seven claim
+#: classes, plus the structural elements of the Finding Contract that are not
+#: claims but are part of an artifact (the frame, the evidence inventory, the
+#: gap list, the escalation).
+#:
+#: A skill declares what it produces against this vocabulary, so that a
+#: manifest cannot name an output nobody can produce and a reader of the
+#: manifest knows exactly what the artifact will contain.
+FINDING_ELEMENTS: tuple[str, ...] = CLAIM_CLASSES + (
+    "frame",
+    "evidence_inventory",
+    "gaps",
+    "contradiction",
+    "timeline",
+    "escalation",
+    "draft_notice",
 )
 
 #: The closed enum of hypothesis epistemic types (Part 5.1.1 of the blueprint).

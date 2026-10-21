@@ -27,7 +27,7 @@ CORE_SRC = REPO_ROOT / "packages" / "fincrime-core" / "src"
 
 sys.path.insert(0, str(CORE_SRC))
 
-from fincrime_core.validate.schema import JsonSchemaValidator  # noqa: E402
+from fincrime_core.validate.schema import JsonSchemaValidator, load_registry  # noqa: E402
 
 #: Corpus of instances exercised against every schema. Each entry is
 #: (schema file, instance, must_be_valid).
@@ -116,7 +116,149 @@ CORPUS: list[tuple[str, object, bool]] = [
     ("skill-manifest.schema.json", {"apiVersion": "fincrime.dev/v1", "kind": "FinCrimeSkill"}, False),
     ("evidence-ref-grammar.schema.json", {}, False),
     ("case.schema.json", {"case_id": "x", "suite": "s", "version": "1.0.0", "kind": "golden"}, False),
+    # The policy set references the rule contract across files. The two
+    # implementations must resolve that reference the same way, or the
+    # exported set and the engine's reading of it are different contracts.
+    (
+        "policy-set.schema.json",
+        {
+            "id": "test",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "description": "d",
+            "jurisdictions": ["US"],
+            "rules": [
+                {
+                    "id": "POL-TEST",
+                    "version": "1.0.0",
+                    "severity": "error",
+                    "description": "d",
+                    "kind": "count",
+                    "rule": {"min_items": 1},
+                    "message": "m",
+                }
+            ],
+        },
+        True,
+    ),
+    (
+        "policy-set.schema.json",
+        {
+            "id": "test",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "description": "d",
+            "jurisdictions": ["US"],
+            "rules": [{"id": "POL-TEST", "kind": "count", "rule": {"min_items": 1}}],
+        },
+        False,
+    ),
+    (
+        "policy-set.schema.json",
+        {
+            "id": "test",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "description": "d",
+            "jurisdictions": ["US"],
+            "rules": [
+                {
+                    "id": "POL-TEST",
+                    "version": "1.0.0",
+                    "severity": "error",
+                    "description": "d",
+                    "kind": "count",
+                    "rule": {"min_items": 1, "bogus": 2},
+                    "message": "m",
+                }
+            ],
+        },
+        False,
+    ),
+    (
+        "case-suite.schema.json",
+        {
+            "suite_id": "test",
+            "skill": "test",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "requirements": {
+                "min_cases": 1,
+                "min_mixed_ratio": 0.4,
+                "min_negative_ratio": 0.15,
+                "required_kinds": ["golden"],
+            },
+            "cases": [{"case_id": "golden-001", "path": "cases/golden-001.json"}],
+        },
+        True,
+    ),
+    (
+        "case-suite.schema.json",
+        {
+            "suite_id": "test",
+            "skill": "test",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "requirements": {
+                "min_cases": 1,
+                "min_mixed_ratio": 0.4,
+                "min_negative_ratio": 0.15,
+                "required_kinds": ["golden"],
+            },
+            "cases": [{"case_id": "Golden-001", "path": "cases/golden-001.json"}],
+        },
+        False,
+    ),
+    (
+        "knowledge-pack-manifest.schema.json",
+        {
+            "id": "test-pack",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "description": "d",
+            "jurisdictions": ["US"],
+            "maintainer": "@someone",
+            "records": [
+                {
+                    "id": "IND-TEST",
+                    "type": "indicator",
+                    "path": "records/indicator/IND-TEST.json",
+                    "sha256": "a" * 64,
+                }
+            ],
+            "checksum": "b" * 64,
+        },
+        True,
+    ),
+    (
+        "knowledge-pack-manifest.schema.json",
+        {
+            "id": "test-pack",
+            "version": "1.0.0",
+            "as_of": "2026-10-21",
+            "description": "d",
+            "jurisdictions": ["global"],
+            "maintainer": "@someone",
+            "records": [],
+            "checksum": "b" * 64,
+        },
+        False,
+    ),
 ]
+
+
+def _reference_registry(registry: dict[str, dict]) -> object:
+    """Build a ``referencing`` registry for the reference implementation.
+
+    The contracts reference each other by ``$id``, so the reference validator
+    needs the same resolution environment our validator has.
+    """
+    try:
+        from referencing import Registry, Resource
+    except ImportError:  # pragma: no cover - jsonschema < 4.18
+        return None
+    resources = [(uri, Resource.from_contents(document)) for uri, document in registry.items()]
+    return Registry().with_resources(resources)
 
 
 def main() -> int:
@@ -130,15 +272,19 @@ def main() -> int:
     failures: list[str] = []
     checked = 0
 
+    # The contracts reference each other by ``$id``, so both implementations
+    # need the same registry to resolve a cross-file reference.
+    registry = load_registry(CONTRACTS)
+
     for schema_name, instance, expected_valid in CORPUS:
         schema_path = CONTRACTS / schema_name
         with schema_path.open("r", encoding="utf-8") as handle:
             schema = json.load(handle)
 
-        ours = JsonSchemaValidator(schema)
+        ours = JsonSchemaValidator(schema, registry=registry)
         ours_valid = ours.is_valid(instance)
 
-        reference = Draft202012Validator(schema)
+        reference = Draft202012Validator(schema, registry=_reference_registry(registry))
         reference_valid = reference.is_valid(instance)
 
         checked += 1

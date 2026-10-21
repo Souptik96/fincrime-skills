@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/policy-set/1.0.0",
+  "title": "FinCrime Policy Set",
+  "description": "A versioned, jurisdiction-scoped set of deterministic rules. The set is what a firm hands to the engine, and what a `provenance.policy_set` reference names. It carries two kinds of policy: enforceable rules, evaluated by code, and procedural policies, which the agent follows and the evaluation suite measures. The distinction matters: a control a firm must be able to defend to a regulator is enforced by code, and a control that cannot be evaluated by code does not belong in the enforceable list. See ADR-0003.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "as_of",
+    "description",
+    "jurisdictions",
+    "rules"
+  ],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "as_of": { "type": "string", "format": "date" },
+    "description": { "type": "string", "minLength": 1 },
+    "jurisdictions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 2 },
+      "description": "A rule set with no jurisdiction applies structurally everywhere. A 'global' scope is invalid: regulatory content is never jurisdiction-agnostic."
+    },
+    "rules": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "https://fincrime.dev/contracts/policy-rule/1.0.0" }
+    },
+    "procedural_policies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/proceduralPolicy" },
+      "description": "Policies the agent follows as part of its procedure and the evaluation suite measures. They are named in a skill's manifest, and are not evaluated by the policy engine."
+    },
+    "checksum": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "The sha256 of the canonical JSON of this document with the checksum field removed. Optional in a set being authored; `fincrime policy export` stamps it, and a set that carries a wrong checksum is rejected on load."
+    },
+    "notes": { "type": "string" }
+  },
+  "$defs": {
+    "proceduralPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "severity", "description", "check", "on_violation", "measured_by"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^POL-[A-Z0-9-]+$" },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "severity": { "enum": ["error", "warn", "info"] },
+        "description": { "type": "string", "minLength": 1 },
+        "check": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the skill must do, stated so that a reviewer can tell whether it did."
+        },
+        "on_violation": { "enum": ["stop", "escalate", "annotate"] },
+        "measured_by": {
+          "type": "string",
+          "minLength": 1,
+          "description": "How compliance with this policy is measured. A procedural policy is measured by the evaluation suite, not by the policy engine."
+        },
+        "jurisdictions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    }
+  }
+}

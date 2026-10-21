@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/case-suite/1.0.0",
+  "title": "FinCrime Case Suite",
+  "description": "The manifest of an evaluation case suite: the requirements the suite must meet and the cases it contains. The requirements are stated in the suite rather than hard-coded, so a suite can be held to a stricter bar than the default, and so the bar is visible to whoever writes the cases. The defaults are the thresholds in CONTRIBUTING.md: at least 60 cases, at least 40% benign, adversarial, missing-data or contradictory, and at least 15% of cases asserting something the skill must not do.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["suite_id", "skill", "version", "as_of", "requirements", "cases"],
+  "properties": {
+    "suite_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "skill": { "type": "string", "minLength": 1 },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "as_of": { "type": "string", "format": "date" },
+    "description": { "type": "string" },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["min_cases", "min_mixed_ratio", "min_negative_ratio", "required_kinds"],
+      "properties": {
+        "min_cases": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The minimum number of cases in the suite."
+        },
+        "min_mixed_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "The minimum share of cases that are benign, adversarial, missing-data or contradictory."
+        },
+        "min_negative_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "The minimum share of cases that assert something the skill must not do."
+        },
+        "required_kinds": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "golden",
+              "adversarial",
+              "edge",
+              "missing_data",
+              "contradictory",
+              "benign",
+              "multijurisdiction"
+            ]
+          }
+        },
+        "min_benign_per_typology": {
+          "type": "boolean",
+          "description": "Require at least one benign case for every typology the suite names. A typology with no benign lookalike is a detector with no false-positive population."
+        }
+      }
+    },
+    "typologies": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "The typologies this suite covers. A benign case counts towards a typology when the typology appears in the case's tags."
+    },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["case_id", "path"],
+        "properties": {
+          "case_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A suite-relative path to the case file."
+          },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

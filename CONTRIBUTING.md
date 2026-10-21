@@ -28,7 +28,9 @@ already implemented in a dozen repositories; it is not where the value is.
 
 ## Requirements for a new skill
 
-Your PR will not merge without all of these:
+Your PR will not merge without all of these. The full guide is
+[`docs/skill-authoring.md`](docs/skill-authoring.md); the command that checks
+most of them is `fincrime validate skills/<name>`.
 
 | # | Requirement | Threshold |
 |---|---|---|
@@ -44,6 +46,10 @@ Your PR will not merge without all of these:
 | 10 | **A named owner** | In the sidecar `owners` field, and in `CODEOWNERS` |
 | 11 | A jurisdiction entry | In `docs/jurisdiction-support.md` |
 | 12 | Knowledge it depends on is not expired | No expired records in the current pack |
+
+Start from `fincrime new skill <name> --outdir skills`. It writes a package
+that already satisfies requirements 1–3, so you are editing a valid package
+rather than assembling one.
 
 ## Requirements for a knowledge record
 
@@ -62,10 +68,12 @@ A record is **not** accepted without:
 ## Local development
 
 ```bash
-make dev      # venv + editable install
-make test     # the test suite
+make dev      # venv + editable install of the core and the CLI
+make test     # the core test suite
+make test-cli # the CLI test suite
 make lint     # the zero-dependency invariant
 make validate # contract validation
+make validate-skills  # every skill package in skills/
 make ci       # everything CI runs
 ```
 
@@ -75,9 +83,10 @@ usually the fastest way to see what your change actually did.
 
 ## Style
 
-- **Python:** standard library only in `fincrime-core`. No exceptions. See
+- **Python:** standard library only in `fincrime-core` **and** in
+  `fincrime-cli`. No exceptions. See
   [ADR-0002](docs/adr/0002-zero-dependency-core.md). The import linter is
-  blocking.
+  blocking, and it covers both packages.
 - **Contracts:** JSON Schema 2020-12, `additionalProperties: false` on closed
   objects, `if`/`then` for conditional requirements.
 - **Comments and docstrings:** explain *why*, not *what*. A comment that

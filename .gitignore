@@ -20,5 +20,9 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Editors
+# Editor
 *.swp
+
+# Kilo session state: plans and the Agent Manager's recovery state. Local
+# tooling state, not part of the project.
+.kilo/

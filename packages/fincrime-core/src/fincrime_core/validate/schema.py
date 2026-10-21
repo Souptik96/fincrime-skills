@@ -25,12 +25,14 @@ on a bad instance.
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
+from pathlib import Path
 from typing import Any, Mapping, Sequence
 
-__all__ = ["SchemaError", "JsonSchemaValidator", "FORMAT_CHECKERS"]
+__all__ = ["SchemaError", "JsonSchemaValidator", "FORMAT_CHECKERS", "load_registry"]
 
 #: ``format`` is an annotation in JSON Schema, but ``date-time`` is checked
 #: anyway because a malformed timestamp in provenance is a real defect.
@@ -104,12 +106,24 @@ def _type_matches(value: Any, expected: str) -> bool:
 
 
 class JsonSchemaValidator:
-    """Validates instances against a JSON Schema document."""
+    """Validates instances against a JSON Schema document.
 
-    __slots__ = ("_root",)
+    ``registry`` maps a contract's ``$id`` URI to the contract itself, which
+    lets one contract reference another (``policy-set.schema.json`` referencing
+    ``policy-rule.schema.json``). Without it, a rule body would have to be
+    copied into every contract that mentions a rule, and two copies of the
+    same rule shape are two contracts waiting to drift apart.
+    """
 
-    def __init__(self, schema: Mapping[str, Any]) -> None:
+    __slots__ = ("_root", "_registry")
+
+    def __init__(
+        self,
+        schema: Mapping[str, Any],
+        registry: Mapping[str, Mapping[str, Any]] | None = None,
+    ) -> None:
         self._root = schema
+        self._registry = dict(registry or {})
 
     def validate(self, instance: Any) -> list[SchemaError]:
         """Validate ``instance``, returning every error found (never raising)."""
@@ -123,14 +137,23 @@ class JsonSchemaValidator:
     # -- internals ------------------------------------------------------
 
     def _resolve_ref(self, ref: str) -> Mapping[str, Any] | None:
-        if not ref.startswith("#"):
+        if ref.startswith("#"):
+            return self._resolve_pointer(self._root, ref[1:])
+        base, _, fragment = ref.partition("#")
+        target = self._registry.get(base)
+        if target is None:
             return None
-        pointer = ref[1:]
+        if not fragment:
+            return target
+        return self._resolve_pointer(target, fragment)
+
+    @staticmethod
+    def _resolve_pointer(document: Mapping[str, Any], pointer: str) -> Mapping[str, Any] | None:
         if pointer in ("", "/"):
-            return self._root
+            return document
         if not pointer.startswith("/"):
             return None
-        current: Any = self._root
+        current: Any = document
         for raw_token in pointer.split("/")[1:]:
             token = raw_token.replace("~1", "/").replace("~0", "~")
             if isinstance(current, Mapping) and token in current:
@@ -437,3 +460,43 @@ def _json_equal(left: Any, right: Any) -> bool:
     if isinstance(left, (int, float)) and isinstance(right, (int, float)):
         return float(left) == float(right)
     return left == right
+
+
+def _rewrite_refs(node: Any, base: str) -> Any:
+    """Rewrite a document's internal ``$ref``s to absolute form.
+
+    A contract that refers to another contract may itself use internal
+    references. Resolved relative to the wrong document they would point at
+    the wrong definition, so they are rewritten to carry the referring
+    contract's identity.
+    """
+    if isinstance(node, dict):
+        rewritten: dict[str, Any] = {}
+        for key, value in node.items():
+            if key == "$ref" and isinstance(value, str) and value.startswith("#"):
+                rewritten[key] = f"{base}{value}"
+            else:
+                rewritten[key] = _rewrite_refs(value, base)
+        return rewritten
+    if isinstance(node, list):
+        return [_rewrite_refs(item, base) for item in node]
+    return node
+
+
+def load_registry(directory: Path | str) -> dict[str, dict[str, Any]]:
+    """Load every contract in ``directory`` into a ``$id``-keyed registry.
+
+    A file with no ``$id`` is skipped rather than registered under a
+    synthetic key: an unaddressable contract cannot be the target of a
+    cross-file reference, and giving it a made-up identity would hide that.
+    """
+    registry: dict[str, dict[str, Any]] = {}
+    for path in sorted(Path(directory).glob("*.json")):
+        with path.open("r", encoding="utf-8") as handle:
+            document = json.load(handle)
+        if not isinstance(document, dict):
+            continue
+        identifier = document.get("$id")
+        if isinstance(identifier, str) and identifier:
+            registry[identifier] = _rewrite_refs(document, identifier)
+    return registry

@@ -12,16 +12,32 @@ the same artifact always produce the same violations in the same order.
 Six rule kinds are supported, and no rule kind contains a free-text expression.
 If a constraint cannot be evaluated by code, it does not belong here — it belongs
 in the skill body and is measured by the evaluation suite instead.
+
+Three additions to the rule model, all of them semantic changes to an
+enforceable control (ADR-0003):
+
+* ``when`` — an artifact-level gate. A rule that reaches a property of the
+  artifact header rather than of a claim (``artifact.completeness``,
+  ``provenance.knowledge_pack.stale``) has no other way to be expressed.
+* ``require.any_of`` — a per-claim disjunction. ``composite.any`` aggregates
+  across the whole selected set, so it cannot say "this claim has evidence
+  references *or* is stated as insufficient information"; ``any_of`` is
+  decided claim by claim.
+* ``pattern`` is a regular expression, not a substring. A field named
+  ``pattern`` that does substring matching is a contract that lies to whoever
+  writes the rule.
 """
 
 from __future__ import annotations
 
 import json
-from dataclasses import dataclass
+import re
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 from fincrime_core.contract.model import Claim, Finding
+from fincrime_core.validate.culpability import CulpabilityMatcher
 
 __all__ = ["PolicyRule", "PolicyViolation", "PolicyEvaluator", "load_rules"]
 
@@ -39,6 +55,7 @@ class PolicyRule:
     message: str
     applies_to: tuple[str, ...] = ()
     jurisdictions: tuple[str, ...] = ()
+    when: Mapping[str, Any] | None = None
 
     def applies_to_artifact(self, finding: Finding) -> bool:
         """True when this rule governs the given artifact."""
@@ -86,6 +103,7 @@ def load_rules(path: str | Path) -> tuple[PolicyRule, ...]:
                 message=str(entry.get("message", "")),
                 applies_to=tuple(entry.get("applies_to") or ()),
                 jurisdictions=tuple(entry.get("jurisdictions") or ()),
+                when=entry.get("when"),
             )
         )
     return tuple(rules)
@@ -138,6 +156,61 @@ def _claim_field(claim: Claim, field: str) -> Any:
     return current
 
 
+def _artifact_field(finding: Finding, field: str) -> Any:
+    """Read a field from the finding itself by dotted path.
+
+    This is how a rule reaches the artifact header — ``artifact.completeness``,
+    ``artifact.jurisdictions``, ``provenance.knowledge_pack.stale`` — rather
+    than a property of one claim.
+    """
+    current: Any = finding
+    for part in field.split("."):
+        if current is None:
+            return None
+        if isinstance(current, Mapping):
+            current = current.get(part)
+        else:
+            current = getattr(current, part, None)
+    return current
+
+
+def _when_applies(when: Mapping[str, Any], finding: Finding) -> bool:
+    """Test an artifact-level gate.
+
+    Every predicate present must hold. An absent predicate holds vacuously,
+    so a gate with one predicate is the common case.
+    """
+    value = _artifact_field(finding, str(when.get("field", "")))
+
+    if "equals" in when and value != when["equals"]:
+        return False
+    if "not_equals" in when and value == when["not_equals"]:
+        return False
+    if "in" in when:
+        options = when["in"] if isinstance(when["in"], (list, tuple)) else [when["in"]]
+        if value not in options:
+            return False
+    if "not_in" in when:
+        options = when["not_in"] if isinstance(when["not_in"], (list, tuple)) else [when["not_in"]]
+        if value in options:
+            return False
+    if "contains" in when:
+        if not isinstance(value, (list, tuple, set, str)):
+            return False
+        if when["contains"] not in value:
+            return False
+    if "matches" in when:
+        if not isinstance(value, str):
+            return False
+        try:
+            matched = re.search(str(when["matches"]), value, re.IGNORECASE) is not None
+        except re.error:
+            return False
+        if not matched:
+            return False
+    return True
+
+
 class PolicyEvaluator:
     """Evaluates policy rules against a finding."""
 
@@ -158,17 +231,19 @@ class PolicyEvaluator:
                 continue
             try:
                 violations.extend(self._evaluate_rule(rule, finding))
-            except Exception:  # pragma: no cover - defensive: a rule must never break validation
+            except Exception as exc:  # pragma: no cover - defensive: a rule must never break validation
                 violations.append(
                     PolicyViolation(
                         rule_id=rule.id,
                         severity="warn",
-                        message=f"Rule {rule.id} could not be evaluated; it was skipped.",
+                        message=f"Rule {rule.id} could not be evaluated and was skipped: {exc}",
                     )
                 )
         return sorted(violations, key=lambda v: v.sort_key())
 
     def _evaluate_rule(self, rule: PolicyRule, finding: Finding) -> list[PolicyViolation]:
+        if rule.when is not None and not _when_applies(rule.when, finding):
+            return []
         handler = {
             "require": self._eval_require,
             "forbid": self._eval_forbid,
@@ -193,7 +268,21 @@ class PolicyEvaluator:
         field = rule.rule.get("field")
         min_items = rule.rule.get("min_items")
         required = rule.rule.get("required")
+        any_of = rule.rule.get("any_of")
         violations: list[PolicyViolation] = []
+
+        if any_of is not None:
+            for claim in self._selected_claims(rule, finding):
+                if not self._claim_satisfies_any(rule, claim, any_of, finding):
+                    violations.append(
+                        PolicyViolation(
+                            rule_id=rule.id,
+                            severity=rule.severity,
+                            message=rule.message or "The claim does not satisfy any permitted alternative.",
+                            claim_id=claim.id,
+                        )
+                    )
+            return violations
 
         if field and min_items is not None:
             for claim in self._selected_claims(rule, finding):
@@ -221,18 +310,50 @@ class PolicyEvaluator:
                     )
         return violations
 
+    def _claim_satisfies_any(
+        self,
+        rule: PolicyRule,
+        claim: Claim,
+        alternatives: Sequence[Mapping[str, Any]],
+        finding: Finding,
+    ) -> bool:
+        """True when ``claim`` satisfies at least one of the alternative bodies.
+
+        The decision is made against this claim alone: a sibling claim that
+        happens to satisfy an alternative must not excuse this one.
+        """
+        scoped = replace(finding, claims=(claim,))
+        for alternative in alternatives:
+            if not self._evaluate_subrule(rule, alternative, scoped):
+                return True
+        return False
+
     def _eval_forbid(self, rule: PolicyRule, finding: Finding) -> list[PolicyViolation]:
         where = rule.rule.get("where") or {}
         violations: list[PolicyViolation] = []
+        pattern = rule.rule.get("pattern")
+        if not pattern:
+            return violations
+        negation_aware = bool(rule.rule.get("negation_aware"))
+        if negation_aware:
+            matcher = CulpabilityMatcher([str(pattern)])
+        else:
+            try:
+                compiled = re.compile(str(pattern), re.IGNORECASE)
+            except re.error as exc:
+                raise ValueError(f"policy pattern {pattern!r} is not a valid regular expression: {exc}") from exc
+
         for claim in self._selected_claims(rule, finding):
-            statement = claim.statement.lower()
-            forbidden = rule.rule.get("pattern") or rule.rule.get("not_pattern")
-            if forbidden and forbidden.lower() in statement:
+            if negation_aware:
+                hit = bool(matcher.find(claim.statement))
+            else:
+                hit = bool(compiled.search(claim.statement))
+            if hit:
                 violations.append(
                     PolicyViolation(
                         rule_id=rule.id,
                         severity=rule.severity,
-                        message=rule.message or f"Statement must not contain {forbidden!r}.",
+                        message=rule.message or f"Statement must not match {pattern!r}.",
                         claim_id=claim.id,
                     )
                 )
@@ -319,10 +440,14 @@ class PolicyEvaluator:
             violations.extend(self._evaluate_subrule(rule, sub, finding))
         any_subs = rule.rule.get("any")
         if any_subs:
-            branch_violations: list[PolicyViolation] = []
-            for sub in any_subs:
-                branch_violations.extend(self._evaluate_subrule(rule, sub, finding))
-            if branch_violations:
+            # `any` means *at least one* branch must be satisfied, so the
+            # composite fails only when every branch failed. Reading it the
+            # other way round would make `any` a synonym for `all`, and a
+            # control that does not do what it says is worse than no control.
+            branch_results = [
+                self._evaluate_subrule(rule, sub, finding) for sub in any_subs
+            ]
+            if all(branch_results):
                 violations.append(
                     PolicyViolation(
                         rule_id=rule.id,

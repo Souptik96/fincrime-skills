@@ -135,6 +135,25 @@
     }
   },
   "$defs": {
+    "outputElement": {
+      "enum": [
+        "fact",
+        "observation",
+        "indicator",
+        "hypothesis",
+        "risk_assessment",
+        "recommendation",
+        "decision",
+        "frame",
+        "evidence_inventory",
+        "gaps",
+        "contradiction",
+        "timeline",
+        "escalation",
+        "draft_notice"
+      ],
+      "description": "An element of the Finding Contract: one of the seven claim classes, or one of the structural sections an artifact carries."
+    },
     "input": {
       "type": "object",
       "additionalProperties": false,
@@ -142,7 +161,11 @@
       "properties": {
         "name": { "type": "string", "minLength": 1 },
         "description": { "type": "string", "minLength": 1 },
-        "schema_ref": { "type": "string" }
+        "contract_ref": {
+          "type": "string",
+          "pattern": "^fincrime/[a-z-]+/[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "description": "The contract this input conforms to, by contract id. A skill is distributed on its own, without the repository, so it must be able to name the contract it needs rather than point at a path inside someone else's checkout."
+        }
       }
     },
     "precondition": {
@@ -167,7 +190,7 @@
         "name": { "type": "string", "minLength": 1 },
         "produces": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": { "$ref": "#/$defs/outputElement" },
           "description": "Claim classes or structural sections this stage may emit."
         },
         "requires": {
@@ -196,10 +219,16 @@
         "required_claims": {
           "type": "array",
           "minItems": 1,
-          "items": { "type": "string" }
+          "items": { "$ref": "#/$defs/outputElement" }
         },
-        "optional_claims": { "type": "array", "items": { "type": "string" } },
-        "prohibited_claims": { "type": "array", "items": { "type": "string" } },
+        "optional_claims": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/outputElement" }
+        },
+        "prohibited_claims": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/outputElement" }
+        },
         "min_hypotheses": { "type": "integer", "minimum": 0 },
         "require_benign_hypothesis": { "type": "boolean" },
         "confidence": {

@@ -1,0 +1,64 @@
+name: knowledge-expiry
+
+# The expiry bot is a recruitment mechanism, not a warning system (ADR-0006).
+#
+# For each stale knowledge record it opens a labelled issue, addressed to the
+# record's maintainer, containing the precise refresh diff required. A domain
+# expert is handed a twenty-minute task rather than an alarm.
+#
+# There is no expiry logic in this workflow and none in the bot script. The
+# plan is computed by `fincrime knowledge check --json`, which is a pure
+# function of the pack and the date. The script only renders what the plan
+# says and files it.
+
+on:
+  schedule:
+    # 06:17 UTC daily. An odd minute, so this job does not land on the
+    # same tick as every other scheduled job in the world.
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+    inputs:
+      as_of:
+        description: "The date to check as of (YYYY-MM-DD). Defaults to today."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: knowledge-expiry
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    name: Plan and file the refreshes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the CLI
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e packages/fincrime-core -e packages/fincrime-cli
+
+      - name: File the refresh issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AS_OF: ${{ inputs.as_of || '' }}
+        run: |
+          set -euo pipefail
+          if [ -z "$AS_OF" ]; then
+            AS_OF="$(date -u +%F)"
+          fi
+          echo "Checking the knowledge packs as of ${AS_OF}."
+          python scripts/knowledge_expiry_bot.py \
+            --packs knowledge/packs \
+            --as-of "$AS_OF"

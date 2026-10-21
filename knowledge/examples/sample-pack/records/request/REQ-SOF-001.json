@@ -1,0 +1,44 @@
+{
+  "id": "REQ-SOF-001",
+  "type": "request",
+  "pack": "sample-pack",
+  "version": "1.0.0",
+  "title": "Source-of-funds documentation",
+  "definition": "A request for documentation establishing the origin of funds that cannot be explained by the subject's declared profile. It is the standard request where a measured pattern is present and the corroborating records that would distinguish the readings are absent.",
+  "behavioral_attributes": [
+    "deposit_amount",
+    "cash_intensity_of_declared_business"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the pattern that prompted the request, cited by source id and pointer",
+    "the absence of the requested records, recorded as a gap"
+  ],
+  "benign_explanations": [
+    "The records exist and the customer supplies them promptly; the request is a routine part of establishing the declared profile."
+  ],
+  "jurisdictions": ["US"],
+  "sources": [
+    {
+      "citation": "FinCrime evidence request catalogue, entry REQ-SOF-001.",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "high"
+}

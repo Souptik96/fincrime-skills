@@ -31,10 +31,14 @@ STDLIB = set(sys.stdlib_module_names)
 #: every platform.
 EXTRA_STDLIB = {
     "fincrime_core",  # first-party intra-package imports
+    "fincrime_cli",  # the CLI's own intra-package imports
 }
 
 #: The packages that are the subject of the check.
-DEFAULT_PACKAGES = ("packages/fincrime-core/src",)
+DEFAULT_PACKAGES = (
+    "packages/fincrime-core/src",
+    "packages/fincrime-cli/src",
+)
 
 #: A forbidden import is one that pulls in an agent framework, a model SDK, a
 #: web framework, or anything that can perform network I/O.

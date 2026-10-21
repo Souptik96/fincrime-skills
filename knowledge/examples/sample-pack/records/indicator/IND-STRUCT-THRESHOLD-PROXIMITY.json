@@ -1,0 +1,53 @@
+{
+  "id": "IND-STRUCT-THRESHOLD-PROXIMITY",
+  "type": "indicator",
+  "pack": "sample-pack",
+  "version": "1.0.0",
+  "title": "Cash deposits clustered immediately below the currency transaction reporting threshold",
+  "definition": "Cash deposits that cluster immediately below the applicable currency transaction reporting threshold, across dispersed branches or accounts, within a single monitoring window. The indicator describes a measured pattern. It does not describe intent, and it is not on its own evidence of a reporting violation.",
+  "typology_refs": ["TYP-STRUCTURING"],
+  "behavioral_attributes": [
+    "deposit_amount",
+    "deposit_frequency",
+    "branch_dispersion",
+    "cash_intensity_of_declared_business"
+  ],
+  "prohibited_attributes": [
+    "nationality",
+    "ethnicity",
+    "age_band",
+    "religion",
+    "disability",
+    "political_opinion",
+    "sex",
+    "gender",
+    "immigration_status",
+    "language"
+  ],
+  "evidence_to_cite": [
+    "the individual deposit records, each cited by its own source id and pointer",
+    "the threshold value in force for the monitoring window",
+    "the subject's declared business profile, where one exists"
+  ],
+  "benign_explanations": [
+    "A cash-intensive legitimate business depositing daily takings below the reporting threshold.",
+    "A business splitting a deposit across branches for operational reasons such as a branch's daily cash limit.",
+    "Seasonal or end-of-week cash takings that cluster below the threshold by coincidence of trading volume.",
+    "A recently formed business whose declared cash intensity is lower than its actual takings."
+  ],
+  "jurisdictions": ["US"],
+  "sources": [
+    {
+      "citation": "Financial Crimes Enforcement Network, Currency Transaction Reporting requirements as summarised in the FinCrime regulatory index.",
+      "url": "https://www.fincen.gov/resources/statutes-regulations/guidance",
+      "retrieved": "2026-10-01"
+    }
+  ],
+  "as_of": "2026-10-01",
+  "review_by": "2027-04-01",
+  "expires_at": "2027-10-01",
+  "status": "active",
+  "maintainer": "@fincrime-maintainers",
+  "confidence": "moderate",
+  "notes": "The benign explanations are the most valuable part of this record. An indicator without them is a detector with no false-positive population."
+}

@@ -1,0 +1,213 @@
+{
+  "id": "fincrime/default",
+  "version": "1.0.0",
+  "as_of": "2026-10-21",
+  "description": "The default enforceable controls. They mirror the structural lints of the core in an exportable, firm-readable form, and they are the controls a firm inherits before it writes a single rule of its own. A control a firm must be able to defend to a regulator belongs here; a control that cannot be evaluated by code does not.",
+  "jurisdictions": [
+    "US"
+  ],
+  "rules": [
+    {
+      "id": "POL-INDICATOR-REQUIRES-INDICATOR-ID",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "An indicator claim must name the indicator it asserts. A pattern with no name is a pattern nobody can check, and a name that is not in the pack is a claim about a rule that does not exist.",
+      "kind": "require",
+      "rule": {
+        "where": {
+          "claim_class": [
+            "indicator"
+          ]
+        },
+        "field": "indicator_ids",
+        "min_items": 1
+      },
+      "message": "An indicator claim must name at least one indicator id from the declared knowledge pack."
+    },
+    {
+      "id": "POL-BENIGN-HYPOTHESIS-REQUIRED",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "An adverse reading may not stand alone. Where an adverse reading is present, a benign reading must compete with it. This is the structural defence that a keyword filter cannot provide.",
+      "kind": "composite",
+      "rule": {
+        "any": [
+          {
+            "kind": "count",
+            "where": {
+              "epistemic_type": [
+                "adverse_reading"
+              ]
+            },
+            "max_items": 0
+          },
+          {
+            "kind": "count",
+            "where": {
+              "epistemic_type": [
+                "benign_reading"
+              ]
+            },
+            "min_items": 1
+          }
+        ]
+      },
+      "message": "An adverse reading is present with no benign reading to compete with it."
+    },
+    {
+      "id": "POL-ASSESSMENT-NEEDS-INDICATOR",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "A risk assessment must either cite evidence or state that the information is insufficient. An assessment that cites nothing and asserts a level is an assertion the artifact does not support.",
+      "kind": "require",
+      "rule": {
+        "where": {
+          "claim_class": [
+            "risk_assessment"
+          ]
+        },
+        "any_of": [
+          {
+            "kind": "require",
+            "field": "evidence_refs",
+            "min_items": 1
+          },
+          {
+            "kind": "consistency",
+            "field": "confidence.level",
+            "equals": "insufficient_information"
+          }
+        ]
+      },
+      "message": "A risk assessment must cite evidence or be stated as insufficient_information."
+    },
+    {
+      "id": "POL-RECOMMENDATION-NEEDS-BASIS",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "A recommendation must be anchored to evidence or to the claim that motivates it. A recommendation with neither is an instruction the artifact does not support.",
+      "kind": "require",
+      "rule": {
+        "where": {
+          "claim_class": [
+            "recommendation"
+          ]
+        },
+        "any_of": [
+          {
+            "kind": "require",
+            "field": "evidence_refs",
+            "min_items": 1
+          },
+          {
+            "kind": "require",
+            "field": "explains",
+            "min_items": 1
+          }
+        ]
+      },
+      "message": "A recommendation must cite evidence or explain the claim that motivates it."
+    },
+    {
+      "id": "POL-NO-CRIMINALITY-CLAIMS",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "Model-authored text may not assert that the subject is a criminal. The patterns are the same narrow set the core's culpability lint uses, and the check is negation-aware, so a statement that rules the conduct out is not a violation.",
+      "kind": "composite",
+      "rule": {
+        "all": [
+          {
+            "kind": "forbid",
+            "pattern": "\\bis\\s+a\\s+money\\s+launderer\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bis\\s+a\\s+money\\s+mule\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bis\\s+a\\s+drug\\s+dealer\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bis\\s+a\\s+trafficker\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bguilty\\s+of\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bcommitted\\s+(?:money\\s+laundering|laundering|fraud|theft)\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bproceeds\\s+of\\s+crime\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bcriminal\\s+enterprise\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bsanctioned\\s+(?:person|individual|party|entity)\\b",
+            "negation_aware": true
+          },
+          {
+            "kind": "forbid",
+            "pattern": "\\bacted\\s+to\\s+evade\\b",
+            "negation_aware": true
+          }
+        ]
+      },
+      "message": "The statement asserts criminality of the subject. The skill layer may not reach that conclusion."
+    },
+    {
+      "id": "POL-CONFIDENCE-CEILING-ON-PARTIAL-EVIDENCE",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "A conclusion drawn from an incomplete evidence set may not be stated with high confidence. The rule applies only to a partial evidence set, which is what the gate reads.",
+      "kind": "count",
+      "rule": {
+        "where": {
+          "claim_class": [
+            "indicator",
+            "hypothesis",
+            "risk_assessment",
+            "recommendation"
+          ],
+          "confidence_level": [
+            "high"
+          ]
+        },
+        "max_items": 0
+      },
+      "message": "The evidence set is partial, so a conclusion drawn from it may not be stated at high confidence.",
+      "when": {
+        "field": "artifact.completeness",
+        "equals": "partial"
+      }
+    }
+  ],
+  "procedural_policies": [
+    {
+      "id": "POL-EVIDENCE-INVENTORY-FIRST",
+      "version": "1.0.0",
+      "severity": "error",
+      "description": "The evidence inventory is built before anything is asserted. A claim made before the analyst knows what evidence exists is a claim about a world the analyst has not seen.",
+      "check": "The artifact carries a non-empty evidence inventory, and it was built before the first claim was drafted.",
+      "on_violation": "stop",
+      "measured_by": "The evaluation suite, through the stage order the artifact records."
+    }
+  ],
+  "notes": "The enforceable rules here mirror the structural lints R-2, R-3b, R-4, R-8 and R-10 of the core. The lints remain the per-claim checks; this set is their exportable form, and it is what a firm reads when it has to explain a control to a regulator. A firm set overrides this set rule by rule, never wholesale.",
+  "checksum": "aeb67c3bbb50e2f362dffff4477b63606fdaf385c5ccece68851094e5f005b00"
+}

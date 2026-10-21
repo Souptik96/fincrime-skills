@@ -21,6 +21,10 @@
     "kind": {
       "enum": ["require", "forbid", "threshold", "count", "consistency", "composite"]
     },
+    "when": {
+      "$ref": "#/$defs/when",
+      "description": "An artifact-level gate. The rule is evaluated only when the artifact satisfies it. This is how a rule reaches a property of the artifact header rather than of a claim."
+    },
     "rule": { "$ref": "#/$defs/ruleBody" },
     "message": { "type": "string", "minLength": 1 },
     "jurisdictions": {
@@ -32,22 +36,75 @@
   "$defs": {
     "ruleBody": {
       "type": "object",
-      "required": [],
+      "additionalProperties": false,
       "properties": {
+        "kind": {
+          "enum": ["require", "forbid", "threshold", "count", "consistency", "composite"],
+          "description": "The kind of a nested rule body. Only meaningful inside any_of, all, any and not; the top-level kind is the rule's own kind."
+        },
         "field": { "type": "string" },
+        "required": {
+          "type": "string",
+          "description": "The field that must be present and truthy on every selected claim."
+        },
         "where": { "$ref": "#/$defs/where" },
+        "any_of": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/ruleBody" },
+          "description": "A per-claim disjunction: a claim satisfies the requirement when it satisfies any one of these bodies. Unlike composite.any, which aggregates across the whole selected set, any_of is decided claim by claim."
+        },
         "min_items": { "type": "integer", "minimum": 0 },
         "max_items": { "type": "integer", "minimum": 0 },
         "min": { "type": "number" },
         "max": { "type": "number" },
         "equals": {},
-        "pattern": { "type": "string" },
-        "not_pattern": { "type": "string" },
+        "pattern": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A regular expression. Under kind 'forbid', a claim statement that matches it is a violation. Matched case-insensitively."
+        },
+        "negation_aware": {
+          "type": "boolean",
+          "description": "Under kind 'forbid', evaluate the pattern per sentence and skip a sentence that carries a negation cue, so that 'not suspected of structuring' is not a violation. The same behaviour as the core's culpability lint."
+        },
         "in": { "type": "array" },
         "not_in": { "type": "array" },
         "all": { "type": "array", "items": { "$ref": "#/$defs/ruleBody" } },
         "any": { "type": "array", "items": { "$ref": "#/$defs/ruleBody" } },
         "not": { "$ref": "#/$defs/ruleBody" }
+      }
+    },
+    "when": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["field"],
+      "anyOf": [
+        { "required": ["equals"] },
+        { "required": ["not_equals"] },
+        { "required": ["in"] },
+        { "required": ["not_in"] },
+        { "required": ["contains"] },
+        { "required": ["matches"] }
+      ],
+      "properties": {
+        "field": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A dotted path into the finding, for example artifact.completeness or provenance.knowledge_pack.stale."
+        },
+        "equals": {},
+        "not_equals": {},
+        "in": { "type": "array" },
+        "not_in": { "type": "array" },
+        "contains": {
+          "description": "The field value contains this item. Applies to an array field or a string field."
+        },
+        "matches": {
+          "type": "string",
+          "minLength": 1,
+          "description": "A regular expression matched against a string field, case-insensitively."
+        }
       }
     },
     "where": {

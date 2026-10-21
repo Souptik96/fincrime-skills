@@ -1,0 +1,26 @@
+{
+  "id": "sample-pack",
+  "version": "1.0.0",
+  "as_of": "2026-10-01",
+  "description": "A worked example of the pack format. It is not a published pack: it exists so that the format, the loader and the expiry tooling have something real to exercise.",
+  "jurisdictions": [
+    "US"
+  ],
+  "maintainer": "@fincrime-maintainers",
+  "records": [
+    {
+      "id": "IND-STRUCT-THRESHOLD-PROXIMITY",
+      "type": "indicator",
+      "path": "records/indicator/IND-STRUCT-THRESHOLD-PROXIMITY.json",
+      "sha256": "e0375500d670da2ab45d947df08efb2cbd93b7e19798310e9fbeaf69dde3dc6b"
+    },
+    {
+      "id": "REQ-SOF-001",
+      "type": "request",
+      "path": "records/request/REQ-SOF-001.json",
+      "sha256": "d88241d2a5a9d30ef69f2ec7cfdfe884bb1d839778bbde827acf5b6d79170ffa"
+    }
+  ],
+  "notes": "Packs are immutable once published. A correction is a new pack version, never an edit to a published one.",
+  "checksum": "15732f390bfd79aafd0182f6c9dd66d73fee38cb509d73fe8048d52c9eb153e1"
+}

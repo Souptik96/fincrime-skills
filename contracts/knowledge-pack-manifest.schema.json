@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://fincrime.dev/contracts/knowledge-pack-manifest/1.0.0",
+  "title": "FinCrime Knowledge Pack Manifest",
+  "description": "The manifest of an immutable, dated knowledge pack. The manifest is the pack's index and its integrity record: every record is listed with the hash of its file, and the pack checksum is derived from those hashes. A pack whose contents no longer match its manifest is not the pack anybody reviewed, so it is rejected. See ADR-0006.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "version",
+    "as_of",
+    "description",
+    "jurisdictions",
+    "maintainer",
+    "records",
+    "checksum"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "The pack id, for example core-2026-10."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "as_of": { "type": "string", "format": "date" },
+    "description": { "type": "string", "minLength": 1 },
+    "jurisdictions": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 2 },
+      "description": "A 'global' or empty jurisdiction list is invalid. Regulatory content is never jurisdiction-agnostic."
+    },
+    "maintainer": { "type": "string", "minLength": 1 },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "type", "path", "sha256"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^(IND|TYP|REG|REQ|SC)-[A-Z0-9-]+$" },
+          "type": {
+            "enum": ["indicator", "typology", "regulatory", "request", "scenario"]
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "A pack-relative path to the record file."
+          },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    },
+    "checksum": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "The pack checksum: the sha256 of the canonical JSON of the record index, sorted by record id."
+    },
+    "notes": { "type": "string" }
+  }
+}

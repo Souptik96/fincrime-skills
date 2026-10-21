@@ -27,10 +27,10 @@ spec:
     required:
       - name: artifact
         description: The finding document under review, conforming to fincrime/finding/1.0.0.
-        schema_ref: "contracts/finding.schema.json"
+        contract_ref: fincrime/finding/1.0.0
       - name: evidence_set
         description: The closed world the artifact was produced against. Without it, evidence attribution cannot be checked.
-        schema_ref: "contracts/evidence-set.schema.json"
+        contract_ref: fincrime/evidence-set/1.0.0
     optional:
       - name: knowledge_index
         description: The knowledge pack the artifact declared, used to check that cited records exist and are not expired.

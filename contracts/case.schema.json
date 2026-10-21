@@ -32,6 +32,11 @@
       "type": "array",
       "items": { "type": "string" }
     },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What this case tests, in one sentence. A case nobody can describe is a case nobody can maintain."
+    },
     "input": {
       "type": "object",
       "description": "The evidence set, inline or by reference to a dataset manifest.",

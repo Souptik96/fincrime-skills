@@ -30,6 +30,25 @@ Enforcement strictness is graded by **change type**, not by staleness alone.
 | A released skill whose **content changed** in the PR | Forbidden | **Hard block** |
 | A released skill, **unchanged**, in a normal CI run | Allowed, disclosed | **Warning**; skill marked `MAINTENANCE_REQUIRED` in the conformance report and on the skills index |
 | A published conformance report | Allowed, disclosed | The report's knowledge-status section lists every expired dependency, its owner, and its review-due date |
+| A record in the declared pack that the skill does **not** cite | Allowed, disclosed | **Warning**; the pack's own refresh is tracked against the pack. An unrelated expired record elsewhere in the pack must never block an unaffected skill |
+
+**Scope: what "cited" means.** The block applies to the knowledge a skill
+*depends on*, not to every record that happens to sit in the same pack:
+
+- a skill that **cites** a record depends on that record. If it has expired,
+  the block applies, and the skill is marked `MAINTENANCE_REQUIRED` in the
+  release context;
+- a skill that declares a pack and cites **no** record in it depends on the
+  pack **as a whole**. Any expired record in it is that skill's stale
+  dependency, and the block applies;
+- a record in the pack that the skill does not cite, in a skill that does
+  cite others, is **disclosed** as a warning in both contexts and blocks
+  neither. The refresh is the pack's business, and it is tracked against the
+  pack.
+
+Without this scoping rule, one expired record in a shared pack would block
+every skill that shares the pack — which is the bricked-repository failure
+this ADR exists to prevent, reached by a different road.
 
 **Runtime artifact behavior is unchanged.** An artifact citing expired knowledge
 is still marked `knowledge_stale: true` and still has its confidence ceiling

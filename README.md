@@ -3,8 +3,11 @@
 **Skills that make AI agents behave like financial-crime investigators — and a
 test suite that proves they don't hallucinate.**
 
-> **Status: Phase 0 (architecture).** The contracts, the validator, and the
-> architecture decision records are in place. No skills have shipped yet.
+> **Status: Phase 1 (core skill specification).** The contracts, the validator,
+> the skill format, and the `fincrime` command are in place. A skill can now be
+> authored, validated, and tested from
+> [`docs/skill-authoring.md`](docs/skill-authoring.md) alone. No skills have
+> shipped yet, and there is no published conformance result.
 
 ---
 
@@ -64,11 +67,15 @@ npx skills add fincrime/fincrime-skills/skills/alert-triage
 
 # the validator and contract library
 pip install fincrime-core
+
+# the command: scaffold, validate, export, check
+pip install fincrime-cli
 ```
 
 The core has **zero runtime dependencies** and **no network capability** — it
 installs and runs in an air-gapped environment with no package-index access
-([ADR-0002](docs/adr/0002-zero-dependency-core.md)).
+([ADR-0002](docs/adr/0002-zero-dependency-core.md)). The CLI is stdlib-only
+too, for the same reason.
 
 ## Use
 
@@ -85,6 +92,17 @@ print(result.evidence_attribution_accuracy)   # deterministic, not judged
 print(result.unsupported_claim_rate)          # deterministic, not judged
 ```
 
+## Authoring a skill
+
+```bash
+fincrime new skill my-skill --outdir skills   # writes a package that already validates
+fincrime validate skills/my-skill              # checks it against the contract
+fincrime policy check --set policies/default/policy-set.json --artifact artifact.json
+```
+
+The guide is [`docs/skill-authoring.md`](docs/skill-authoring.md). It is the
+whole of what a contributor needs to read.
+
 ## Why this is different from a prompt pack
 
 | | A prompt pack | This |
@@ -100,18 +118,18 @@ print(result.unsupported_claim_rate)          # deterministic, not judged
 
 ```text
 contracts/     the canonical, versioned JSON Schemas (the product)
-packages/      fincrime-core (contract, validator, policy, knowledge) + CLI + evals
+packages/      fincrime-core (contract, validator, policy, knowledge) + fincrime-cli
 skills/        portable Agent Skills packages (v1: 6 skills, US only)
 knowledge/     dated, cited, expiring knowledge packs
 policies/      deterministic rules (data, not prose)
 evals/         case suites, baselines, published conformance report
 adapters/      optional: MCP, OpenAI Agents, LangGraph (none required)
-docs/adr/      architecture decision records
+docs/          the authoring guide, the jurisdiction statement, and the ADRs
 ```
 
 ## Architecture decisions
 
-Nine ADRs, each ≤ 2 pages, stating context / decision / consequences:
+Ten ADRs, each ≤ 2 pages, stating context / decision / consequences:
 
 | ADR | Decision |
 |---|---|
@@ -124,14 +142,17 @@ Nine ADRs, each ≤ 2 pages, stating context / decision / consequences:
 | [0007](docs/adr/0007-no-skill-baseline.md) | No-skill baseline as the unit of skill value |
 | [0008](docs/adr/0008-v1-scope.md) | v1 scope: six skills, one jurisdiction, Part V only |
 | [0009](docs/adr/0009-tool-generated-safety-notices.md) | Tool-generated safety notices (non-strippable) |
+| [0010](docs/adr/0010-skill-format-and-cli-boundary.md) | The skill format and the engine/tooling boundary |
 
 ## Development
 
 ```bash
-make dev      # venv + editable install
+make dev      # venv + editable install of the core and the CLI
 make test     # unit, contract, golden, adversarial, PII
+make test-cli # the CLI suite
 make lint     # import lint (zero-dep invariant)
 make validate # contract validation
+make validate-skills  # every skill package in skills/
 make ci       # everything CI runs
 ```
 
