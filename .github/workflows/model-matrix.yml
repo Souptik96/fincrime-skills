@@ -1,0 +1,44 @@
+name: Weekly Model-Matrix & Evaluation Gates
+
+on:
+  schedule:
+    # Run every Sunday at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  model-matrix:
+    name: Model-Matrix Replay & Knowledge Currency
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies (editable core and cli)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "packages/fincrime-core[dev]" -e "packages/fincrime-cli[dev]"
+
+      - name: Air-gap network isolation check
+        run: python scripts/check_no_network.py -- packages/fincrime-core/tests -q
+
+      - name: Zero-PII scanner check
+        run: python scripts/check_pii.py
+
+      - name: Execute 360-case offline replay evaluation & enforce gates
+        run: fincrime eval --skill all --replay --gates
+
+      - name: Knowledge currency & pack expiry monitoring (ADR-0006)
+        run: python scripts/knowledge_expiry_bot.py
+
+      - name: Verify zero documentation drift (Doc-Testing Engine)
+        run: python scripts/check_docs.py
+
+      - name: Regenerate and verify conformance benchmark
+        run: python scripts/generate_conformance_report.py

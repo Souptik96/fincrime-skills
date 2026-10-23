@@ -294,6 +294,11 @@ def build_source_index(evidence_set: Mapping[str, Any]) -> SourceIndex:
         subject_id = _first(subject, "subject_id")
         if subject_id:
             index.register(f"subject:{subject_id}", dict(subject))
+    elif isinstance(evidence_set.get("subject_scope"), Mapping):
+        subject_scope = evidence_set["subject_scope"]
+        subject_id = _first(subject_scope, "subject_id")
+        if subject_id:
+            index.register(f"subject:{subject_id}", dict(subject_scope))
 
     for txn in evidence_set.get("transactions") or ():
         if isinstance(txn, Mapping):
@@ -324,5 +329,11 @@ def build_source_index(evidence_set: Mapping[str, Any]) -> SourceIndex:
             entity_id = _first(entity, "entity_id")
             if entity_id:
                 index.register(f"entity:{entity_id}", dict(entity))
+
+    for source in evidence_set.get("sources") or ():
+        if isinstance(source, Mapping):
+            source_id = source.get("source_id")
+            if source_id and isinstance(source_id, str):
+                index.register(source_id, dict(source))
 
     return index

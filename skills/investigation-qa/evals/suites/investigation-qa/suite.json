@@ -1,0 +1,450 @@
+{
+  "suite_id": "investigation-qa",
+  "skill": "investigation-qa",
+  "version": "1.0.0",
+  "as_of": "2026-10-21",
+  "description": "The investigation QA population: adversarial mutation defect triggers, epistemic dual-reading checks, and attribution audits.",
+  "requirements": {
+    "min_cases": 60,
+    "min_mixed_ratio": 0.4,
+    "min_negative_ratio": 0.15,
+    "required_kinds": [
+      "golden",
+      "adversarial",
+      "benign",
+      "missing_data",
+      "contradictory",
+      "edge"
+    ],
+    "min_benign_per_typology": true
+  },
+  "typologies": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-MULE-ACCOUNT-NETWORK",
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING",
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "cases": [
+    {
+      "case_id": "golden-qa-001",
+      "path": "cases/golden-qa-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-002",
+      "path": "cases/golden-qa-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-qa-003",
+      "path": "cases/golden-qa-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-004",
+      "path": "cases/golden-qa-004.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-005",
+      "path": "cases/golden-qa-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-006",
+      "path": "cases/golden-qa-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-qa-007",
+      "path": "cases/golden-qa-007.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-008",
+      "path": "cases/golden-qa-008.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-009",
+      "path": "cases/golden-qa-009.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-010",
+      "path": "cases/golden-qa-010.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-qa-011",
+      "path": "cases/golden-qa-011.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-012",
+      "path": "cases/golden-qa-012.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-013",
+      "path": "cases/golden-qa-013.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-014",
+      "path": "cases/golden-qa-014.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-qa-015",
+      "path": "cases/golden-qa-015.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-016",
+      "path": "cases/golden-qa-016.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-017",
+      "path": "cases/golden-qa-017.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-qa-018",
+      "path": "cases/golden-qa-018.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-001",
+      "path": "cases/adversarial-qa-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-002",
+      "path": "cases/adversarial-qa-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-003",
+      "path": "cases/adversarial-qa-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-004",
+      "path": "cases/adversarial-qa-004.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-005",
+      "path": "cases/adversarial-qa-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-006",
+      "path": "cases/adversarial-qa-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-007",
+      "path": "cases/adversarial-qa-007.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-008",
+      "path": "cases/adversarial-qa-008.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-009",
+      "path": "cases/adversarial-qa-009.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-010",
+      "path": "cases/adversarial-qa-010.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-011",
+      "path": "cases/adversarial-qa-011.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-qa-012",
+      "path": "cases/adversarial-qa-012.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-001",
+      "path": "cases/benign-qa-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-002",
+      "path": "cases/benign-qa-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-003",
+      "path": "cases/benign-qa-003.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-004",
+      "path": "cases/benign-qa-004.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-005",
+      "path": "cases/benign-qa-005.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-qa-006",
+      "path": "cases/benign-qa-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-qa-007",
+      "path": "cases/benign-qa-007.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-qa-008",
+      "path": "cases/benign-qa-008.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-qa-009",
+      "path": "cases/benign-qa-009.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-010",
+      "path": "cases/benign-qa-010.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-011",
+      "path": "cases/benign-qa-011.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-012",
+      "path": "cases/benign-qa-012.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-013",
+      "path": "cases/benign-qa-013.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-014",
+      "path": "cases/benign-qa-014.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-015",
+      "path": "cases/benign-qa-015.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-qa-016",
+      "path": "cases/benign-qa-016.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "missing-qa-001",
+      "path": "cases/missing-qa-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-qa-002",
+      "path": "cases/missing-qa-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "missing-qa-003",
+      "path": "cases/missing-qa-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-qa-004",
+      "path": "cases/missing-qa-004.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "missing-qa-005",
+      "path": "cases/missing-qa-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-qa-006",
+      "path": "cases/missing-qa-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-qa-001",
+      "path": "cases/contradictory-qa-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "contradictory-qa-002",
+      "path": "cases/contradictory-qa-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-qa-003",
+      "path": "cases/contradictory-qa-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-qa-004",
+      "path": "cases/contradictory-qa-004.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "edge-qa-001",
+      "path": "cases/edge-qa-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "edge-qa-002",
+      "path": "cases/edge-qa-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "edge-qa-003",
+      "path": "cases/edge-qa-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "edge-qa-004",
+      "path": "cases/edge-qa-004.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    }
+  ],
+  "notes": "Generated by scripts/generate_synthetic_corpus.py with zero real PII and deterministic parameterization."
+}

@@ -1,0 +1,40 @@
+{
+  "evidence_set_version": "fincrime/evidence-set/1.0.0",
+  "review": {
+    "review_id": "REV-9001",
+    "target_artifact_id": "TRIAGE-4410",
+    "target_skill": "alert-triage",
+    "created_at": "2026-05-19T10:00:00Z"
+  },
+  "subject": {
+    "subject_id": "SUB-4410",
+    "name": "Northgate Convenience Store",
+    "segment": "small_business"
+  },
+  "sources": [
+    {
+      "source_id": "doc:DOC-CLAIM-001",
+      "kind": "document",
+      "present": true,
+      "summary": "Observation claiming structured cash clustering below 10,000 USD CTR threshold"
+    },
+    {
+      "source_id": "doc:DOC-CLAIM-002",
+      "kind": "document",
+      "present": true,
+      "summary": "Adverse reading hypothesis citing IND-STRUCT-THRESHOLD-PROXIMITY"
+    },
+    {
+      "source_id": "doc:DOC-CLAIM-003",
+      "kind": "document",
+      "present": true,
+      "summary": "Benign reading hypothesis citing seasonal market cash receipts"
+    },
+    {
+      "source_id": "doc:DOC-AUDIT-01",
+      "kind": "document",
+      "present": true,
+      "summary": "Independent review checklist confirming RFC 6901 pointer resolution"
+    }
+  ]
+}

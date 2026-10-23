@@ -20,6 +20,14 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
+for pkg in ("packages/fincrime-core/src", "packages/fincrime-cli/src"):
+    pkg_path = str(REPO_ROOT / pkg)
+    if pkg_path not in sys.path:
+        sys.path.insert(0, pkg_path)
+
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
 
 class NetworkAccessAttempted(RuntimeError):
     """Raised when something under test tries to open a socket."""

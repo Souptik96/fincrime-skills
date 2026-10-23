@@ -1,0 +1,169 @@
+apiVersion: fincrime.dev/v1
+kind: FinCrimeSkill
+
+metadata:
+  name: sar-narrative-draft
+  version: 1.0.0
+  status: draft
+  owners:
+    - "@fincrime-maintainers"
+  license: Apache-2.0
+  jurisdiction_scope:
+    - US
+  category: fincrime
+  compliance: BSA/AML
+  created: "2026-10-21"
+  contract_version: fincrime/finding/1.0.0
+  knowledge_pack: core-2026-10
+  related_skills: alert-triage,case-summarize,evidence-request,investigation-qa
+
+spec:
+  purpose: >-
+    Synthesize an escalated investigation file into the Part V Suspicious
+    Activity Narrative of a FinCEN SAR. Operates strictly under US jurisdiction
+    (31 CFR 1020.320). Emits Part V narrative prose only with RFC 6901 evidence
+    attribution, mandatory benign reading evaluation, and human sign-off gating.
+    Never constructs or serializes electronic filing batch XML.
+
+  inputs:
+    required:
+      - name: case_summary
+        description: The consolidated investigation timeline, subject scope, and transaction records.
+      - name: evidence_set
+        description: The closed world of transactional, account, customer, and document records.
+        contract_ref: fincrime/evidence-set/1.0.0
+    optional:
+      - name: knowledge_index
+        description: The declared knowledge pack used to ground typologies and indicator citations.
+      - name: policy_rules
+        description: Deterministic policy controls governing SAR narrative authoring.
+
+  preconditions:
+    - id: PC-1
+      check: "case summary and evidence set are supplied"
+      on_fail: stop
+      message: "Cannot synthesize SAR narrative without an escalated case summary and evidence set."
+    - id: PC-2
+      check: "evidence set is closed and every source carries a stable pointer"
+      on_fail: stop
+      message: "Evidence attribution requires addressable source records."
+
+  procedure:
+    - stage: S0
+      name: frame
+      produces: [frame]
+      requires: []
+    - stage: S1
+      name: ground
+      produces: [evidence_inventory, gaps]
+      requires: [evidence_set]
+      guard: POL-EVIDENCE-INVENTORY-FIRST
+      on_violation: stop
+    - stage: S2
+      name: extract
+      produces: [observation, indicator]
+      requires: [evidence_inventory]
+      guard: POL-INDICATOR-REQUIRES-INDICATOR-ID
+      on_violation: stop
+    - stage: S3
+      name: hypothesize
+      produces: [hypothesis]
+      requires: [claim_set]
+      guard: POL-BENIGN-HYPOTHESIS-REQUIRED
+      on_violation: stop
+    - stage: S4
+      name: contrast
+      produces: [contradiction]
+      requires: [claim_set]
+    - stage: S5
+      name: assess
+      produces: [risk_assessment]
+      requires: [gap_list]
+      guard: POL-ASSESSMENT-NEEDS-INDICATOR
+    - stage: S6
+      name: recommend
+      produces: [recommendation]
+      requires: [claim_set]
+      guard: POL-RECOMMENDATION-NEEDS-BASIS
+    - stage: S7
+      name: escalate
+      produces: [escalation]
+      requires: [claim_set]
+
+  output:
+    format: fincrime/finding/1.0.0
+    artifact: sar_narrative
+    required_claims:
+      - frame
+      - evidence_inventory
+      - gaps
+      - observation
+      - indicator
+      - hypothesis
+      - risk_assessment
+      - recommendation
+    optional_claims:
+      - contradiction
+      - escalation
+    prohibited_claims:
+      - decision
+    min_hypotheses: 2
+    require_benign_hypothesis: true
+    confidence:
+      levels:
+        - high
+        - moderate
+        - low
+        - insufficient_information
+      default_ceiling: high
+
+  policies:
+    required:
+      - POL-EVIDENCE-INVENTORY-FIRST
+      - POL-INDICATOR-REQUIRES-INDICATOR-ID
+      - POL-BENIGN-HYPOTHESIS-REQUIRED
+      - POL-ASSESSMENT-NEEDS-INDICATOR
+      - POL-RECOMMENDATION-NEEDS-BASIS
+      - POL-NO-CRIMINALITY-CLAIMS
+    optional:
+      - POL-CONFIDENCE-CEILING-ON-PARTIAL-EVIDENCE
+
+  knowledge:
+    indicators:
+      - IND-STRUCT-THRESHOLD-PROXIMITY
+      - IND-FAST-MOVEMENT-PASS-THROUGH
+      - IND-ROUND-AMOUNT-DEPOSIT-CLUSTER
+      - IND-MULTI-ACCOUNT-AGGREGATION
+    scenarios: []
+    typologies:
+      - TYP-STRUCTURING-SMURFING
+      - TYP-MULE-ACCOUNT-NETWORK
+      - TYP-ACCOUNT-TAKEOVER-LAUNDERING
+      - TYP-TRADE-BASED-MONEY-LAUNDERING
+    regulatory:
+      - REG-SAR-1020-320
+      - REG-CTR-1010-311
+
+  evaluation:
+    suite: evals/suites/sar-narrative-draft
+    case_count_min: 60
+    gates:
+      schema_validity: 1.0
+      evidence_attribution_accuracy: 0.98
+      unsupported_claim_rate_max: 0.02
+      required_field_compliance: 1.0
+      policy_pass_rate: 1.0
+      expected_defect_recall: 0.9
+      false_defect_rate_max: 0.05
+
+  safety:
+    human_approval_required:
+      - recommendation
+      - escalation
+    prohibited_actions:
+      - direct_filing
+      - legal_conclusion
+      - bsa_xml_generation
+      - artifact_rewrite
+    closed_world: true
+    pii_policy: reference_only

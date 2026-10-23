@@ -1,0 +1,86 @@
+{
+  "case_id": "golden-sanctions-011",
+  "suite": "sanctions-alert",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Screening hit against designated list entity requires escalation for compliance block determination.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "sanctions-screening",
+        "subject_id": "SUB-6011",
+        "match_target": "SDN-ENTITY-6011",
+        "match_score": 0.94,
+        "window": "2026-06-01/2026-06-15"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:ALT-6011",
+            "kind": "document",
+            "present": true,
+            "summary": "Watchlist hit alert for SUB-6011 matching OFAC SDN list"
+          },
+          {
+            "source_id": "txn:TXN-6011",
+            "kind": "transaction",
+            "present": true,
+            "amount": 250000,
+            "summary": "Wire transfer flagged at clearing gateway"
+          },
+          {
+            "source_id": "doc:DOC-6011",
+            "kind": "document",
+            "present": true,
+            "summary": "Corporate registry extract linking entity to designated jurisdiction"
+          }
+        ]
+      },
+      "screening_policy": {
+        "policy_id": "ofac-sdn-2026",
+        "threshold": 0.85,
+        "in_force_from": "2026-01-01"
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "guilty of sanctions evasion",
+      "is a designated terrorist",
+      "violated ofac restrictions",
+      "sanctioned person",
+      "sanctioned individual",
+      "sanctioned entity"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "Strong screening match requires compliance officer disposition; no unilateral blocking."
+  }
+}

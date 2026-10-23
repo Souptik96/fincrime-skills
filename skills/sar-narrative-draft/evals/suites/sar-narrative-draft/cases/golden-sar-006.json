@@ -1,0 +1,79 @@
+{
+  "case_id": "golden-sar-006",
+  "suite": "sar-narrative-draft",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Escalated investigation of TYP-MULE-ACCOUNT-NETWORK synthesized into Part V SAR narrative.",
+  "input": {
+    "inline": {
+      "case_summary": {
+        "case_id": "CASE-5006",
+        "subject_id": "SUB-5006",
+        "summary": "Escalated investigation file for SUB-5006 documenting anomalous flow.",
+        "escalated_by": "Senior AML Investigator"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:TXN-5006-1",
+            "kind": "transaction",
+            "present": true,
+            "amount": 48000,
+            "summary": "Inbound transfer for SUB-5006"
+          },
+          {
+            "source_id": "txn:TXN-5006-2",
+            "kind": "transaction",
+            "present": true,
+            "amount": 47200,
+            "summary": "Rapid onward dispersion for SUB-5006"
+          },
+          {
+            "source_id": "doc:DOC-5006",
+            "kind": "document",
+            "present": true,
+            "summary": "Customer CDD profile and discrepancy memo"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "Suspicious activity pattern warrants Part V SAR draft; human approval required."
+  }
+}

@@ -14,7 +14,7 @@
     "skill_id": "evidence-request",
     "skill_version": "1.0.0",
     "model": { "provider": "example", "id": "example-model-1", "temperature": 0, "seed": 42 },
-    "prompt_sha256": "f19142536c355744b228704c445089bff7c1b4ec5754800a90731d57d14a8012",
+    "prompt_sha256": "f180fe696e786420ff4868cbfdae8d4a15dcc92f128cbf0327fc1933cb1e9630",
     "evidence_set_sha256": "87301c1b0fec9ce1bb7dbf3b883bb88fda99884c887191179cadec112b71b554",
     "knowledge_pack": { "id": "fincrime-knowledge", "version": "core-2026-10", "as_of": "2026-10-01" },
     "policy_set": { "id": "firm-aml", "version": "7.2" },

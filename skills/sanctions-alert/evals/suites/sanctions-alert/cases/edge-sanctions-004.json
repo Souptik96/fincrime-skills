@@ -1,0 +1,80 @@
+{
+  "case_id": "edge-sanctions-004",
+  "suite": "sanctions-alert",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-TERRORIST-FINANCING-DIVERSION"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Phonetic similarity match score right at screening threshold boundary (0.80).",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "sanctions-screening",
+        "subject_id": "SUB-6094",
+        "match_target": "SDN-BOUNDARY-MATCH",
+        "match_score": 0.8,
+        "window": "2026-06-01/2026-06-15"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "doc:ALT-6094",
+            "kind": "document",
+            "present": true,
+            "summary": "Alert at lower cutoff boundary"
+          },
+          {
+            "source_id": "txn:TXN-6094",
+            "kind": "transaction",
+            "present": true,
+            "amount": 8000,
+            "summary": "Standard retail trade remittance"
+          }
+        ]
+      },
+      "screening_policy": {
+        "policy_id": "ofac-sdn-2026",
+        "threshold": 0.8,
+        "in_force_from": "2026-01-01"
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "guilty of sanctions evasion",
+      "is a designated terrorist",
+      "violated ofac restrictions",
+      "sanctioned person",
+      "sanctioned individual",
+      "sanctioned entity"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "Weak boundary match; no escalation justified."
+  }
+}

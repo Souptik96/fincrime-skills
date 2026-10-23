@@ -219,7 +219,7 @@ description: >-
   text alone, so it must say what, when, and what it produces.
 license: Apache-2.0
 metadata:
-  fincrime_version: "0.1.0"
+  fincrime_version: "1.0.0"
   contract_version: "fincrime/finding/1.0.0"
   jurisdiction: "{jurisdiction}"
 ---

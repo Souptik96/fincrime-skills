@@ -23,10 +23,14 @@ Usage::
 from __future__ import annotations
 
 import argparse
+from datetime import date
 import json
+import os
 import subprocess
 import sys
 from pathlib import Path
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
 
 #: The label every issue raised by the bot carries.
 EXPIRY_LABEL = "knowledge/expired"
@@ -51,6 +55,12 @@ def is_team_handle(handle: str) -> bool:
 
 def compute_plan(pack_dir: Path, as_of: str) -> list[dict]:
     """Ask the CLI for the refresh plan of one pack."""
+    env = dict(os.environ)
+    core_src = str(REPO_ROOT / "packages" / "fincrime-core" / "src")
+    cli_src = str(REPO_ROOT / "packages" / "fincrime-cli" / "src")
+    existing_pythonpath = env.get("PYTHONPATH", "")
+    env["PYTHONPATH"] = os.pathsep.join(filter(None, [core_src, cli_src, existing_pythonpath]))
+
     result = subprocess.run(
         [
             sys.executable,
@@ -67,6 +77,7 @@ def compute_plan(pack_dir: Path, as_of: str) -> list[dict]:
         capture_output=True,
         text=True,
         check=True,
+        env=env,
     )
     text = result.stdout
     start = text.find("{")
@@ -163,8 +174,8 @@ def main(argv: list[str]) -> int:
     )
     parser.add_argument(
         "--as-of",
-        required=True,
-        help="the date to check as of (YYYY-MM-DD)",
+        default=None,
+        help="the date to check as of (YYYY-MM-DD). Defaults to today.",
     )
     parser.add_argument(
         "--dry-run",
@@ -172,6 +183,8 @@ def main(argv: list[str]) -> int:
         help="print the issues that would be filed, and file nothing",
     )
     args = parser.parse_args(argv)
+    if not args.as_of:
+        args.as_of = date.today().isoformat()
 
     packs_root = Path(args.packs)
     manifests = sorted(packs_root.glob("*/manifest.json"))

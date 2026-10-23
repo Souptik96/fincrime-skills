@@ -1,0 +1,168 @@
+apiVersion: fincrime.dev/v1
+kind: FinCrimeSkill
+
+metadata:
+  name: sanctions-alert
+  version: 1.0.0
+  status: draft
+  owners:
+    - "@fincrime-maintainers"
+  license: Apache-2.0
+  jurisdiction_scope:
+    - US
+  category: fincrime
+  compliance: BSA/AML
+  created: "2026-10-21"
+  contract_version: fincrime/finding/1.0.0
+  knowledge_pack: core-2026-10
+  related_skills: alert-triage,case-summarize,evidence-request,investigation-qa,sar-narrative-draft
+
+spec:
+  purpose: >-
+    Assess a sanctions or watchlist screening alert against customer identity and
+    transaction evidence, evaluating match criteria, false-positive vs true-hit
+    hypotheses, and documentation gaps. Use when a sanctions screening match
+    requires structured assessment before human disposition; never use to
+    unilaterally block, unblock, or freeze assets. Produces a sanctions_assessment
+    conforming to fincrime/finding/1.0.0.
+
+  inputs:
+    required:
+      - name: alert
+        description: The raw screening alert containing match criteria, scored attributes, and target identifier.
+      - name: evidence_set
+        description: The closed world of customer identity records, transactions, invoices, and screening hit details.
+        contract_ref: fincrime/evidence-set/1.0.0
+      - name: screening_policy
+        description: The declared sanctions policy and threshold settings in force for the screening window.
+    optional:
+      - name: knowledge_index
+        description: The declared knowledge pack used to resolve indicators and regulatory citations.
+      - name: policy_rules
+        description: Deterministic firm policies governing sanctions reviews and false-positive criteria.
+      - name: prior_findings
+        description: Prior screening or disposition artifacts for the subject.
+
+  preconditions:
+    - id: PC-1
+      check: "the alert and evidence set are supplied"
+      on_fail: stop
+      message: "Cannot evaluate sanctions screening alert without match alert and evidence set."
+    - id: PC-2
+      check: "the evidence set is closed and every source carries a stable source id"
+      on_fail: stop
+      message: "Evidence attribution requires an addressable, closed evidence set."
+    - id: PC-3
+      check: "the declared knowledge pack is resolvable"
+      on_fail: annotate
+      message: "Regulatory records and typology grounding cannot be verified; disclose it."
+
+  procedure:
+    - stage: S0
+      name: frame
+      produces: [frame]
+      requires: []
+    - stage: S1
+      name: ground
+      produces: [evidence_inventory, gaps]
+      requires: [evidence_set]
+      guard: POL-EVIDENCE-INVENTORY-FIRST
+      on_violation: stop
+    - stage: S2
+      name: match_analysis
+      produces: [observation, indicator]
+      requires: [evidence_inventory]
+    - stage: S3
+      name: hypothesis_generation
+      produces: [hypothesis]
+      requires: [observation]
+      guard: POL-BENIGN-HYPOTHESIS-REQUIRED
+      on_violation: annotate
+    - stage: S4
+      name: risk_assessment
+      produces: [risk_assessment]
+      requires: [hypothesis]
+      guard: POL-ASSESSMENT-NEEDS-INDICATOR
+      on_violation: stop
+    - stage: S5
+      name: synthesize
+      produces: [recommendation, escalation]
+      requires: [risk_assessment]
+      guard: POL-RECOMMENDATION-NEEDS-BASIS
+      on_violation: stop
+
+  output:
+    format: fincrime/finding/1.0.0
+    artifact: sanctions_assessment
+    required_claims:
+      - frame
+      - evidence_inventory
+      - gaps
+      - observation
+      - indicator
+      - hypothesis
+      - risk_assessment
+      - recommendation
+    optional_claims:
+      - contradiction
+      - escalation
+    prohibited_claims:
+      - decision
+    min_hypotheses: 2
+    require_benign_hypothesis: true
+    confidence:
+      levels:
+        - high
+        - moderate
+        - low
+        - insufficient_information
+      default_ceiling: high
+
+  policies:
+    required:
+      - POL-EVIDENCE-INVENTORY-FIRST
+      - POL-INDICATOR-REQUIRES-INDICATOR-ID
+      - POL-BENIGN-HYPOTHESIS-REQUIRED
+      - POL-ASSESSMENT-NEEDS-INDICATOR
+      - POL-RECOMMENDATION-NEEDS-BASIS
+      - POL-NO-CRIMINALITY-CLAIMS
+    optional:
+      - POL-CONFIDENCE-CEILING-ON-PARTIAL-EVIDENCE
+
+  knowledge:
+    indicators:
+      - IND-COMMON-OWNERSHIP-SHELL-CHAIN
+      - IND-THIRD-PARTY-TRANSFER-CHAIN
+      - IND-FAST-MOVEMENT-PASS-THROUGH
+    scenarios: []
+    typologies:
+      - TYP-SHELL-COMPANY-LAYERING
+      - TYP-TRADE-BASED-MONEY-LAUNDERING
+    regulatory:
+      - REG-OFAC-REPORTING-501-603
+      - REG-OFAC-TERRORIST-ASSETS-501-601
+
+  evaluation:
+    suite: evals/suites/sanctions-alert
+    case_count_min: 60
+    gates:
+      schema_validity: 1.0
+      evidence_attribution_accuracy: 0.98
+      unsupported_claim_rate_max: 0.02
+      required_field_compliance: 1.0
+      policy_pass_rate: 1.0
+      expected_defect_recall: 0.9
+      false_defect_rate_max: 0.05
+
+  safety:
+    human_approval_required:
+      - recommendation
+      - escalation
+    prohibited_actions:
+      - unilateral_block
+      - unilateral_unblock
+      - asset_freeze
+      - direct_filing
+      - legal_conclusion
+    closed_world: true
+    pii_policy: reference_only

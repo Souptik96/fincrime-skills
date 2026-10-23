@@ -14,7 +14,7 @@
     "skill_id": "alert-triage",
     "skill_version": "1.0.0",
     "model": { "provider": "example", "id": "example-model-1", "temperature": 0, "seed": 42 },
-    "prompt_sha256": "8628afb9dcf96b4ba94c0bd2ca2e22c9262e20c582e0382d4c44da1f3a97e146",
+    "prompt_sha256": "0b73387a9a320f13d47feb8cadbc886f6646d86ee2f3f474a9f1092c1200cda7",
     "evidence_set_sha256": "06a3a2327b162b786e5cd65c1d3135ee6e76fb9de362eb79500793199303353a",
     "knowledge_pack": { "id": "fincrime-knowledge", "version": "core-2026-10", "as_of": "2026-10-01" },
     "policy_set": { "id": "firm-aml", "version": "7.2" },

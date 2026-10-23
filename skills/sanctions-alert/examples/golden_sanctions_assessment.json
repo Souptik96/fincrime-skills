@@ -1,0 +1,141 @@
+{
+  "contract_version": "fincrime/finding/1.0.0",
+  "artifact": {
+    "skill_id": "sanctions-alert",
+    "skill_version": "1.0.0",
+    "artifact_type": "sanctions_assessment",
+    "subject_ids": ["SUB-8801"],
+    "jurisdictions": ["US"],
+    "created_at": "2026-06-11T14:00:00Z",
+    "completeness": "complete",
+    "scope_note": "Sanctions alert assessment for potential OFAC SDN screening match on maritime bunker wire transfer."
+  },
+  "provenance": {
+    "skill_id": "sanctions-alert",
+    "skill_version": "1.0.0",
+    "model": { "provider": "example", "id": "sanctions-screen-1", "temperature": 0, "seed": 42 },
+    "prompt_sha256": "3a18afb9dcf96b4ba94c0bd2ca2e22c9262e20c582e0382d4c44da1f3a97e146",
+    "evidence_set_sha256": "c1781340b413e1538a4541ed929e3232ed521971d850daad0991a3e76a2ac41e",
+    "knowledge_pack": { "id": "core-2026-10", "version": "1.0.0", "as_of": "2026-10-21" },
+    "policy_set": { "id": "firm-sanctions", "version": "3.1" },
+    "run_id": "run-sanc-001",
+    "timestamp": "2026-06-11T14:00:00Z"
+  },
+  "claims": [
+    {
+      "id": "C-001",
+      "class": "fact",
+      "statement": "On 2026-06-10, a wire transfer of 450,000 USD to a marine bunker supplier was flagged by screening against OFAC SDN entry for MV VALTORIA.",
+      "evidence_refs": ["txn:TXN-8812#/amount", "doc:ALT-8811#/summary"],
+      "confidence": {
+        "level": "high",
+        "basis": "Extracted from screening engine hit alert and core wire transfer log."
+      }
+    },
+    {
+      "id": "C-002",
+      "class": "observation",
+      "statement": "The screening match is based solely on vessel name similarity, whereas official vessel registration establishes distinct IMO number 9876543 versus designated IMO 9123456.",
+      "evidence_refs": ["doc:ALT-8811#/summary", "doc:DOC-8813#/summary"],
+      "confidence": {
+        "level": "high",
+        "basis": "Direct comparison of verified vessel IMO registry against OFAC SDN schedule identifier."
+      }
+    },
+    {
+      "id": "C-003",
+      "class": "indicator",
+      "statement": "The wire transfer reflects customary bunkering payments executed through transparent commercial channels without layering.",
+      "evidence_refs": ["txn:TXN-8812#/summary", "doc:DOC-8814#/summary"],
+      "indicator_ids": ["IND-THIRD-PARTY-TRANSFER-CHAIN"],
+      "knowledge_ids": ["IND-THIRD-PARTY-TRANSFER-CHAIN"],
+      "confidence": {
+        "level": "moderate",
+        "basis": "Evaluated against transfer chain indicator definition in core-2026-10."
+      }
+    },
+    {
+      "id": "C-004",
+      "class": "hypothesis",
+      "statement": "The vessel is operating under a deliberate flag or identity masking scheme to evade maritime sanctions restrictions.",
+      "epistemic_type": "adverse_reading",
+      "falsifier": "Independent registry verification confirming hull and propulsion identity continuity for IMO 9876543.",
+      "evidence_refs": ["doc:ALT-8811#/summary", "doc:DOC-8813#/summary"],
+      "confidence": {
+        "level": "low",
+        "basis": "Plausible screening engine adverse hypothesis, negated by primary documentation."
+      }
+    },
+    {
+      "id": "C-005",
+      "class": "hypothesis",
+      "statement": "The alert is a homonym false positive where an un-sanctioned commercial vessel shares a name with an unrelated designated SDN entity.",
+      "epistemic_type": "benign_reading",
+      "falsifier": "Evidence demonstrating beneficial ownership or financial nexus connecting IMO 9876543 to the sanctioned vessel.",
+      "evidence_refs": ["doc:DOC-8813#/summary", "doc:DOC-8814#/summary"],
+      "confidence": {
+        "level": "high",
+        "basis": "Supported by conflicting unique identifiers (IMO 9876543 vs 9123456) and verified EU UBO declaration."
+      }
+    },
+    {
+      "id": "C-006",
+      "class": "risk_assessment",
+      "statement": "Due to distinct verified IMO registry and documented legitimate beneficial ownership, the transaction presents low sanctions risk and indicates a false positive screening hit.",
+      "evidence_refs": ["doc:DOC-8813#/summary", "doc:DOC-8814#/summary"],
+      "confidence": {
+        "level": "high",
+        "basis": "Synthesized analysis of identifier disconfirmation and KYC documentation."
+      }
+    },
+    {
+      "id": "C-007",
+      "class": "recommendation",
+      "statement": "Recommend that the Sanctions Compliance Officer clear the alert as a false positive and authorize release of the 450,000 USD wire transfer.",
+      "human_approval_required": true,
+      "explains": ["C-006"],
+      "evidence_refs": ["doc:DOC-8813#/summary"],
+      "confidence": {
+        "level": "high",
+        "basis": "Firm sanctions operating procedure for confirmed IMO disconfirmation."
+      }
+    }
+  ],
+  "evidence_inventory": [
+    {
+      "source_id": "doc:ALT-8811",
+      "kind": "document",
+      "present": true,
+      "summary": "OFAC SDN screening alert: potential match on vessel name 'MV VALTORIA' against designated entry IMO 9123456"
+    },
+    {
+      "source_id": "txn:TXN-8812",
+      "kind": "transaction",
+      "present": true,
+      "summary": "Wire transfer of 450,000 USD to marine bunker supplier at bunkering port"
+    },
+    {
+      "source_id": "doc:DOC-8813",
+      "kind": "document",
+      "present": true,
+      "summary": "Vessel registry certificate showing subject vessel holds IMO 9876543, distinct from sanctioned IMO 9123456"
+    },
+    {
+      "source_id": "doc:DOC-8814",
+      "kind": "document",
+      "present": true,
+      "summary": "Beneficial ownership declaration confirming ultimate beneficial owner is an EU national with no SDN list nexus"
+    }
+  ],
+  "gaps": [],
+  "human_decision_required": [
+    {
+      "decision_id": "D-01",
+      "owner_role": "Sanctions Compliance Officer",
+      "question": "Approve false positive disposition and authorize release of wire transfer funds.",
+      "would_change_if": [
+        "Receipt of new intelligence from OFAC linking IMO 9876543 to the designated SDN entity."
+      ]
+    }
+  ]
+}

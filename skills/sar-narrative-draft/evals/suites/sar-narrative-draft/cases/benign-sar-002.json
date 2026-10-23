@@ -1,0 +1,72 @@
+{
+  "case_id": "benign-sar-002",
+  "suite": "sar-narrative-draft",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Legitimate explanation disconfirms suspicious intent: Commercial business daily takings deposit just below CTR threshold.",
+  "input": {
+    "inline": {
+      "case_summary": {
+        "case_id": "CASE-5052",
+        "subject_id": "SUB-5052",
+        "summary": "Investigation review for SUB-5052 reveals documented legitimate source: Commercial business daily takings deposit just below CTR threshold.",
+        "escalated_by": "AML Investigator"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:TXN-5052",
+            "kind": "transaction",
+            "present": true,
+            "amount": 9200,
+            "summary": "Commercial business daily takings deposit just below CTR threshold."
+          },
+          {
+            "source_id": "doc:DOC-5052",
+            "kind": "document",
+            "present": true,
+            "summary": "Commercial contracts and tax records verifying activity"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "Activity accounted for by verified records; no SAR filing escalation."
+  }
+}

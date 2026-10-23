@@ -14,7 +14,7 @@
     "skill_id": "case-summarize",
     "skill_version": "1.0.0",
     "model": { "provider": "example", "id": "example-model-1", "temperature": 0, "seed": 42 },
-    "prompt_sha256": "3cd9b2d2f2c1ff4f649921a27f57bd959d8c95e23dffe3594635adc7087afd6f",
+    "prompt_sha256": "ed03f64c54ef46759f0109f1daef1f38860c34a17c7da1f6929428868ba13af0",
     "evidence_set_sha256": "f7ce7347b8b4381863bebd72ea2a48bb9d90d18f08a2d906c4957c6ecf85293b",
     "knowledge_pack": { "id": "fincrime-knowledge", "version": "core-2026-10", "as_of": "2026-10-01" },
     "policy_set": { "id": "firm-aml", "version": "7.2" },

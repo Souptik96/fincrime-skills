@@ -1,0 +1,69 @@
+{
+  "case_id": "benign-qa-014",
+  "suite": "investigation-qa",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "QA confirms dual-reading compliance for benign lookalike: Holding company dividend distribution with clear ultimate beneficial ownership.",
+  "input": {
+    "inline": {
+      "artifact": {
+        "artifact_type": "triage_report",
+        "finding_id": "FIND-4064",
+        "epistemic_dual_reading": true
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:TXN-4064",
+            "kind": "transaction",
+            "present": true,
+            "amount": 7500,
+            "summary": "Holding company dividend distribution with clear ultimate beneficial ownership."
+          },
+          {
+            "source_id": "doc:DOC-4064",
+            "kind": "document",
+            "present": true,
+            "summary": "KYC profile and tax returns confirming activity"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "fact",
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "high",
+    "human_approval_required": true,
+    "notes": "Benign reading appropriately established; QA confirms compliance."
+  }
+}

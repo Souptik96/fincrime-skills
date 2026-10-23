@@ -27,6 +27,21 @@ from fincrime_core.policy.evaluator import PolicyEvaluator
 from fincrime_core.policy.set import export_policy_set, load_policy_set
 from fincrime_core.validate.validator import EnforcementContext, Validator
 
+from fincrime_cli.demo import cmd_demo
+from fincrime_cli.evalcmd import cmd_eval
+from fincrime_cli.explain import cmd_explain
+from fincrime_cli.knowledgecmd import (
+    cmd_knowledge_check,
+    cmd_knowledge_inspect,
+    cmd_knowledge_list,
+    cmd_knowledge_typologies,
+    cmd_knowledge_validate,
+)
+from fincrime_cli.policycmd import (
+    cmd_policy_check,
+    cmd_policy_export,
+    cmd_policy_list,
+)
 from fincrime_cli.scaffold import scaffold_skill
 from fincrime_cli.skillcheck import check_skill_package
 
@@ -509,23 +524,94 @@ def build_parser() -> argparse.ArgumentParser:
     validate_parser.set_defaults(func=_cmd_validate)
 
     # policy
-    policy_parser = subparsers.add_parser("policy", help="export and check policy sets")
+    policy_parser = subparsers.add_parser("policy", help="list, export and check policy sets")
     policy_subparsers = policy_parser.add_subparsers(dest="policy_command")
+    policy_list = policy_subparsers.add_parser(
+        "list", help="list available policy sets and rules"
+    )
+    policy_list.add_argument(
+        "--policies-dir", default=None, help="directory containing policy sets"
+    )
+    policy_list.add_argument(
+        "--format", choices=["text", "json"], default="text", help="output format"
+    )
+    policy_list.add_argument("--json", action="store_true", help="emit policy sets as JSON")
+    policy_list.set_defaults(func=cmd_policy_list)
+
     policy_export = policy_subparsers.add_parser("export", help="export a policy set")
-    policy_export.add_argument("--set", required=True, dest="set", help="the policy set to export")
+    policy_export.add_argument(
+        "--set", default="default", dest="set", help="the policy set to export (defaults to default)"
+    )
     policy_export.add_argument("--out", default=None, help="where to write the export")
-    policy_export.set_defaults(func=_cmd_policy_export)
+    policy_export.set_defaults(func=cmd_policy_export)
+
     policy_check = policy_subparsers.add_parser(
         "check", help="evaluate a policy set against an artifact"
     )
-    policy_check.add_argument("--set", required=True, dest="set", help="the policy set")
-    policy_check.add_argument("--artifact", required=True, help="the finding document")
+    policy_check.add_argument(
+        "--set", default="default", dest="set", help="the policy set (defaults to default)"
+    )
+    policy_check.add_argument(
+        "--artifact", default=None, help="the finding document (optional: checks policy set if omitted)"
+    )
     policy_check.add_argument("--json", action="store_true", help="emit the violations as JSON")
-    policy_check.set_defaults(func=_cmd_policy_check)
+    policy_check.set_defaults(func=cmd_policy_check)
 
     # knowledge
-    knowledge_parser = subparsers.add_parser("knowledge", help="check knowledge packs")
+    knowledge_parser = subparsers.add_parser("knowledge", help="list, inspect, and check knowledge packs")
     knowledge_subparsers = knowledge_parser.add_subparsers(dest="knowledge_command")
+
+    knowledge_list = knowledge_subparsers.add_parser(
+        "list", help="list available knowledge packs and record counts"
+    )
+    knowledge_list.add_argument(
+        "--packs-dir", default=None, help="directory containing knowledge packs"
+    )
+    knowledge_list.add_argument(
+        "--as-of",
+        type=date.fromisoformat,
+        default=None,
+        help="date for freshness checks",
+    )
+    knowledge_list.add_argument(
+        "--format", choices=["text", "json"], default="text", help="output format"
+    )
+    knowledge_list.add_argument("--json", action="store_true", help="emit knowledge packs as JSON")
+    knowledge_list.set_defaults(func=cmd_knowledge_list)
+
+    knowledge_inspect = knowledge_subparsers.add_parser(
+        "inspect", help="inspect an indicator or knowledge record"
+    )
+    knowledge_inspect.add_argument(
+        "--indicator", default=None, help="the indicator ID to inspect"
+    )
+    knowledge_inspect.add_argument(
+        "--record", default=None, help="the record ID to inspect"
+    )
+    knowledge_inspect.add_argument(
+        "--pack", default=None, help="pack directory to search (defaults to knowledge/packs)"
+    )
+    knowledge_inspect.add_argument(
+        "--as-of",
+        type=date.fromisoformat,
+        default=None,
+        help="date for freshness checks",
+    )
+    knowledge_inspect.add_argument(
+        "--format", choices=["text", "json"], default="text", help="output format"
+    )
+    knowledge_inspect.add_argument("--json", action="store_true", help="emit inspection report as JSON")
+    knowledge_inspect.set_defaults(func=cmd_knowledge_inspect)
+
+    knowledge_typologies = knowledge_subparsers.add_parser(
+        "typologies", help="list the 12 AML/CTF typologies and paired benign twins"
+    )
+    knowledge_typologies.add_argument(
+        "--format", choices=["text", "json"], default="text", help="output format"
+    )
+    knowledge_typologies.add_argument("--json", action="store_true", help="emit typologies as JSON")
+    knowledge_typologies.set_defaults(func=cmd_knowledge_typologies)
+
     knowledge_validate = knowledge_subparsers.add_parser(
         "validate", help="check a pack's integrity against its manifest"
     )
@@ -542,7 +628,8 @@ def build_parser() -> argparse.ArgumentParser:
         help="apply the promotion enforcement context: an expired record blocks",
     )
     knowledge_validate.add_argument("--json", action="store_true", help="emit the findings as JSON")
-    knowledge_validate.set_defaults(func=_cmd_knowledge_validate)
+    knowledge_validate.set_defaults(func=cmd_knowledge_validate)
+
     knowledge_check = knowledge_subparsers.add_parser(
         "check", help="plan the refreshes a pack needs"
     )
@@ -554,13 +641,96 @@ def build_parser() -> argparse.ArgumentParser:
         help="the date the check is made as of (defaults to today)",
     )
     knowledge_check.add_argument("--json", action="store_true", help="emit the plan as JSON")
-    knowledge_check.set_defaults(func=_cmd_knowledge_check)
+    knowledge_check.set_defaults(func=cmd_knowledge_check)
+
+    # eval
+    eval_parser = subparsers.add_parser("eval", help="evaluate skills against test suites and gates")
+    eval_parser.add_argument("--skill", default=None, help="skill name, directory, or 'all'")
+    eval_parser.add_argument("--suite", default=None, help="path to evaluation suite directory or suite.json")
+    eval_parser.add_argument("--replay", action="store_true", help="run offline against pre-recorded replay corpus")
+    eval_parser.add_argument("--mock", action="store_true", help="run against deterministic mock provider")
+    eval_parser.add_argument("--gates", action="store_true", help="enforce manifest evaluation gates (exit 1 on breach)")
+    eval_parser.add_argument(
+        "--format", choices=["markdown", "json"], default="markdown", help="output report format"
+    )
+    eval_parser.add_argument("--out", default=None, help="write evaluation report to specified file")
+    eval_parser.add_argument(
+        "--as-of",
+        type=date.fromisoformat,
+        default=None,
+        help="date for freshness and knowledge expiration checks",
+    )
+    eval_parser.set_defaults(func=cmd_eval)
+
+    # demo
+    demo_parser = subparsers.add_parser(
+        "demo", help="demonstrate the Finding Contract vs unconstrained LLMs"
+    )
+    demo_parser.add_argument(
+        "--skill", default="alert-triage", help="the skill to demonstrate (default: alert-triage)"
+    )
+    demo_parser.add_argument(
+        "--non-interactive",
+        action="store_true",
+        help="run without pauses or interactive prompts",
+    )
+    demo_parser.add_argument(
+        "--json", action="store_true", help="emit the demonstration result as JSON"
+    )
+    demo_parser.set_defaults(func=cmd_demo)
+
+    # explain
+    explain_parser = subparsers.add_parser(
+        "explain", help="explain validation rules, defect codes, and artifact failures"
+    )
+    explain_parser.add_argument(
+        "target",
+        nargs="?",
+        default=None,
+        help="the rule ID, defect code, or policy ID to explain",
+    )
+    explain_parser.add_argument(
+        "--artifact", default=None, help="the finding artifact to validate and explain"
+    )
+    explain_parser.add_argument(
+        "--evidence-set",
+        default=None,
+        help="the evidence set the artifact was produced against",
+    )
+    explain_parser.add_argument(
+        "--policy-set", default=None, help="the policy set to check against"
+    )
+    explain_parser.add_argument(
+        "--as-of",
+        type=date.fromisoformat,
+        default=None,
+        help="the date the check is made as of",
+    )
+    explain_parser.add_argument(
+        "--list",
+        action="store_true",
+        help="list all explainable rules and defect codes",
+    )
+    explain_parser.add_argument(
+        "--json", action="store_true", help="emit the explanation as JSON"
+    )
+    explain_parser.set_defaults(func=cmd_explain)
 
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     """Run the command line."""
+    if hasattr(sys.stdout, "reconfigure"):
+        try:
+            sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
+    if hasattr(sys.stderr, "reconfigure"):
+        try:
+            sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+        except Exception:
+            pass
     parser = build_parser()
     args = parser.parse_args(list(argv) if argv is not None else None)
 

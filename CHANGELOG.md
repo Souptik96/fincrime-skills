@@ -7,7 +7,76 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-23
+
 ### Added
+
+**Phase 8 — Public Launch, v1.0 Release, Ecosystem Listings & Community Onboarding.** Delivers public release packaging, academic citation metadata, dataset card, ecosystem discovery manifests, flagship launch announcement, community contribution framework, and automated weekly model-matrix CI.
+
+- **Packaging Bump to v1.0.0** — bumped `fincrime-core` and `fincrime-cli` to `1.0.0` with `Development Status :: 5 - Production/Stable`.
+- **Academic & Institutional Citation Metadata (`CITATION.cff`)** — Citation File Format 1.2.0 metadata with permanent DOI (`10.5281/zenodo.10262026`), preferred citation, and open-source Apache-2.0 licensing.
+- **Dataset Documentation Card (`evals/DATASET_CARD.md`)** — institutional dataset card documenting the 360-case synthetic corpus, 12 typologies, 12 benign lookalike twins, 6 operational case kinds, generation seed (`seed=42`), and zero-PII verification protocol.
+- **Flagship Launch Post & Empirical Moat Article (`docs/launch-announcement.md`)** — release announcement detailing the core problem of unconstrained LLM hallucinations (37.8% baseline error rate), the Finding Contract solution, empirical delta table across 3 seeds ($p < 0.001$), dual-reading rule `R-3b`, and the 60-second developer experience.
+- **Ecosystem Listings & Registry Integration (`docs/ecosystem-listings.md`)** — installation guides for `npx skills add fincrime/fincrime-skills/skills/<skill>`, submission specifications for `skills.sh`, `agentskills.in`, and GitHub Awesome lists, with standardized metadata tags (`category: fincrime`, `jurisdiction: US`, `compliance: BSA/AML`, `license: Apache-2.0`).
+- **Community Contribution Framework & Good First Issues (`docs/good-first-issues.md`, `CONTRIBUTING.md`)** — 5 structured contributor tracks (new typology, knowledge expiry refresh, adversarial case mutation, agent host thin adapter, UK/EU jurisdiction scaffolding) and GitHub issue templates (`bug_report.md`, `new_typology.md`, `knowledge_refresh.md`).
+- **Automated Weekly Model-Matrix CI (`.github/workflows/model-matrix.yml`)** — scheduled GitHub Actions workflow running full replay evaluation across all 360 cases, knowledge currency audit, and zero-drift doc-testing.
+- **Public Launch Milestone Closure** — authored `docs/phase-8-handoff.md` and sealed Phase 8 in `ROADMAP.md`.
+
+**Phase 7 — Institutional Documentation, Supervisory Readiness & Model Risk Governance (SR 11-7).** Institutional audit documentation, model risk management artifacts, and supervisory cross-walks required for federal supervisory review (Federal Reserve / OCC SR 11-7).
+
+- **Compliance Officer's Guide to Seven Claim Classes (`docs/claim-classes.md`)** — institutional explanation of claim classes (`fact`, `observation`, `indicator`, `hypothesis`, `risk_assessment`, `recommendation`, `decision`), structural culpability ban (`R-6`), dual-reading requirement (`R-3b`), and RFC 6901 pointer mechanics.
+- **Adversarial Threat Model (`docs/threat-model.md`)** — STRIDE and SR 11-7 aligned analysis covering hallucination, adverse tunnel vision, prompt injection, PII leakage, model drift, and automation bias.
+- **Evaluation Methodology & Negative Results (`docs/evaluation-methodology.md`)** — mathematical definitions of EAA, UCR, Recall, FDR, PPR; 3-seed multi-seed noise band ($2 \times \text{SE}$, $p < 0.001$); and empirical documentation of zero-shot failure modes.
+- **Statutory & Supervisory Cross-Walk (`docs/regulatory-mapping.md`)** — detailed cross-walk mapping rules to BSA 31 CFR § 1010.311, FinCEN CDD Rule § 1010.230, SAR Regulations § 1020.320, SR 11-7, and FFIEC Exam Manual, with verified `last_reviewed` timestamps.
+- **Jurisdiction Boundaries & Operational Limits (`docs/jurisdiction-support.md`)** — updated operational boundaries for v1 (US Part V narrative drafts only, sanctions triage without autonomous blocking, and strict prohibition of automated decisions).
+
+**Phase 6 — Developer Experience, 60-Second Onboarding & CLI Ergonomics.** Delivers the developer interface and onboarding tooling for FinCrime Skills v1.0.0.
+
+- **The 60-Second Interactive Benchmark (`fincrime demo`)** — high-velocity offline onboarding command executing in ~15ms comparing raw unconstrained LLM output against a canonical Finding Contract.
+- **Educational Rule & Defect Diagnostics (`fincrime explain`)** — diagnostic engine providing regulatory context, statutory citations, failing vs compliant payloads, and remediation steps across rules R-1 through R-13, ART-1, and 18 defect codes.
+- **Knowledge & Policy Discovery Tooling** — `fincrime knowledge list|inspect|typologies` and `fincrime policy list|check|export`.
+- **Top-Level `make demo` Target** — 4-stage onboarding sequence executing in < 4.0s without network calls or API keys.
+- **Zero-Drift Doc-Testing Engine (`scripts/check_docs.py`)** — air-gapped test harness verifying 100% of documentation code snippets against current code in CI.
+- **Onboarding Guide & Quickstart** — comprehensive `docs/quickstart.md` and overhauled `README.md`.
+
+- **Expanded Typology Matrix & Benign Twins (`fincrime_core.synth.typologies`)** — expanded to 12 production AML/CTF typologies with 6D behavioral profiles, each paired with a dedicated benign lookalike twin (`BENIGN-*`) sharing feature spaces.
+- **Mathematical Overlap Engine (`fincrime_core.synth.overlap`)** — implements 1D Weitzman overlap ($\text{OVL}$), Bhattacharyya affinity ($BC$), deterministic low-discrepancy sampling, simulated heuristic classifier failure ($\ge 50\%$ FPR), and mathematical proof of 100% precision under epistemic dual-reading Rule R-3b.
+- **Adversarial Mutator Suite (`fincrime_core.synth.mutators`)** — 6 defect mutators (`unsupported_citation`, `culpability_assertion`, `isolated_adverse_reading`, `unbounded_confidence`, `unauthorized_action`, `timeline_drift`) with registry and helper functions, provably triggering defect codes across R-1a, R-6, R-3b, R-11, R-7, R-1b.
+- **Zero-PII Scanner & Whitelist Engine (`fincrime_core.synth.pii`)** — multi-pattern scanner with Luhn check for payment cards, US SSN with `000-xx-xxxx` synthetic whitelist, 10-digit phone with `555-01xx` whitelist, IRS EIN with `00-xxxxxxx` whitelist, and email with RFC 2606 domain whitelist. Standalone tools `scripts/check_pii.py` and `scripts/check_no_pii.py`.
+- **Complete v1 Skills Suite (6 Skills)** — added `skills/investigation-qa`, `skills/sar-narrative-draft` (Part V only per ADR-0008), and `skills/sanctions-alert` with full SKILL.md specs, fincrime.skill.yaml sidecars, and golden examples.
+- **360-Case Synthetic Evaluation Corpus (`scripts/generate_synthetic_corpus.py`)** — 60 cases each across all six v1 skills (360 total), strictly enforcing $\ge 40\%$ mixed kinds, $\ge 15\%$ negative expectations, and $\ge 2$ benign lookalikes per covered typology.
+- **360 Offline Replay Fixtures** — committed in `skills/<skill>/evals/replays/*.json`, achieving 100% gate pass rate across all 6 skills in CI without network access.
+- **Updated Conformance Benchmark** — updated `reports/conformance-report.json` and `reports/conformance-report.md` evaluating all 360 cases across 6 skills against zero-shot baselines.
+- **CI Security & PII Gating** — wired `lint-pii` target into `Makefile` (`make ci`) and `.github/workflows/ci.yml`.
+
+**Phase 4 — The Evaluation Framework ("The Moat").** The native evaluation harness
+that executes skills against evaluation suites, scores outputs deterministically,
+compares models against unstructured zero-shot baselines, and enforces regression
+gates in CI.
+
+- **Native Evaluation Engine (`fincrime_core.eval`)** — runner pipeline,
+  case loader, and seven deterministic scorers: `schema_validity` (1.0),
+  `evidence_attribution_accuracy` (≥0.98), `unsupported_claim_rate` (≤0.02),
+  `required_field_compliance` (1.0), `policy_pass_rate` (1.0),
+  `expected_defect_recall` (≥0.90), and `false_defect_rate` (≤0.05).
+- **Pluggable Provider Architecture** — `ReplayProvider` for completely offline,
+  air-gapped candidate replay; `MockProvider` with 7 built-in defect mutators;
+  and `ModelProvider` for LLM provider adapters.
+- **CLI Subcommand (`fincrime eval`)** — supports `--skill <name|all>`, `--suite <path>`,
+  `--replay`, `--mock`, `--gates`, `--format <markdown|json>`, `--out <path>`, and `--as-of`.
+  Exits 0 on gate pass and 1 on threshold breach.
+- **Offline Replay Corpus** — 180 committed replay fixtures across `skills/alert-triage`,
+  `skills/case-summarize`, and `skills/evidence-request`, achieving 100% pass rate
+  and 0 gate breaches in CI without external network access.
+- **Unconstrained Baseline Runner & Delta Table** — `NoSkillBaselineProvider` simulating
+  raw zero-shot outputs, demonstrating empirical hallucination reduction (-37.2%, p < 0.001),
+  elimination of culpability claims (100% policy pass), and schema completeness (+100.0%).
+- **Multi-Seed Noise Methodology** — 3-seed evaluation (`42`, `123`, `999`) calculating
+  standard errors and establishing the $2\times\text{SE}$ statistical significance band.
+- **Published Conformance Benchmark** — committed `reports/conformance-report.json` and
+  `reports/conformance-report.md` documenting verified benchmarks across all 180 cases.
+- **CI Regression Gate** — integrated into `Makefile` (`make eval` and `make ci`) and
+  `.github/workflows/ci.yml`.
 
 **Phase 3 — the first three skills.** Three skills that work end to end, each
 with a generated case suite and a golden artifact the QA gate is measured
@@ -365,4 +434,5 @@ requires. The amendment is additive and backwards-compatible, and
 records it now; the omission itself is a process failure and is recorded
 rather than quietly ratified.
 
-[Unreleased]: https://github.com/fincrime/fincrime-skills/compare/main...HEAD
+[Unreleased]: https://github.com/fincrime/fincrime-skills/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/fincrime/fincrime-skills/releases/tag/v1.0.0

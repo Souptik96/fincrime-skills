@@ -1,0 +1,159 @@
+{
+  "artifact": {
+    "artifact_type": "request_dossier",
+    "completeness": "partial",
+    "created_at": "2026-10-21T09:00:00Z",
+    "jurisdictions": [
+      "US"
+    ],
+    "skill_id": "evidence-request",
+    "skill_version": "1.0.0",
+    "subject_ids": [
+      "subject-6311"
+    ]
+  },
+  "claims": [
+    {
+      "class": "fact",
+      "confidence": {
+        "basis": "Direct evidence set intake",
+        "level": "high"
+      },
+      "evidence_refs": [
+        "txn:6385#/summary"
+      ],
+      "id": "C-001",
+      "statement": "Review documented for case adversarial-elder-003 across 1 verified evidence sources."
+    },
+    {
+      "class": "observation",
+      "confidence": {
+        "basis": "Read directly from closed world",
+        "level": "high"
+      },
+      "evidence_refs": [
+        "txn:6385#/summary"
+      ],
+      "id": "C-002",
+      "statement": "Observed activity documented in transaction records."
+    },
+    {
+      "class": "hypothesis",
+      "competing_with": [
+        "C-005"
+      ],
+      "confidence": {
+        "basis": "Pattern velocity analysis",
+        "level": "low"
+      },
+      "epistemic_type": "adverse_reading",
+      "evidence_refs": [
+        "txn:6385#/summary"
+      ],
+      "falsifier": "Terminal logs and point-of-sale settlement batches demonstrating routine commercial takings.",
+      "id": "C-004",
+      "statement": "The transaction pattern is consistent with deliberate avoidance of reporting thresholds or anomalous value transit."
+    },
+    {
+      "class": "hypothesis",
+      "competing_with": [
+        "C-004"
+      ],
+      "confidence": {
+        "basis": "Declared customer profile",
+        "level": "low"
+      },
+      "epistemic_type": "benign_reading",
+      "evidence_refs": [
+        "txn:6385#/summary"
+      ],
+      "falsifier": "Customer declaration disclaiming cash operations or counterparty confirmation of loan repayment.",
+      "id": "C-005",
+      "statement": "The transactions may reflect normal seasonal cash flow variation, documented trade billing, or verified customer profile."
+    },
+    {
+      "class": "risk_assessment",
+      "confidence": {
+        "basis": "Decisive gap remains on file pending secondary records",
+        "level": "low"
+      },
+      "evidence_refs": [
+        "txn:6385#/summary"
+      ],
+      "id": "C-006",
+      "statement": "Transactional risk evaluated based on verified patterns, without asserting culpability."
+    },
+    {
+      "class": "recommendation",
+      "confidence": {
+        "basis": "Documentation and review standard",
+        "level": "moderate"
+      },
+      "evidence_refs": [
+        "txn:6385#/summary"
+      ],
+      "explains": [
+        "C-006"
+      ],
+      "human_approval_required": false,
+      "id": "C-007",
+      "knowledge_ids": [
+        "REQ-ATM-TRANSACTION-LOG"
+      ],
+      "statement": "Maintain routine monitoring window; no escalation warranted based on current records."
+    }
+  ],
+  "contract_version": "fincrime/finding/1.0.0",
+  "evidence_inventory": [
+    {
+      "decisive": true,
+      "kind": "transaction",
+      "present": true,
+      "source_id": "txn:6385",
+      "summary": "Withdrawal of 4,000 USD at a branch on 2026-03-05"
+    }
+  ],
+  "gaps": [
+    {
+      "blocks_conclusion": true,
+      "decisive": true,
+      "description": "Secondary records for monitoring window absent from evidence set.",
+      "gap_id": "G-01"
+    }
+  ],
+  "human_decision_required": [
+    {
+      "decision_id": "D-01",
+      "owner_role": "Compliance Officer",
+      "question": "Whether to request additional commercial records or escalate to Level 2 review.",
+      "would_change_if": [
+        "Receipt of terminal logs and settlement batches confirming commercial source.",
+        "Absence of response within standard customer outreach window."
+      ]
+    }
+  ],
+  "provenance": {
+    "evidence_set_sha256": "7d1e446754e3df2878fe00085d2481b7c48871a28b65f06d05792873dc51a35e",
+    "knowledge_pack": {
+      "as_of": "2026-10-21",
+      "id": "core-2026-10",
+      "version": "1.0.0"
+    },
+    "model": {
+      "id": "replay-engine",
+      "provider": "replay",
+      "seed": 42,
+      "temperature": 0
+    },
+    "policy_set": {
+      "id": "firm-aml",
+      "version": "1.0.0"
+    },
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "run_id": "run-replay-adversarial-elder-003",
+    "skill_id": "evidence-request",
+    "skill_version": "1.0.0",
+    "timestamp": "2026-10-21T09:00:00Z"
+  },
+  "timeline": []
+}

@@ -1,0 +1,72 @@
+{
+  "case_id": "benign-sar-015",
+  "suite": "sar-narrative-draft",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Legitimate explanation disconfirms suspicious intent: Seasonal advance inventory purchase supported by authenticated customs bill of lading.",
+  "input": {
+    "inline": {
+      "case_summary": {
+        "case_id": "CASE-5065",
+        "subject_id": "SUB-5065",
+        "summary": "Investigation review for SUB-5065 reveals documented legitimate source: Seasonal advance inventory purchase supported by authenticated customs bill of lading.",
+        "escalated_by": "AML Investigator"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:TXN-5065",
+            "kind": "transaction",
+            "present": true,
+            "amount": 9200,
+            "summary": "Seasonal advance inventory purchase supported by authenticated customs bill of lading."
+          },
+          {
+            "source_id": "doc:DOC-5065",
+            "kind": "document",
+            "present": true,
+            "summary": "Commercial contracts and tax records verifying activity"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "Activity accounted for by verified records; no SAR filing escalation."
+  }
+}

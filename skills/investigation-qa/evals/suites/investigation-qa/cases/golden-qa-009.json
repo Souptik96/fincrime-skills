@@ -1,0 +1,70 @@
+{
+  "case_id": "golden-qa-009",
+  "suite": "investigation-qa",
+  "version": "1.0.0",
+  "kind": "golden",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Quality assurance audit of complete finding artifact for TYP-STRUCTURING-SMURFING with verified attribution.",
+  "input": {
+    "inline": {
+      "artifact": {
+        "artifact_type": "triage_report",
+        "finding_id": "FIND-4009",
+        "claims_count": 5,
+        "verified": true
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:TXN-4009",
+            "kind": "transaction",
+            "present": true,
+            "amount": 9500,
+            "summary": "Verified deposit for SUB-4009"
+          },
+          {
+            "source_id": "doc:DOC-4009",
+            "kind": "document",
+            "present": true,
+            "summary": "Audit verification sheet for SUB-4009"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "fact",
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "high",
+    "human_approval_required": true,
+    "notes": "Artifact passes all deterministic structural lints; no QA escalation."
+  }
+}

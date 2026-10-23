@@ -105,6 +105,11 @@ jobs:
             --set policies/default/policy-set.json \
             --artifact examples/01-alert-triage-structuring/artifact.json
 
+      - name: Offline evaluation replay and regression gate enforcement (Phase 4)
+        run: |
+          python -m fincrime_cli.main eval --skill all --replay --gates
+          python scripts/generate_conformance_report.py
+
   matrix:
     name: Python ${{ matrix.python-version }}
     runs-on: ubuntu-latest
@@ -195,6 +200,10 @@ jobs:
           python -m venv /tmp/corevenv
           /tmp/corevenv/bin/pip install --quiet packages/fincrime-core
           /tmp/corevenv/bin/pip show fincrime-core | grep -i "^Requires:" || echo "Requires: (none)"
+      - name: Zero-PII scanner (enforce synthetic-only datasets)
+        run: |
+          python -m pip install -e "packages/fincrime-core"
+          python scripts/check_pii.py
       - name: CodeQL
         uses: github/codeql-action/init@v3
         with:

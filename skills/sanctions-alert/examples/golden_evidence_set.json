@@ -1,0 +1,43 @@
+{
+  "evidence_set_version": "fincrime/evidence-set/1.0.0",
+  "case": {
+    "case_id": "CASE-8801",
+    "opened_at": "2026-06-10T09:00:00Z",
+    "subject_id": "SUB-8801",
+    "escalated_by": "Sanctions Screening Operations"
+  },
+  "subject": {
+    "subject_id": "SUB-8801",
+    "name": "Valtoria Marine Trading Corp",
+    "segment": "maritime_transport",
+    "onboarded_at": "2024-03-10",
+    "kyc_status": "current"
+  },
+  "sources": [
+    {
+      "source_id": "doc:ALT-8811",
+      "kind": "document",
+      "present": true,
+      "summary": "OFAC SDN screening alert: potential match on vessel name 'MV VALTORIA' against designated entry IMO 9123456"
+    },
+    {
+      "source_id": "txn:TXN-8812",
+      "kind": "transaction",
+      "present": true,
+      "amount": 450000,
+      "summary": "Wire transfer of 450,000 USD to marine bunker supplier at bunkering port"
+    },
+    {
+      "source_id": "doc:DOC-8813",
+      "kind": "document",
+      "present": true,
+      "summary": "Vessel registry certificate showing subject vessel holds IMO 9876543, distinct from sanctioned IMO 9123456"
+    },
+    {
+      "source_id": "doc:DOC-8814",
+      "kind": "document",
+      "present": true,
+      "summary": "Beneficial ownership declaration confirming ultimate beneficial owner is an EU national with no SDN list nexus"
+    }
+  ]
+}

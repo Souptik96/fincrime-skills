@@ -1,0 +1,450 @@
+{
+  "suite_id": "sanctions-alert",
+  "skill": "sanctions-alert",
+  "version": "1.0.0",
+  "as_of": "2026-10-21",
+  "description": "The sanctions screening alert population: false-positive disconfirmation, general license exemptions, and human block sign-off.",
+  "requirements": {
+    "min_cases": 60,
+    "min_mixed_ratio": 0.4,
+    "min_negative_ratio": 0.15,
+    "required_kinds": [
+      "golden",
+      "adversarial",
+      "benign",
+      "missing_data",
+      "contradictory",
+      "edge"
+    ],
+    "min_benign_per_typology": true
+  },
+  "typologies": [
+    "TYP-SHELL-COMPANY-LAYERING",
+    "TYP-TRADE-BASED-MONEY-LAUNDERING",
+    "TYP-TRANSSHIPMENT-SANCTIONS-EVASION",
+    "TYP-TERRORIST-FINANCING-DIVERSION"
+  ],
+  "cases": [
+    {
+      "case_id": "golden-sanctions-001",
+      "path": "cases/golden-sanctions-001.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-002",
+      "path": "cases/golden-sanctions-002.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-003",
+      "path": "cases/golden-sanctions-003.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-004",
+      "path": "cases/golden-sanctions-004.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-005",
+      "path": "cases/golden-sanctions-005.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-006",
+      "path": "cases/golden-sanctions-006.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-007",
+      "path": "cases/golden-sanctions-007.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-008",
+      "path": "cases/golden-sanctions-008.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-009",
+      "path": "cases/golden-sanctions-009.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-010",
+      "path": "cases/golden-sanctions-010.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-011",
+      "path": "cases/golden-sanctions-011.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-012",
+      "path": "cases/golden-sanctions-012.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-013",
+      "path": "cases/golden-sanctions-013.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-014",
+      "path": "cases/golden-sanctions-014.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-015",
+      "path": "cases/golden-sanctions-015.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-016",
+      "path": "cases/golden-sanctions-016.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-017",
+      "path": "cases/golden-sanctions-017.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "golden-sanctions-018",
+      "path": "cases/golden-sanctions-018.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-001",
+      "path": "cases/adversarial-sanctions-001.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-002",
+      "path": "cases/adversarial-sanctions-002.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-003",
+      "path": "cases/adversarial-sanctions-003.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-004",
+      "path": "cases/adversarial-sanctions-004.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-005",
+      "path": "cases/adversarial-sanctions-005.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-006",
+      "path": "cases/adversarial-sanctions-006.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-007",
+      "path": "cases/adversarial-sanctions-007.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-008",
+      "path": "cases/adversarial-sanctions-008.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-009",
+      "path": "cases/adversarial-sanctions-009.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-010",
+      "path": "cases/adversarial-sanctions-010.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-011",
+      "path": "cases/adversarial-sanctions-011.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "adversarial-sanctions-012",
+      "path": "cases/adversarial-sanctions-012.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-001",
+      "path": "cases/benign-sanctions-001.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-002",
+      "path": "cases/benign-sanctions-002.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-003",
+      "path": "cases/benign-sanctions-003.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-004",
+      "path": "cases/benign-sanctions-004.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-005",
+      "path": "cases/benign-sanctions-005.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-006",
+      "path": "cases/benign-sanctions-006.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-007",
+      "path": "cases/benign-sanctions-007.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-008",
+      "path": "cases/benign-sanctions-008.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-009",
+      "path": "cases/benign-sanctions-009.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-010",
+      "path": "cases/benign-sanctions-010.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-011",
+      "path": "cases/benign-sanctions-011.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-012",
+      "path": "cases/benign-sanctions-012.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-013",
+      "path": "cases/benign-sanctions-013.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-014",
+      "path": "cases/benign-sanctions-014.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-015",
+      "path": "cases/benign-sanctions-015.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "benign-sanctions-016",
+      "path": "cases/benign-sanctions-016.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "missing-sanctions-001",
+      "path": "cases/missing-sanctions-001.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "missing-sanctions-002",
+      "path": "cases/missing-sanctions-002.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-sanctions-003",
+      "path": "cases/missing-sanctions-003.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "missing-sanctions-004",
+      "path": "cases/missing-sanctions-004.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "missing-sanctions-005",
+      "path": "cases/missing-sanctions-005.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "missing-sanctions-006",
+      "path": "cases/missing-sanctions-006.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-sanctions-001",
+      "path": "cases/contradictory-sanctions-001.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-sanctions-002",
+      "path": "cases/contradictory-sanctions-002.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-sanctions-003",
+      "path": "cases/contradictory-sanctions-003.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "contradictory-sanctions-004",
+      "path": "cases/contradictory-sanctions-004.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    },
+    {
+      "case_id": "edge-sanctions-001",
+      "path": "cases/edge-sanctions-001.json",
+      "tags": [
+        "TYP-SHELL-COMPANY-LAYERING"
+      ]
+    },
+    {
+      "case_id": "edge-sanctions-002",
+      "path": "cases/edge-sanctions-002.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "edge-sanctions-003",
+      "path": "cases/edge-sanctions-003.json",
+      "tags": [
+        "TYP-TRANSSHIPMENT-SANCTIONS-EVASION"
+      ]
+    },
+    {
+      "case_id": "edge-sanctions-004",
+      "path": "cases/edge-sanctions-004.json",
+      "tags": [
+        "TYP-TERRORIST-FINANCING-DIVERSION"
+      ]
+    }
+  ],
+  "notes": "Generated by scripts/generate_synthetic_corpus.py with zero real PII and deterministic parameterization."
+}

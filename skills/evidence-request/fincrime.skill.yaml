@@ -10,6 +10,8 @@ metadata:
   license: Apache-2.0
   jurisdiction_scope:
     - US
+  category: fincrime
+  compliance: BSA/AML
   created: "2026-10-21"
   contract_version: fincrime/finding/1.0.0
   knowledge_pack: core-2026-10

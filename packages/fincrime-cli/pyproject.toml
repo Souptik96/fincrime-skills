@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "fincrime-cli"
-version = "0.1.0"
+version = "1.0.0"
 description = "The fincrime command: scaffold, validate, and inspect financial-crime skills and their contracts."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -12,7 +12,7 @@ license = { "text" = "Apache-2.0" }
 authors = [{ name = "fincrime-skills maintainers" }]
 keywords = ["aml", "fincrime", "agent-skills", "cli", "validator"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
     "Intended Audience :: Financial and Insurance Industry",
     "License :: OSI Approved :: Apache Software License",
@@ -26,7 +26,7 @@ classifiers = [
 
 # The CLI is stdlib-only at runtime, for the same reason the core is: it runs
 # in the environments that need it, including air-gapped ones (ADR-0002).
-dependencies = ["fincrime-core>=0.1.0"]
+dependencies = ["fincrime-core>=1.0.0"]
 
 [project.optional-dependencies]
 # PyYAML is a dev-only dependency. It is used by the parity test that proves

@@ -1,0 +1,72 @@
+{
+  "case_id": "benign-sar-006",
+  "suite": "sar-narrative-draft",
+  "version": "1.0.0",
+  "kind": "benign",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Legitimate explanation disconfirms suspicious intent: Family tuition and living expense transfers from relatives abroad.",
+  "input": {
+    "inline": {
+      "case_summary": {
+        "case_id": "CASE-5056",
+        "subject_id": "SUB-5056",
+        "summary": "Investigation review for SUB-5056 reveals documented legitimate source: Family tuition and living expense transfers from relatives abroad.",
+        "escalated_by": "AML Investigator"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "txn:TXN-5056",
+            "kind": "transaction",
+            "present": true,
+            "amount": 9200,
+            "summary": "Family tuition and living expense transfers from relatives abroad."
+          },
+          {
+            "source_id": "doc:DOC-5056",
+            "kind": "document",
+            "present": true,
+            "summary": "Commercial contracts and tax records verifying activity"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "Activity accounted for by verified records; no SAR filing escalation."
+  }
+}

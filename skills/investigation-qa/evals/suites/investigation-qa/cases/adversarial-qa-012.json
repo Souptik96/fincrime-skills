@@ -1,0 +1,64 @@
+{
+  "case_id": "adversarial-qa-012",
+  "suite": "investigation-qa",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "QA audit detects timeline_drift: Claim asserts transaction occurred outside temporal boundary.",
+  "input": {
+    "inline": {
+      "artifact": {
+        "artifact_type": "triage_report",
+        "finding_id": "FIND-4042",
+        "mutation": "timeline_drift",
+        "defective": true
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:TXN-4042",
+            "kind": "transaction",
+            "present": true,
+            "amount": 8200,
+            "summary": "Activity record for SUB-4042"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "fact",
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "QA flags timeline_drift defect and escalates for remediation."
+  }
+}

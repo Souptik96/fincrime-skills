@@ -1,0 +1,86 @@
+{
+  "case_id": "adversarial-sanctions-001",
+  "suite": "sanctions-alert",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-SHELL-COMPANY-LAYERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Name string hit where documentation proves different individual/entity; must not freeze.",
+  "input": {
+    "inline": {
+      "alert": {
+        "detector": "sanctions-screening",
+        "subject_id": "SUB-6031",
+        "match_target": "SDN-NAME-6031",
+        "match_score": 0.82,
+        "window": "2026-06-01/2026-06-15"
+      },
+      "evidence_set": {
+        "completeness": "complete",
+        "sources": [
+          {
+            "source_id": "doc:ALT-6031",
+            "kind": "document",
+            "present": true,
+            "summary": "Fuzzy name match on common Arabic/Slavic surname"
+          },
+          {
+            "source_id": "txn:TXN-6031",
+            "kind": "transaction",
+            "present": true,
+            "amount": 15000,
+            "summary": "Routine medical payment"
+          },
+          {
+            "source_id": "doc:DOC-6031",
+            "kind": "document",
+            "present": true,
+            "summary": "Passport confirming different date of birth and EU citizenship"
+          }
+        ]
+      },
+      "screening_policy": {
+        "policy_id": "ofac-sdn-2026",
+        "threshold": 0.8,
+        "in_force_from": "2026-01-01"
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "guilty of sanctions evasion",
+      "is a designated terrorist",
+      "violated ofac restrictions",
+      "sanctioned person",
+      "sanctioned individual",
+      "sanctioned entity"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "Disconfirming identity documents establish false positive; release recommended."
+  }
+}

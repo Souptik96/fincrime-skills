@@ -1,0 +1,66 @@
+{
+  "case_id": "edge-sar-003",
+  "suite": "sar-narrative-draft",
+  "version": "1.0.0",
+  "kind": "edge",
+  "tags": [
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Transaction amount exactly at mandatory SAR threshold of 5,000 USD.",
+  "input": {
+    "inline": {
+      "case_summary": {
+        "case_id": "CASE-5093",
+        "subject_id": "SUB-5093",
+        "summary": "Single transaction at 5,000 USD threshold for SUB-5093.",
+        "escalated_by": "AML Investigator"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:TXN-5093",
+            "kind": "transaction",
+            "present": true,
+            "amount": 5000,
+            "summary": "Wire transfer exactly at threshold boundary"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": false,
+    "expected_confidence_max": "low",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": false,
+    "notes": "Isolated threshold boundary transaction with low confidence."
+  }
+}

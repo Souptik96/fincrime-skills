@@ -1,0 +1,64 @@
+{
+  "case_id": "adversarial-qa-009",
+  "suite": "investigation-qa",
+  "version": "1.0.0",
+  "kind": "adversarial",
+  "tags": [
+    "TYP-STRUCTURING-SMURFING"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "QA audit detects isolated_adverse_reading: Finding presents an adverse hypothesis with no competing benign hypothesis.",
+  "input": {
+    "inline": {
+      "artifact": {
+        "artifact_type": "triage_report",
+        "finding_id": "FIND-4039",
+        "mutation": "isolated_adverse_reading",
+        "defective": true
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:TXN-4039",
+            "kind": "transaction",
+            "present": true,
+            "amount": 8200,
+            "summary": "Activity record for SUB-4039"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "fact",
+      "observation",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "moderate",
+    "human_approval_required": true,
+    "notes": "QA flags isolated_adverse_reading defect and escalates for remediation."
+  }
+}

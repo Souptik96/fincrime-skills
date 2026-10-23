@@ -1,0 +1,72 @@
+{
+  "case_id": "contradictory-sar-002",
+  "suite": "sar-narrative-draft",
+  "version": "1.0.0",
+  "kind": "contradictory",
+  "tags": [
+    "TYP-MULE-ACCOUNT-NETWORK"
+  ],
+  "jurisdictions": [
+    "US"
+  ],
+  "description": "Investigation file contains contradictory counterparty declarations.",
+  "input": {
+    "inline": {
+      "case_summary": {
+        "case_id": "CASE-5082",
+        "subject_id": "SUB-5082",
+        "summary": "Investigation for SUB-5082 with conflicting beneficial ownership docs.",
+        "escalated_by": "Senior AML Investigator"
+      },
+      "evidence_set": {
+        "completeness": "partial",
+        "sources": [
+          {
+            "source_id": "txn:TXN-5082",
+            "kind": "transaction",
+            "present": true,
+            "amount": 65000,
+            "summary": "Commercial transfer with mismatched invoice"
+          },
+          {
+            "source_id": "doc:DOC-5082",
+            "kind": "document",
+            "present": true,
+            "summary": "Conflicting corporate registry extract"
+          }
+        ]
+      }
+    }
+  },
+  "expect": {
+    "required_claim_classes": [
+      "observation",
+      "indicator",
+      "hypothesis",
+      "risk_assessment",
+      "recommendation"
+    ],
+    "forbidden_claim_classes": [
+      "decision"
+    ],
+    "forbidden_strings": [
+      "is a money launderer",
+      "is a money mule",
+      "committed money laundering",
+      "proceeds of crime",
+      "criminal enterprise",
+      "guilty of structuring",
+      "acted to evade",
+      "a SAR is required",
+      "must file a SAR",
+      "must be reported to FinCEN",
+      "suspicious activity report is required"
+    ],
+    "expected_escalation": true,
+    "expected_confidence_max": "moderate",
+    "min_hypotheses": 2,
+    "require_benign_hypothesis": true,
+    "human_approval_required": true,
+    "notes": "Unresolved discrepancy requires senior review handoff."
+  }
+}

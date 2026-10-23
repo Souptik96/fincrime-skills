@@ -15,6 +15,8 @@ thirty mediocre ones.
 
 ## What we are looking for, in priority order
 
+For new contributors looking for guided entry points, please explore our **[5 Good First Issue Tracks](docs/good-first-issues.md)** covering typologies, knowledge records, adversarial mutation, adapters, and UK/EU scaffolding.
+
 | # | Contribution | Why it is valuable |
 |---|---|---|
 | 1 | **Cases** for an existing skill | The corpus is the binding constraint on the whole project. A case with a benign twin and a documented expected outcome is worth more than a new skill. |
@@ -80,6 +82,15 @@ make ci       # everything CI runs
 Every PR must keep `make ci` green. The CI job posts a comment on your PR with
 the per-skill metric delta — that comment is the feedback loop, and it is
 usually the fastest way to see what your change actually did.
+
+## Architectural Invariants
+
+Every contribution must preserve the four core invariants that define this repository:
+
+1. **Zero-Dependency Runtime (ADR-0002):** The core and CLI have zero required third-party dependencies (`dependencies = []`). The trust boundary of a bank deployment must not depend on external supply chains or network access. Enforced by `scripts/check_imports.py` in CI.
+2. **Air-Gap Safety (ADR-0003):** All evaluation suites, commands, and unit tests run with network sockets blocked. No network calls are permitted during execution. Enforced by `scripts/check_no_network.py` in CI.
+3. **Zero-PII Guarantee (ADR-0007):** All evaluation datasets, replays, and documentation examples use synthetic, reserved namespaces (RFC 2606 domains, `000-xx-xxxx` SSNs, `555-01xx` numbers, `00-xxxxxxx` EINs, synthetic card numbers). No real customer data may ever be committed. Enforced by `scripts/check_pii.py` in CI.
+4. **Zero Documentation Drift Guarantee:** Every Python and shell code snippet in markdown documentation is continuously executed and validated against live code in an air-gapped sandbox. Enforced by `scripts/check_docs.py` in CI.
 
 ## Style
 

@@ -1,0 +1,450 @@
+{
+  "suite_id": "sar-narrative-draft",
+  "skill": "sar-narrative-draft",
+  "version": "1.0.0",
+  "as_of": "2026-10-21",
+  "description": "The SAR narrative population: Part V narrative synthesis, culpability defense, and mandatory tool-generated draft notices.",
+  "requirements": {
+    "min_cases": 60,
+    "min_mixed_ratio": 0.4,
+    "min_negative_ratio": 0.15,
+    "required_kinds": [
+      "golden",
+      "adversarial",
+      "benign",
+      "missing_data",
+      "contradictory",
+      "edge"
+    ],
+    "min_benign_per_typology": true
+  },
+  "typologies": [
+    "TYP-STRUCTURING-SMURFING",
+    "TYP-MULE-ACCOUNT-NETWORK",
+    "TYP-ACCOUNT-TAKEOVER-LAUNDERING",
+    "TYP-TRADE-BASED-MONEY-LAUNDERING"
+  ],
+  "cases": [
+    {
+      "case_id": "golden-sar-001",
+      "path": "cases/golden-sar-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-002",
+      "path": "cases/golden-sar-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-sar-003",
+      "path": "cases/golden-sar-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-004",
+      "path": "cases/golden-sar-004.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-005",
+      "path": "cases/golden-sar-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-006",
+      "path": "cases/golden-sar-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-sar-007",
+      "path": "cases/golden-sar-007.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-008",
+      "path": "cases/golden-sar-008.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-009",
+      "path": "cases/golden-sar-009.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-010",
+      "path": "cases/golden-sar-010.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-sar-011",
+      "path": "cases/golden-sar-011.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-012",
+      "path": "cases/golden-sar-012.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-013",
+      "path": "cases/golden-sar-013.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-014",
+      "path": "cases/golden-sar-014.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "golden-sar-015",
+      "path": "cases/golden-sar-015.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-016",
+      "path": "cases/golden-sar-016.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-017",
+      "path": "cases/golden-sar-017.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "golden-sar-018",
+      "path": "cases/golden-sar-018.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-001",
+      "path": "cases/adversarial-sar-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-002",
+      "path": "cases/adversarial-sar-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-003",
+      "path": "cases/adversarial-sar-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-004",
+      "path": "cases/adversarial-sar-004.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-005",
+      "path": "cases/adversarial-sar-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-006",
+      "path": "cases/adversarial-sar-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-007",
+      "path": "cases/adversarial-sar-007.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-008",
+      "path": "cases/adversarial-sar-008.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-009",
+      "path": "cases/adversarial-sar-009.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-010",
+      "path": "cases/adversarial-sar-010.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-011",
+      "path": "cases/adversarial-sar-011.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "adversarial-sar-012",
+      "path": "cases/adversarial-sar-012.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-001",
+      "path": "cases/benign-sar-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-002",
+      "path": "cases/benign-sar-002.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-003",
+      "path": "cases/benign-sar-003.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-004",
+      "path": "cases/benign-sar-004.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-005",
+      "path": "cases/benign-sar-005.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-sar-006",
+      "path": "cases/benign-sar-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-sar-007",
+      "path": "cases/benign-sar-007.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-sar-008",
+      "path": "cases/benign-sar-008.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "benign-sar-009",
+      "path": "cases/benign-sar-009.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-010",
+      "path": "cases/benign-sar-010.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-011",
+      "path": "cases/benign-sar-011.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-012",
+      "path": "cases/benign-sar-012.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-013",
+      "path": "cases/benign-sar-013.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-014",
+      "path": "cases/benign-sar-014.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-015",
+      "path": "cases/benign-sar-015.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "benign-sar-016",
+      "path": "cases/benign-sar-016.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-sar-001",
+      "path": "cases/missing-sar-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-sar-002",
+      "path": "cases/missing-sar-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "missing-sar-003",
+      "path": "cases/missing-sar-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-sar-004",
+      "path": "cases/missing-sar-004.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "missing-sar-005",
+      "path": "cases/missing-sar-005.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "missing-sar-006",
+      "path": "cases/missing-sar-006.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-sar-001",
+      "path": "cases/contradictory-sar-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "contradictory-sar-002",
+      "path": "cases/contradictory-sar-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "contradictory-sar-003",
+      "path": "cases/contradictory-sar-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "contradictory-sar-004",
+      "path": "cases/contradictory-sar-004.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "edge-sar-001",
+      "path": "cases/edge-sar-001.json",
+      "tags": [
+        "TYP-STRUCTURING-SMURFING"
+      ]
+    },
+    {
+      "case_id": "edge-sar-002",
+      "path": "cases/edge-sar-002.json",
+      "tags": [
+        "TYP-MULE-ACCOUNT-NETWORK"
+      ]
+    },
+    {
+      "case_id": "edge-sar-003",
+      "path": "cases/edge-sar-003.json",
+      "tags": [
+        "TYP-ACCOUNT-TAKEOVER-LAUNDERING"
+      ]
+    },
+    {
+      "case_id": "edge-sar-004",
+      "path": "cases/edge-sar-004.json",
+      "tags": [
+        "TYP-TRADE-BASED-MONEY-LAUNDERING"
+      ]
+    }
+  ],
+  "notes": "Generated by scripts/generate_synthetic_corpus.py with zero real PII and deterministic parameterization."
+}

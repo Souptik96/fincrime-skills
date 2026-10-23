@@ -39,7 +39,9 @@
         "created": { "type": "string" },
         "contract_version": { "type": "string", "minLength": 1 },
         "knowledge_pack": { "type": "string", "minLength": 1 },
-        "related_skills": { "type": "string" }
+        "related_skills": { "type": "string" },
+        "category": { "type": "string" },
+        "compliance": { "type": "string" }
       }
     },
     "spec": {

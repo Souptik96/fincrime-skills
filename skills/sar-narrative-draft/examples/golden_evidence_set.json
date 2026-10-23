@@ -1,0 +1,44 @@
+{
+  "evidence_set_version": "fincrime/evidence-set/1.0.0",
+  "case": {
+    "case_id": "CASE-7701",
+    "opened_at": "2026-05-15T08:00:00Z",
+    "subject_id": "SUB-7701",
+    "escalated_by": "Senior AML Investigator"
+  },
+  "subject": {
+    "subject_id": "SUB-7701",
+    "name": "Apex Precision Logistics LLC",
+    "segment": "commercial_trade",
+    "onboarded_at": "2023-08-14",
+    "kyc_status": "current"
+  },
+  "sources": [
+    {
+      "source_id": "txn:TXN-7711",
+      "kind": "transaction",
+      "present": true,
+      "amount": 94000,
+      "summary": "Inbound wire of 94,000 USD from offshore logistics entity"
+    },
+    {
+      "source_id": "txn:TXN-7712",
+      "kind": "transaction",
+      "present": true,
+      "amount": 92500,
+      "summary": "Immediate outbound pass-through wire of 92,500 USD to secondary trading firm"
+    },
+    {
+      "source_id": "doc:DOC-7713",
+      "kind": "document",
+      "present": true,
+      "summary": "Pro-forma invoice lacking itemized cargo bill of lading or customs declarations"
+    },
+    {
+      "source_id": "doc:DOC-7714",
+      "kind": "document",
+      "present": true,
+      "summary": "Corporate CDD extract confirming shared corporate address with three trading intermediaries"
+    }
+  ]
+}
